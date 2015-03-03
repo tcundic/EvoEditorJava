@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE documentation SYSTEM "documentation.dtd">
+<documentation>
+
+	<gallery name="Clean Cell Window" qrcode="dfdc640a-21ea-4883-aec1-a94b65b6e688" transparency="128" repeat="yes" showIndicator="yes">
+		<page>
+			<text>Clean Cell Window in 16 Steps</text>
+		</page>
+		<page>
+			<image path="dfdc640a-21ea-4883-aec1-a94b65b6e688/AVL483_Warnung_Laserstrahl_split1.jpg"/>
+		</page>
+		<page>
+			<image path="dfdc640a-21ea-4883-aec1-a94b65b6e688/AVL483_Warnung_Laserstrahl_split2.jpg"/>
+		</page>
+		<page>
+			<image path="dfdc640a-21ea-4883-aec1-a94b65b6e688/AVL483_Warnung_Laserstrahl_split3.jpg"/>
+		</page>
+		<page  confirmationText="">
+			<image path="dfdc640a-21ea-4883-aec1-a94b65b6e688/AVL483_Warnung_Laserstrahl_split4_confirm.jpg"/>
+		</page>
+		<page>
+			<text>Step 1/16:                                                      Switch off device</text>
+		</page>
+		<page>
+			<video path="dfdc640a-21ea-4883-aec1-a94b65b6e688/1_turn off switch.mp4"/>
+		</page>
+		<page>
+			<text>Step 2/16:                                                      Open housing locks</text>
+		</page>
+		<page>
+			<video path="dfdc640a-21ea-4883-aec1-a94b65b6e688/2_open locks.mp4"/>
+		</page>
+		<page>
+			<text>Step 3/16:                                                      Open housing lid</text>
+		</page>
+		<page>
+			<video path="dfdc640a-21ea-4883-aec1-a94b65b6e688/3_open lid.mp4"/>
+		</page>
+		<page>
+			<text>Step 4/16:                                                      Remove screws</text>
+		</page>
+		<page>
+			<video path="dfdc640a-21ea-4883-aec1-a94b65b6e688/4_remove screws.mp4"/>
+		</page>
+		<page>
+			<text>Step 5/16:                                                      Remove cover of measuring chamber</text>
+		</page>
+		<page>
+			<video path="dfdc640a-21ea-4883-aec1-a94b65b6e688/5_remove measuring chamber cover.mp4"/>
+		</page>
+		<page>
+			<text>Step 6/16:                                                      Remove right window</text>
+		</page>
+		<page description="Loosen: Turn to direction marked OPEN.">
+			<video path="dfdc640a-21ea-4883-aec1-a94b65b6e688/6_remove right window.mp4"/>
+		</page>
+		<page>
+			<text>Step 7/16:                                                      Clean glass pipe</text>
+		</page>
+		<page >
+			<image path="dfdc640a-21ea-4883-aec1-a94b65b6e688/AVL483_Hinweis_Reinigung_1_split1.jpg"/>
+		</page>
+		<page  confirmationText="">
+			<image path="dfdc640a-21ea-4883-aec1-a94b65b6e688/AVL483_Hinweis_Reinigung_1_split2_confirm.jpg"/>
+		</page>
+		<page>
+			<video path="dfdc640a-21ea-4883-aec1-a94b65b6e688/7_clean glass tube.mp4"/>
+		</page>
+		<page>
+			<text>Step 8/16:                                                      Clean right window</text>
+		</page>
+		<page description="Use new, clean lens cleaning tissue." confirmationText="">
+			<video path="dfdc640a-21ea-4883-aec1-a94b65b6e688/8_clean right window.mp4"/>
+		</page>
+		<page>
+			<text>Step 9/16:                                                      Remount right window...</text>
+			<page>
+				<text>Mounting: Insert window with serial number in horizontal position.</text>
+			</page>
+			<page description="Sticker with serial number">
+				<image path="dfdc640a-21ea-4883-aec1-a94b65b6e688/AVL483_Seriennummer_Waagrecht.png"/>
+			</page>
+		</page>
+		<page description="Lock: Turn to direction marked CLOSE.">
+			<video path="dfdc640a-21ea-4883-aec1-a94b65b6e688/9_remount right window.mp4"/>
+		</page>
+		<page>
+			<text>Step 10/16:                                                      Remove left window</text>
+		</page>
+		<page description="Loosen: Turn to direction marked OPEN.">
+			<video path="dfdc640a-21ea-4883-aec1-a94b65b6e688/10_remove left window.mp4"/>
+		</page>
+		<page>
+			<text>Step 11/16:                                                      Clean left window</text>
+		</page>
+		<page description="Use new, clean lens cleaning tissue.">
+			<video path="dfdc640a-21ea-4883-aec1-a94b65b6e688/11_clean left window.mp4"/>
+		</page>
+		<page>
+			<text>Step 12/16:                                                      Remount left window...</text>
+			<page>
+				<text>Mounting: Insert window with serial number in horizontal position.</text>
+			</page>
+			<page description="Sticker with serial number">
+				<image path="dfdc640a-21ea-4883-aec1-a94b65b6e688/AVL483_Seriennummer_Waagrecht.png"/>
+			</page>
+		</page>
+		<page>
+			<video path="dfdc640a-21ea-4883-aec1-a94b65b6e688/12_remount left window.mp4"/>
+		</page>
+		<page>
+			<text>Step 13/16:                                                      Place cover of measuring chamber</text>
+		</page>
+		<page>
+			<video path="dfdc640a-21ea-4883-aec1-a94b65b6e688/13_close measuring chamber cover.mp4"/>
+		</page>
+		<page>
+			<text>Step 14/16:                                                      Screw cover of measuring chamber</text>
+		</page>
+		<page>
+			<video path="dfdc640a-21ea-4883-aec1-a94b65b6e688/14_remount screws.mp4"/>
+		</page>		
+		<page>
+			<text>Step 15/16:                                                      Close housing lid</text>
+		</page>
+		<page>
+			<video path="dfdc640a-21ea-4883-aec1-a94b65b6e688/15_close lid.mp4"/>
+		</page>	
+		<page>
+			<text>Step 16/16:                                                      Close housing locks</text>
+		</page>
+		<page>
+			<video path="dfdc640a-21ea-4883-aec1-a94b65b6e688/16_close locks.mp4"/>
+		</page>			
+		<page>
+			<text>Sequence finished.                                                                                 Swipe forward: repeat sequence                                    Swipe down: read QR code</text>
+		</page>	
+	</gallery>
+	
+	<gallery name="Replace Filters" qrcode="03aefa17-f2fb-444b-b742-36ef1753c34a" transparency="128" repeat="yes">
+		<page confirmationText="">
+			<image path="03aefa17-f2fb-444b-b742-36ef1753c34a/avl_gg_Messwert.jpg"/>
+		</page>
+		<page>
+			<text>Replace Filters in 10 Steps</text>
+		</page>
+		<page>
+			<image path="03aefa17-f2fb-444b-b742-36ef1753c34a/Hazard_Micro_Fiber_split1.jpg"/>
+		</page>
+		<page>
+			<image path="03aefa17-f2fb-444b-b742-36ef1753c34a/Hazard_Micro_Fiber_split2.jpg"/>
+		</page>
+		<page>
+			<image path="03aefa17-f2fb-444b-b742-36ef1753c34a/Hazard_Micro_Fiber_split3.jpg"/>
+		</page>
+		<page confirmationText="">
+			<image path="03aefa17-f2fb-444b-b742-36ef1753c34a/Hazard_Micro_Fiber_split4_confirm.jpg"/>
+		</page>
+		<page  confirmationText="">
+			<image path="03aefa17-f2fb-444b-b742-36ef1753c34a/Notice_pump_off_confirm.jpg"/>
+		</page>
+		<page>
+			<text>Step 1/10:                                                      Switch off device</text>
+		</page>
+		<page>
+			<video path="03aefa17-f2fb-444b-b742-36ef1753c34a/01_turn off switch.mp4"/>
+		</page>
+		<page>
+			<text>Step 2/10:                                                      Open housing locks</text>
+		</page>
+		<page>
+			<video path="03aefa17-f2fb-444b-b742-36ef1753c34a/02_open locks.mp4"/>
+		</page>
+		<page>
+			<text>Step 3/10:                                                      Open housing lid</text>
+		</page>
+		<page>
+			<video path="03aefa17-f2fb-444b-b742-36ef1753c34a/03_open lid.mp4"/>
+		</page>
+		<page>
+			<text>Step 4/10:                                                      Remove cover and filter</text>
+		</page>
+		<page description="Loosen: Turn filter cover anticlockwise.">
+			<video path="03aefa17-f2fb-444b-b742-36ef1753c34a/04_remove_housing_with_filter.mp4"/>
+		</page>
+		<page>
+			<text>Step 5/10:                                                      Remove old filter from cover</text>
+		</page>
+		<page>
+			<video path="03aefa17-f2fb-444b-b742-36ef1753c34a/05_remove_filter_from_cover.mp4"/>
+		</page>
+		<page>
+			<text>Step 6/10:                                                      Place new filter in cover</text>
+		</page>
+		<page>
+			<video path="03aefa17-f2fb-444b-b742-36ef1753c34a/06_place_new_filter_in_cover.mp4"/>
+		</page>
+		<page>
+			<text>Step 7/10:                                                      Remount cover and filter</text>
+		</page>
+		<page description="Lock: Turn transparent filter cover clockwise.">
+			<video path="03aefa17-f2fb-444b-b742-36ef1753c34a/07_reassemble_housing_with_new_filter.mp4"/>
+		</page>
+		<page  confirmationText="">
+			<image path="03aefa17-f2fb-444b-b742-36ef1753c34a/Notice_filter_mounting_confirm.jpg"/>
+		</page>
+		<page>
+			<text>Step 8/10:                                                      Remove remaining old filters</text>
+		</page>
+		<page description="Repeat previous steps with remaining filters.">
+			<video path="03aefa17-f2fb-444b-b742-36ef1753c34a/08_repeat_for_other_2_filters.mp4"/>
+		</page>
+		<page  confirmationText="">
+			<image path="03aefa17-f2fb-444b-b742-36ef1753c34a/Notice_filter_mounting_confirm.jpg"/>
+		</page>
+		<page>
+			<text>Step 9/10:                                                      Close housing lid</text>
+		</page>
+		<page>
+			<video path="03aefa17-f2fb-444b-b742-36ef1753c34a/09_close lid.mp4"/>
+		</page>	
+		<page>
+			<text>Step 10/10:                                                      Close housing locks</text>
+		</page>
+		<page>
+			<video path="03aefa17-f2fb-444b-b742-36ef1753c34a/16_close locks.mp4"/>
+		</page>		
+		<page>
+			<text>Sequence finished.                                                                                 Swipe forward: repeat sequence                                    Swipe down: read QR code</text>
+		</page>	
+	</gallery>
+	
+</documentation>

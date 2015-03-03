@@ -1,0 +1,15 @@
+<!ELEMENT documentation (gallery+)>
+<!ELEMENT gallery (page+)>
+<!ATTLIST gallery name CDATA #REQUIRED>
+<!ATTLIST gallery qrcode CDATA #REQUIRED>
+<!ATTLIST gallery transparency CDATA #IMPLIED>
+<!ATTLIST gallery repeat (yes|no) "no">
+<!ATTLIST gallery showIndicator (yes|no) "no">
+<!ELEMENT page ((text|image|video),page*)>
+<!ATTLIST page confirmationText CDATA #IMPLIED>
+<!ATTLIST page description CDATA #IMPLIED>
+<!ELEMENT text (#PCDATA)>
+<!ELEMENT image EMPTY>
+<!ATTLIST image path CDATA #REQUIRED>
+<!ELEMENT video EMPTY>
+<!ATTLIST video path CDATA #REQUIRED>

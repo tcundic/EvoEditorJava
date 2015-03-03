@@ -1,0 +1,131 @@
+package hr.foi.air.evoEditor.main;
+
+import hr.foi.air.evoEditor.controller.EvoEditor;
+import hr.foi.air.evoEditor.gui.EditorMainGUI;
+import hr.foi.air.evoEditor.model.EvoPageResourceRule;
+import hr.foi.air.evoEditor.model.RawGallery;
+import hr.foi.air.evoEditor.model.RawPage;
+import hr.foi.air.evoEditor.model.RawPageResource;
+import hr.foi.air.evoEditor.model.interfaces.IGallery;
+import hr.foi.air.evoEditor.model.interfaces.IPage;
+import hr.foi.air.evoEditor.model.interfaces.IPageResource;
+import hr.foi.air.evoEditor.model.interfaces.IPageResourceRule;
+
+import java.awt.EventQueue;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.swing.UIManager;
+
+public class Main {
+	
+	private static final String DESCRIPTION = "description";
+	private static final String CONFIRMATION_TEXT = "confirmationText";
+	
+	private static final String[] GALLERY_ATTRIBUTES = {"name", "qrcode", "repeat", "showIndicator", "transparency"};
+	
+	private static final String IMAGE_RESOURCE_NAME = "image";
+	private static final String VIDEO_RESOURCE_NAME = "video";
+	private static final String TEXT_RESOURCE_NAME = "text";
+	
+	private static final String IMAGE_RESOURCE_ATTRIBUTE = "path";
+	
+
+	public static void main(String[] args) {
+		
+		ArrayList<IPageResource> pageResourceFormat = getPageResourceFormat();
+		IPageResourceRule pageResourceRuleFormat = getPageResourceRuleFormat();
+		IPage pageFormat = getPageFormat(pageResourceFormat, pageResourceRuleFormat);
+		IGallery galleryFormat = getGalleryFormat(pageFormat);
+		
+		final EvoEditor evoEditor = new EvoEditor(galleryFormat);
+		
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					UIManager.setLookAndFeel(
+				            UIManager.getSystemLookAndFeelClassName());
+					EditorMainGUI window = new EditorMainGUI(evoEditor);
+					evoEditor.setGUIObject(window);
+					window.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+
+	}
+
+	/**
+	 * Builds a resource rule a page can have.
+	 * @return
+	 */
+	private static IPageResourceRule getPageResourceRuleFormat() {
+		return new EvoPageResourceRule();
+	}
+
+	/**
+	 * Builds a resource list a page can use.
+	 * @return
+	 */
+	private static ArrayList<IPageResource> getPageResourceFormat() {
+		ArrayList<String> imageVideoResourceAttributes = new ArrayList<String>(1);
+		imageVideoResourceAttributes.add(IMAGE_RESOURCE_ATTRIBUTE);
+		
+		IPageResource image = new RawPageResource();
+    	image.setName(IMAGE_RESOURCE_NAME);
+    	image.setUsed(true);
+    	image.setCanHaveContent(false);
+    	image.setPossibleAttributes(imageVideoResourceAttributes);
+    	
+    	IPageResource video = new RawPageResource();
+    	video.setName(VIDEO_RESOURCE_NAME);
+    	video.setUsed(false);
+    	video.setCanHaveContent(false);
+    	video.setPossibleAttributes(imageVideoResourceAttributes);
+    	
+    	IPageResource text = new RawPageResource();
+    	text.setName(TEXT_RESOURCE_NAME);
+    	text.setUsed(false);
+    	text.setCanHaveContent(true);
+    	text.setContent("");
+    	
+    	ArrayList<IPageResource> pageResourceFormat = new ArrayList<IPageResource>(3);
+    	pageResourceFormat.add(image);
+    	pageResourceFormat.add(video);
+    	pageResourceFormat.add(text);
+    	
+    	return pageResourceFormat;
+	}
+	
+	/**
+	 * Builds a page that a gallery can contain
+	 * @param pageResourceFormat
+	 * @param pageResourceRuleFormat
+	 * @return
+	 */
+	private static IPage getPageFormat(ArrayList<IPageResource> pageResourceFormat, IPageResourceRule pageResourceRuleFormat) {
+		Set<String> possiblePageAttributeList = new HashSet<String>(2);
+    	possiblePageAttributeList.add(DESCRIPTION);
+    	possiblePageAttributeList.add(CONFIRMATION_TEXT);     	
+    	
+    	IPage pageFormat = new RawPage(possiblePageAttributeList, pageResourceFormat, pageResourceRuleFormat);
+    	return pageFormat;
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	private static IGallery getGalleryFormat(IPage pageType) {
+		Set<String> possibleGalleryAttributeList = new HashSet<String>();
+    	for(String attribute : GALLERY_ATTRIBUTES){
+    		possibleGalleryAttributeList.add(attribute);
+    	}
+    	
+    	IGallery galleryFormat = new RawGallery(possibleGalleryAttributeList, pageType);
+    	return galleryFormat;
+	}
+
+}

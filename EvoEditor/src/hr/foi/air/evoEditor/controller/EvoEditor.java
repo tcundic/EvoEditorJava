@@ -12,11 +12,17 @@ public class EvoEditor {
 	
 	EditorMainGUI gui;
 	IGallery gallery;
+	GalleryDataPanelController galleryDataPanelController;
 	
 	private static final String PAGE_NOT_SELECTED = "Page not selected..";
 
 	public EvoEditor(IGallery galleryFormat) {
 		this.gallery = galleryFormat;
+		this.galleryDataPanelController = new GalleryDataPanelController(gallery);
+	}
+	
+	public GalleryDataPanelController getGalleryDataPanelController(){
+		return this.galleryDataPanelController;
 	}
 
 	public void setGUIObject(EditorMainGUI gui) {

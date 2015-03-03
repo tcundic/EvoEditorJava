@@ -143,7 +143,8 @@ public class EditorMainGUI implements TreeSelectionListener{
 		});
 		controlItemsPanel.add(btnExport);
 		
-		JPanel galleryDataPanel = new GalleryDataPanel(evoEditor);
+		//East component
+		JPanel galleryDataPanel = new GalleryDataPanel(evoEditor.getGalleryDataPanelController());
 		frmEvoeditor.getContentPane().add(galleryDataPanel, BorderLayout.EAST);		
 		
 		JPanel panelCenter = new JPanel();

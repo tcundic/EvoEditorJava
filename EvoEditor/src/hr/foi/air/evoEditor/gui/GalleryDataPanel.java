@@ -1,6 +1,7 @@
 package hr.foi.air.evoEditor.gui;
 
 import hr.foi.air.evoEditor.controller.EvoEditor;
+import hr.foi.air.evoEditor.controller.GalleryDataPanelController;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -29,14 +30,14 @@ public class GalleryDataPanel extends JPanel {
 	JTable tblGalleryAttributes;
 	JSlider transparencySlider;
 	
-	EvoEditor evoEditor;
+	GalleryDataPanelController controller;
 	
 	
 	/**
 	 * Create the panel.
 	 */
-	public GalleryDataPanel(EvoEditor evoEditor) {
-		this.evoEditor = evoEditor;
+	public GalleryDataPanel(GalleryDataPanelController controller) {
+		this.controller = controller;
 		initialize();
 	}
 	

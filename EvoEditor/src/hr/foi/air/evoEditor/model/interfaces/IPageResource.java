@@ -6,6 +6,18 @@ import java.util.Set;
 public interface IPageResource {
 	
 	/**
+	 * Sets if the resource should be set to used by default
+	 * @param isUsedByDefault
+	 */
+	public void setDefaultlyUsed(boolean isUsedByDefault);
+	
+	/**
+	 * Returns true if the resource is to be used by default.
+	 * @return
+	 */
+	public boolean isDefaultlyUsed();
+	
+	/**
 	 * @return Name of the resource element
 	 */
 	public String getName();

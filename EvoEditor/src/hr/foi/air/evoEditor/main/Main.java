@@ -2,14 +2,12 @@ package hr.foi.air.evoEditor.main;
 
 import hr.foi.air.evoEditor.controller.EvoEditor;
 import hr.foi.air.evoEditor.gui.EditorMainGUI;
-import hr.foi.air.evoEditor.model.EvoPageResourceRule;
 import hr.foi.air.evoEditor.model.RawGallery;
 import hr.foi.air.evoEditor.model.RawPage;
 import hr.foi.air.evoEditor.model.RawPageResource;
 import hr.foi.air.evoEditor.model.interfaces.IGallery;
 import hr.foi.air.evoEditor.model.interfaces.IPage;
 import hr.foi.air.evoEditor.model.interfaces.IPageResource;
-import hr.foi.air.evoEditor.model.interfaces.IPageResourceRule;
 
 import java.awt.EventQueue;
 import java.util.ArrayList;
@@ -35,8 +33,7 @@ public class Main {
 	public static void main(String[] args) {
 		
 		ArrayList<IPageResource> pageResourceFormat = getPageResourceFormat();
-		IPageResourceRule pageResourceRuleFormat = getPageResourceRuleFormat();
-		IPage pageFormat = getPageFormat(pageResourceFormat, pageResourceRuleFormat);
+		IPage pageFormat = getPageFormat(pageResourceFormat);
 		IGallery galleryFormat = getGalleryFormat(pageFormat);
 		
 		final EvoEditor evoEditor = new EvoEditor(galleryFormat);
@@ -58,14 +55,6 @@ public class Main {
 	}
 
 	/**
-	 * Builds a resource rule a page can have.
-	 * @return
-	 */
-	private static IPageResourceRule getPageResourceRuleFormat() {
-		return new EvoPageResourceRule();
-	}
-
-	/**
 	 * Builds a resource list a page can use.
 	 * @return
 	 */
@@ -75,19 +64,17 @@ public class Main {
 		
 		IPageResource image = new RawPageResource();
     	image.setName(IMAGE_RESOURCE_NAME);
-    	image.setUsed(true);
+    	image.setDefaultlyUsed(true);
     	image.setCanHaveContent(false);
     	image.setPossibleAttributes(imageVideoResourceAttributes);
     	
     	IPageResource video = new RawPageResource();
     	video.setName(VIDEO_RESOURCE_NAME);
-    	video.setUsed(false);
     	video.setCanHaveContent(false);
     	video.setPossibleAttributes(imageVideoResourceAttributes);
     	
     	IPageResource text = new RawPageResource();
     	text.setName(TEXT_RESOURCE_NAME);
-    	text.setUsed(false);
     	text.setCanHaveContent(true);
     	text.setContent("");
     	
@@ -105,12 +92,12 @@ public class Main {
 	 * @param pageResourceRuleFormat
 	 * @return
 	 */
-	private static IPage getPageFormat(ArrayList<IPageResource> pageResourceFormat, IPageResourceRule pageResourceRuleFormat) {
+	private static IPage getPageFormat(ArrayList<IPageResource> pageResourceFormat) {
 		Set<String> possiblePageAttributeList = new HashSet<String>(2);
     	possiblePageAttributeList.add(DESCRIPTION);
     	possiblePageAttributeList.add(CONFIRMATION_TEXT);     	
     	
-    	IPage pageFormat = new RawPage(possiblePageAttributeList, pageResourceFormat, pageResourceRuleFormat);
+    	IPage pageFormat = new RawPage(possiblePageAttributeList, pageResourceFormat);
     	return pageFormat;
 	}
 

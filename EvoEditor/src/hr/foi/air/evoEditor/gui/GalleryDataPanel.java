@@ -1,6 +1,5 @@
 package hr.foi.air.evoEditor.gui;
 
-import hr.foi.air.evoEditor.controller.EvoEditor;
 import hr.foi.air.evoEditor.controller.GalleryDataPanelController;
 
 import java.awt.BorderLayout;

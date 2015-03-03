@@ -4,8 +4,6 @@ import hr.foi.air.evoEditor.controller.EvoEditor;
 import hr.foi.air.evoEditor.model.interfaces.IPage;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,7 +13,6 @@ import java.util.UUID;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -23,8 +20,6 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JSeparator;
-import javax.swing.JSlider;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.JTree;
@@ -32,11 +27,8 @@ import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
-import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
-
-import org.eclipse.wb.swing.FocusTraversalOnArray;
 
 public class EditorMainGUI implements TreeSelectionListener{
 	
@@ -248,7 +240,7 @@ public class EditorMainGUI implements TreeSelectionListener{
 	}
 
 	protected void onBtnAddSubpageClick() {
-		if(selectedPageId != null){
+		if(selectedPageId != null && selectedPageId != galleryTreeRoot.getUserObject()){
 			evoEditor.btnAddSubpageClicked(selectedPageId);
 		}	
 	}

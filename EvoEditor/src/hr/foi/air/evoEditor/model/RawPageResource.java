@@ -17,6 +17,7 @@ public class RawPageResource implements IPageResource {
 	private HashMap<String, String> attributeMap;
 	private boolean isUsed;
 	private boolean canHaveContent;
+	private boolean isUSedByDefault;
 	
 	public RawPageResource() {
 		name = DEFAULT_STRING;
@@ -24,6 +25,7 @@ public class RawPageResource implements IPageResource {
 		attributeMap = new HashMap<String, String>();
 		isUsed = DEFAULT_BOOLEAN;
 		canHaveContent = DEFAULT_BOOLEAN;
+		isUSedByDefault = DEFAULT_BOOLEAN;
 	}
 	
 	@Override
@@ -96,6 +98,7 @@ public class RawPageResource implements IPageResource {
 		pr.setContent(content);
 		pr.setName(name);
 		pr.setCanHaveContent(canHaveContent);
+		pr.setDefaultlyUsed(isUSedByDefault);
 
 		//String is immutable?
 		for(Map.Entry<String, String> entry : attributeMap.entrySet()){
@@ -119,5 +122,16 @@ public class RawPageResource implements IPageResource {
 		for(String attribute : possibleAttributesArray){
 			attributeMap.put(attribute, "");
 		}		
+	}
+
+	@Override
+	public void setDefaultlyUsed(boolean isUsedByDefault) {
+		this.isUSedByDefault = isUsedByDefault;
+		
+	}
+
+	@Override
+	public boolean isDefaultlyUsed() {
+		return isUSedByDefault;
 	}
 }

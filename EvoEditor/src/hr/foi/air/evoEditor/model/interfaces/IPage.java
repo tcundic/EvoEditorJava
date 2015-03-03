@@ -97,18 +97,6 @@ public interface IPage extends Comparable<IPage>{
     public void setPossibleResources(ArrayList<IPageResource> possiblePageResources);
 
     /**
-     * Get rule by which resource can be added on page.
-     * @return
-     */
-    public IPageResourceRule getPageResourceRule();
-
-    /**
-     * Set rule by which page can be added to page.
-     * @param pageResourceRule
-     */
-	public void setPageResourceRule(IPageResourceRule pageResourceRule);
-
-    /**
      * Use resource pageResourceName on current page.
      * @param pageResourceName
      */

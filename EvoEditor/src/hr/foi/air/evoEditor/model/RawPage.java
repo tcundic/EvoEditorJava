@@ -2,7 +2,6 @@ package hr.foi.air.evoEditor.model;
 
 import hr.foi.air.evoEditor.model.interfaces.IPage;
 import hr.foi.air.evoEditor.model.interfaces.IPageResource;
-import hr.foi.air.evoEditor.model.interfaces.IPageResourceRule;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,31 +19,38 @@ public class RawPage implements IPage{
     
     private HashMap<String, String> pageAttributeMap;
     private ArrayList<IPageResource> pageResourceList;
-    private IPageResourceRule pageResourceRule;
     
     public RawPage(Set<String> pageAttributeNames,
-    		ArrayList<IPageResource> pageResourceList,
-    		IPageResourceRule pageResourceRule){
+    		ArrayList<IPageResource> pageResourceList){
     	
     	this.iD = UUID.randomUUID();
     	
-        this.pageResourceRule = pageResourceRule;        
-        
-        this.pageResourceList = new ArrayList<IPageResource>();       
-        for(IPageResource pageResource : pageResourceList){
-    		this.pageResourceList.add(pageResource.clone());
-    	}
-        
-        this.pageAttributeMap = new HashMap<String, String>();
+    	this.pageAttributeMap = new HashMap<String, String>();
         for(String attributeName : pageAttributeNames){
         	this.pageAttributeMap.put(attributeName, DEFAULT_STRING);
         }
+        
+        /*
+         * Uses the user defined type of PageResources and sets to used the first
+         * resource with the attribute isDefaultlyUsed set to true
+         */
+        boolean defaultResourceIsSet = false;
+        this.pageResourceList = new ArrayList<IPageResource>();       
+        for(IPageResource pageResourceType : pageResourceList){
+        	IPageResource pageResource = pageResourceType.clone();
+        	pageResource.setUsed(false);
+        	if(!defaultResourceIsSet && pageResource.isDefaultlyUsed()){
+        		pageResource.setUsed(true);
+        		defaultResourceIsSet = true;
+        	}
+    		this.pageResourceList.add(pageResource);
+    	}        
     }
     
     
     @Override
 	public IPage getInstance(UUID parentiD, int orderNumber) {    	
-    	IPage page = new RawPage(pageAttributeMap.keySet(), pageResourceList, pageResourceRule);
+    	IPage page = new RawPage(pageAttributeMap.keySet(), pageResourceList);
     	page.setParentID(parentiD);
     	page.setOrderNumber(orderNumber);
     	
@@ -130,17 +136,15 @@ public class RawPage implements IPage{
     		this.pageResourceList.add(pageResource.clone());
     	}
     }
-    
-    public IPageResourceRule getPageResourceRule() {
-		return pageResourceRule;
-	}
-
-	public void setPageResourceRule(IPageResourceRule pageResourceRule) {
-		this.pageResourceRule = pageResourceRule;
-	}
-    
+	
     public void usePageResource(String pageResourceName){
-    	this.pageResourceRule.setResourceAsUsable(pageResourceList, pageResourceName);
+    	for(IPageResource pageResource : pageResourceList){
+			if(pageResource.getName().compareTo(pageResourceName) == 0){
+				pageResource.setUsed(true);
+			}else{
+				pageResource.setUsed(false);
+			}
+		}
     }
 
     /**

@@ -48,7 +48,7 @@ public class EvoEditor {
 		IPage page = gallery.findPageByID(selectedPageId);
 		if(page != null){
 			gallery.increaseOrderNumber(selectedPageId);
-			gui.reattachNodes(page.getParentID(), gallery.getChildPageList(page.getParentID()));
+			gui.reattachNodes(page.getId());
 		}	
 	}
 
@@ -59,7 +59,7 @@ public class EvoEditor {
 		IPage page = gallery.findPageByID(selectedPageId);
 		if(page != null){
 			gallery.decreaseOrderNumber(selectedPageId);
-			gui.reattachNodes(page.getParentID(), gallery.getChildPageList(page.getParentID()));
+			gui.reattachNodes(page.getId());
 		}			
 	}
 

@@ -49,7 +49,7 @@ public class EditorMainGUI implements TreeSelectionListener{
 	private JTable tablePageAttributesAndResources;
 	private JTree tree;
 	private JLabel lblPreviewText;
-	private DefaultMutableTreeNode gallery;
+	DefaultMutableTreeNode galleryTreeRoot;
 
 	/**
 	 * Create the application.
@@ -231,9 +231,8 @@ public class EditorMainGUI implements TreeSelectionListener{
 		frmEvoeditor.getContentPane().add(panelPageTree, BorderLayout.WEST);
 		panelPageTree.setLayout(new BorderLayout(0, 0));		
 		
-		gallery = 
-				new DefaultMutableTreeNode(evoEditor.getGalleryID());
-		tree = new JTree(gallery);
+		galleryTreeRoot = new DefaultMutableTreeNode(evoEditor.getGalleryID());
+		tree = new JTree(galleryTreeRoot);
 		tree.setShowsRootHandles(true);
 		// only one node can be selected
 		tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
@@ -307,18 +306,16 @@ public class EditorMainGUI implements TreeSelectionListener{
 	 * @param parentId
 	 * @param childId
 	 */
-	public void addNodeToTree(UUID parentId, UUID childId){
+	public void addNodeToTree(UUID parentId, UUID childId){	
 		DefaultTreeModel model = (DefaultTreeModel) tree.getModel();
-		DefaultMutableTreeNode root = (DefaultMutableTreeNode)model.getRoot();
 		DefaultMutableTreeNode childNode = new DefaultMutableTreeNode(childId);
-		DefaultMutableTreeNode parentNode = findNode(parentId, root);
+		DefaultMutableTreeNode parentNode = findNode(parentId);
 		int[] childIndices = {0};
 		
 		if(parentNode != null){
 			parentNode.add(childNode);
 			childIndices[0] = parentNode.getChildCount() - 1;
-			model.nodesWereInserted(parentNode, childIndices);
-			
+			model.nodesWereInserted(parentNode, childIndices);			
 		}				
 	}
 	
@@ -329,27 +326,26 @@ public class EditorMainGUI implements TreeSelectionListener{
 	 */
 	public void removePageFromTree(UUID pageToDeleteId) {
 		DefaultTreeModel model = (DefaultTreeModel) tree.getModel();
-		DefaultMutableTreeNode root = (DefaultMutableTreeNode)model.getRoot();
 		
-		if((UUID)root.getUserObject() != pageToDeleteId){
-			DefaultMutableTreeNode nodeToDelete = findNode(pageToDeleteId, root);
+		if((UUID)galleryTreeRoot.getUserObject() != pageToDeleteId){
+			DefaultMutableTreeNode nodeToDelete = findNode(pageToDeleteId);
 			model.removeNodeFromParent(nodeToDelete);
 		}		
 	}
 
 	/**
 	 * Builds the tree using recursion and the current gallery object
-	 * @param parentNode
+	 * @param node
 	 */
-	private void buildGalleryTree(DefaultMutableTreeNode parentNode) {
-		UUID parentId = (UUID)parentNode.getUserObject();
+	private void buildGalleryTreeFromNode(DefaultMutableTreeNode node) {
+		UUID parentId = (UUID)node.getUserObject();
 		ArrayList<IPage> childPagesList = evoEditor.getChildPages(parentId);
 		
 		// recursion 
 		for(IPage page : childPagesList){
 			DefaultMutableTreeNode childNode = new DefaultMutableTreeNode(page.getId());
-			parentNode.add(childNode);
-			buildGalleryTree(childNode);
+			node.add(childNode);
+			buildGalleryTreeFromNode(childNode);
 		}		
 	}
 	
@@ -359,7 +355,7 @@ public class EditorMainGUI implements TreeSelectionListener{
 	 * @param root
 	 * @return
 	 */
-	private DefaultMutableTreeNode findNode(UUID nodeId, DefaultMutableTreeNode root){
+	private DefaultMutableTreeNode findNodeRecursion(UUID nodeId, DefaultMutableTreeNode root){
 		if((UUID)root.getUserObject() == nodeId){
 			return root;
 		}
@@ -369,7 +365,7 @@ public class EditorMainGUI implements TreeSelectionListener{
 		@SuppressWarnings("rawtypes")
 		Enumeration children = root.children();
 		while(children.hasMoreElements()){
-			node = findNode(nodeId, (DefaultMutableTreeNode)children.nextElement());
+			node = findNodeRecursion(nodeId, (DefaultMutableTreeNode)children.nextElement());
             if(node != null){
             	break;
             }            
@@ -377,30 +373,34 @@ public class EditorMainGUI implements TreeSelectionListener{
 		return node;
 	}
 	
-	public void reattachNodes(UUID parentId, ArrayList<IPage> children){
-		DefaultTreeModel model = (DefaultTreeModel) tree.getModel();
-		DefaultMutableTreeNode root = (DefaultMutableTreeNode)model.getRoot();
-		DefaultMutableTreeNode parentNode = findNode(parentId, root);		
-		
-		if(parentNode != null){
-			parentNode.removeAllChildren();
-			for(IPage page : children){
-				DefaultMutableTreeNode childNode = new DefaultMutableTreeNode(page.getId());
-				parentNode.add(childNode);
-				if(page.getId() == selectedPageId){
-					tree.getSelectionModel().setSelectionPath(new TreePath(childNode.getPath()));
-				}
+	private DefaultMutableTreeNode findNode(UUID nodeId){
+		@SuppressWarnings("unchecked")
+		Enumeration<DefaultMutableTreeNode> e = galleryTreeRoot.depthFirstEnumeration();
+		while (e.hasMoreElements()) {
+			DefaultMutableTreeNode node = e.nextElement();
+			if (node.toString().equalsIgnoreCase(String.valueOf(nodeId))) {
+				return node;
 			}
 		}
-		model.reload(parentNode);		
+		return null;
+	}
+	
+	public void reattachNodes(UUID nodeId){
+		DefaultTreeModel model = (DefaultTreeModel) tree.getModel();
+		DefaultMutableTreeNode node = findNode(nodeId);
+		DefaultMutableTreeNode parentNode = (DefaultMutableTreeNode)node.getParent();	
+		parentNode.removeAllChildren();
+		buildGalleryTreeFromNode(parentNode);
+		model.reload(galleryTreeRoot);		
 	}
 	
 	public void reselectNode() {
-		tree.setSelectionPath(findNode());
+		tree.setSelectionPath(getSelectedNodeTreePath());
 	}
 	
-	private TreePath findNode() {
-		Enumeration<DefaultMutableTreeNode> e = gallery.depthFirstEnumeration();
+	private TreePath getSelectedNodeTreePath() {
+		@SuppressWarnings("unchecked")
+		Enumeration<DefaultMutableTreeNode> e = galleryTreeRoot.depthFirstEnumeration();
 		while (e.hasMoreElements()) {
 			DefaultMutableTreeNode node = e.nextElement();
 			if (node.toString().equalsIgnoreCase(String.valueOf(selectedPageId))) {

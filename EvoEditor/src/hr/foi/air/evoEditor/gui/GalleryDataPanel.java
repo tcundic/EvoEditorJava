@@ -88,5 +88,9 @@ public class GalleryDataPanel extends JPanel {
 		super.add(btnSaveGalleryData);
 		super.setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{lblGallery, GalleryAttributesPanel, tblGalleryAttributes, lblTransparency}));
 	}
+	
+	public void foo(){
+		controller.bar();
+	}
 
 }

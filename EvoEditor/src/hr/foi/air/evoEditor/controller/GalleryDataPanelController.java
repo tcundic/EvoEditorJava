@@ -9,4 +9,9 @@ public class GalleryDataPanelController {
 	public GalleryDataPanelController(IGallery gallery){
 		this.gallery = gallery;
 	}
+
+	public void bar() {
+		// TODO Auto-generated method stub
+		
+	}
 }

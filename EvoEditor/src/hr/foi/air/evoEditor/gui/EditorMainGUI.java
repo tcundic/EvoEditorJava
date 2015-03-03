@@ -143,53 +143,8 @@ public class EditorMainGUI implements TreeSelectionListener{
 		});
 		controlItemsPanel.add(btnExport);
 		
-		JPanel galleryDataPanel = new JPanel();
-		galleryDataPanel.setMinimumSize(new Dimension(350, 100));
-		frmEvoeditor.getContentPane().add(galleryDataPanel, BorderLayout.EAST);
-		galleryDataPanel.setLayout(new BoxLayout(galleryDataPanel, BoxLayout.Y_AXIS));
-		
-		JLabel lblGallery = new JLabel("Gallery");
-		galleryDataPanel.add(lblGallery);
-		
-		JSeparator separator = new JSeparator();
-		galleryDataPanel.add(separator);
-		
-		JPanel GalleryAttributesPanel = new JPanel();
-		galleryDataPanel.add(GalleryAttributesPanel);
-		GalleryAttributesPanel.setLayout(new BorderLayout(0, 0));
-		
-		tblGalleryAttributes = new JTable();
-		GalleryAttributesPanel.add(tblGalleryAttributes, BorderLayout.CENTER);
-		
-		JSeparator separator_1 = new JSeparator();
-		galleryDataPanel.add(separator_1);
-		
-		JLabel lblTransparency = new JLabel("Transparency");
-		galleryDataPanel.add(lblTransparency);
-		
-		textFieldTransparencyValue = new JTextField();
-		galleryDataPanel.add(textFieldTransparencyValue);
-		textFieldTransparencyValue.setColumns(3);
-		textFieldTransparencyValue.setMaximumSize(new Dimension(40, 20));
-		
-		JSlider transparencySlider = new JSlider();
-		transparencySlider.setMinorTickSpacing(1);
-		transparencySlider.setValue(128);
-		transparencySlider.setMaximum(256);
-		galleryDataPanel.add(transparencySlider);
-		
-		JSeparator separator_2 = new JSeparator();
-		galleryDataPanel.add(separator_2);
-		
-		JCheckBox chckbxGalleryRepeatOption = new JCheckBox("Repeat");
-		galleryDataPanel.add(chckbxGalleryRepeatOption);
-		
-		JCheckBox chckbxShowIndicatorOption = new JCheckBox("Show indicator");
-		galleryDataPanel.add(chckbxShowIndicatorOption);
-		
-		JButton btnSaveGalleryData = new JButton("Save gallery data");
-		galleryDataPanel.add(btnSaveGalleryData);
-		galleryDataPanel.setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{lblGallery, GalleryAttributesPanel, tblGalleryAttributes, lblTransparency}));
+		JPanel galleryDataPanel = new GalleryDataPanel(evoEditor);
+		frmEvoeditor.getContentPane().add(galleryDataPanel, BorderLayout.EAST);		
 		
 		JPanel panelCenter = new JPanel();
 		frmEvoeditor.getContentPane().add(panelCenter, BorderLayout.CENTER);

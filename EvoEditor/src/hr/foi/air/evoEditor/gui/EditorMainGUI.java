@@ -1,6 +1,7 @@
 package hr.foi.air.evoEditor.gui;
 
 import hr.foi.air.evoEditor.controller.EvoEditor;
+import hr.foi.air.evoEditor.controller.GalleryDataPanelController;
 import hr.foi.air.evoEditor.controller.GalleryTreeController;
 import hr.foi.air.evoEditor.controller.PageDataController;
 import hr.foi.air.evoEditor.controller.PagePreviewController;
@@ -68,8 +69,13 @@ public class EditorMainGUI{
 		controlItemsPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
 		//EAST component
-		JPanel galleryDataPanel = new GalleryDataPanel(evoEditor.getGalleryDataController());
+		GalleryDataPanelController galleryDataPanelController = evoEditor.getGalleryDataController();
+		GalleryDataPanel galleryDataPanel = new GalleryDataPanel(galleryDataPanelController);
+		galleryDataPanelController.setGui(galleryDataPanel);
+		galleryDataPanelController.setInitialData();	
+		
 		frmEvoeditor.getContentPane().add(galleryDataPanel, BorderLayout.EAST);		
+
 		
 		//CENTER component
 		JPanel panelCenter = new JPanel();		

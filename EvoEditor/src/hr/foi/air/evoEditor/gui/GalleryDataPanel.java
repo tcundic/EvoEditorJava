@@ -5,6 +5,9 @@ import hr.foi.air.evoEditor.controller.GalleryDataPanelController;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -15,6 +18,8 @@ import javax.swing.JSeparator;
 import javax.swing.JSlider;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.tree.DefaultMutableTreeNode;
 
 import org.eclipse.wb.swing.FocusTraversalOnArray;
 
@@ -28,6 +33,7 @@ public class GalleryDataPanel extends JPanel {
 	JTextField textFieldTransparencyValue;
 	JTable tblGalleryAttributes;
 	JSlider transparencySlider;
+	ArrayList<String> unchangeableElements;
 	
 	GalleryDataPanelController controller;
 	
@@ -41,6 +47,7 @@ public class GalleryDataPanel extends JPanel {
 	}
 	
 	private void initialize() {
+		unchangeableElements = new ArrayList<String>();
 		super.setMinimumSize(new Dimension(350, 100));
 		super.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		
@@ -54,7 +61,11 @@ public class GalleryDataPanel extends JPanel {
 		super.add(GalleryAttributesPanel);
 		GalleryAttributesPanel.setLayout(new BorderLayout(0, 0));
 		
-		tblGalleryAttributes = new JTable();
+		DefaultTableModel model = new DefaultTableModel();
+		tblGalleryAttributes = new JTable(model);
+		model.addColumn("Attribute name");
+		model.addColumn("Attribute value");
+		
 		GalleryAttributesPanel.add(tblGalleryAttributes, BorderLayout.CENTER);
 		
 		JSeparator separator_1 = new JSeparator();
@@ -62,6 +73,8 @@ public class GalleryDataPanel extends JPanel {
 		
 		JLabel lblTransparency = new JLabel("Transparency");
 		super.add(lblTransparency);
+		
+		unchangeableElements.add("transparency");
 		
 		textFieldTransparencyValue = new JTextField();
 		super.add(textFieldTransparencyValue);
@@ -80,16 +93,26 @@ public class GalleryDataPanel extends JPanel {
 		JCheckBox chckbxGalleryRepeatOption = new JCheckBox("Repeat");
 		super.add(chckbxGalleryRepeatOption);
 		
+		unchangeableElements.add("repeat");
+		
 		JCheckBox chckbxShowIndicatorOption = new JCheckBox("Show indicator");
 		super.add(chckbxShowIndicatorOption);
+		
+		unchangeableElements.add("showIndicator");
 		
 		JButton btnSaveGalleryData = new JButton("Save gallery data");
 		super.add(btnSaveGalleryData);
 		super.setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{lblGallery, GalleryAttributesPanel, tblGalleryAttributes, lblTransparency}));
+		
 	}
 	
-	public void foo(){
-		controller.bar();
+	public void addAttributes(String attributeName, String attributeValue) {
+		DefaultTableModel dtm = (DefaultTableModel) tblGalleryAttributes.getModel();
+		dtm.addRow(new Object[] {attributeName, attributeValue});
+	}
+
+	public ArrayList<String> getUnchangeableElements() {
+		return unchangeableElements;
 	}
 
 }

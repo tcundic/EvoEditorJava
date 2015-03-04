@@ -182,5 +182,18 @@ public class RawPage implements IPage{
 	public boolean isPageDefined() {
 		return this.pageDefined;
 	}
+
+
+	@Override
+	public IPageResource getUsedResource() {
+		IPageResource usedPageResource = null;
+		for(IPageResource resource : pageResourceList){
+			if(resource.isUsed()){
+				usedPageResource = resource;
+				break;
+			}
+		}
+		return usedPageResource;
+	}
 }
 

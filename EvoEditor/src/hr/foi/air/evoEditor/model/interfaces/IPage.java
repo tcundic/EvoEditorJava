@@ -95,7 +95,12 @@ public interface IPage extends Comparable<IPage>{
      * @param possiblePageResources
      */
     public void setPossibleResources(ArrayList<IPageResource> possiblePageResources);
-
+    
+    /**
+     * Get the resource currently used by the page.
+     * @return
+     */
+    public IPageResource getUsedResource();
     /**
      * Use resource pageResourceName on current page.
      * @param pageResourceName

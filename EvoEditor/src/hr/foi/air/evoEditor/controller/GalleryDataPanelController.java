@@ -11,7 +11,6 @@ public class GalleryDataPanelController {
 	}
 
 	public void bar() {
-		// TODO Auto-generated method stub
 		
 	}
 }

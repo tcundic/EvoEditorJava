@@ -10,19 +10,38 @@ import java.util.UUID;
 
 public class EvoEditor {
 	
-	EditorMainGUI gui;
-	IGallery gallery;
-	GalleryDataPanelController galleryDataPanelController;
+	private EditorMainGUI gui;
+	private IGallery gallery;
+	private GalleryDataPanelController galleryDataPanelController;
+	private PagePreviewController pagePreviewController;
+	private GalleryTreeController galleryTreePanelController;
+	private PageDataController pageDataController;
+	
 	
 	private static final String PAGE_NOT_SELECTED = "Page not selected..";
 
 	public EvoEditor(IGallery galleryFormat) {
 		this.gallery = galleryFormat;
 		this.galleryDataPanelController = new GalleryDataPanelController(gallery);
+		this.pagePreviewController = new PagePreviewController(gallery);
+		this.galleryTreePanelController = new GalleryTreeController(gallery);
+		this.pageDataController = new PageDataController(gallery);
 	}
 	
-	public GalleryDataPanelController getGalleryDataPanelController(){
+	public PageDataController getPageDataController(){
+		return this.pageDataController;
+	}
+	
+	public GalleryDataPanelController getGalleryDataController(){
 		return this.galleryDataPanelController;
+	}
+
+	public PagePreviewController getPagePreviewController() {
+		return this.pagePreviewController;
+	}
+	
+	public GalleryTreeController getGalleryTreePanelController() {
+		return this.galleryTreePanelController;
 	}
 
 	public void setGUIObject(EditorMainGUI gui) {
@@ -35,45 +54,6 @@ public class EvoEditor {
 
 	public ArrayList<IPage> getChildPages(UUID parentId) {
 		return gallery.getChildPageList(parentId);
-	}
-
-	public void btnAddPageClicked() {		
-		UUID childId = gallery.addBlankPage(gallery.getID());
-		gui.addNodeToTree(gallery.getID(), childId);
-	}
-
-	public void btnAddSubpageClicked(UUID parentId) {
-		UUID childId = gallery.addBlankPage(parentId);
-		gui.addNodeToTree(parentId, childId);
-	}
-
-	public void btnBtnMoveUpClicked(UUID selectedPageId) {
-		if(selectedPageId == null){
-			return;
-		}
-		IPage page = gallery.findPageByID(selectedPageId);
-		if(page != null){
-			gallery.increaseOrderNumber(selectedPageId);
-			gui.reattachNodes(page.getId());
-		}	
-	}
-
-	public void btnMoveDownClicked(UUID selectedPageId) {
-		if(selectedPageId != null){
-			
-		}
-		IPage page = gallery.findPageByID(selectedPageId);
-		if(page != null){
-			gallery.decreaseOrderNumber(selectedPageId);
-			gui.reattachNodes(page.getId());
-		}			
-	}
-
-	public void btnDeletePageClicked(UUID selectedPageId) {
-		if(selectedPageId != null){
-			gallery.deletePage(selectedPageId);
-			gui.removePageFromTree(selectedPageId);	
-		}
 	}
 
 	public String getSelectedPageResourceName(UUID selectedPageId) {
@@ -99,5 +79,4 @@ public class EvoEditor {
 		}
 		return orderNumber;
 	}
-
 }

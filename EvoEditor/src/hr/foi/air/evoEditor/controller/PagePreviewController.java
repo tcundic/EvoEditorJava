@@ -8,8 +8,11 @@ import hr.foi.air.evoEditor.model.interfaces.IPageResource;
 import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.UUID;
 
+import javax.imageio.ImageIO;
 import javax.swing.JTree;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
@@ -63,12 +66,24 @@ public class PagePreviewController implements TreeSelectionListener{
 		}  	
 	}
 	
+	public void setInitialData() {
+		gui.add(new ImagePanel());
+	}
+	
 	private class ImagePanel extends Component {
 		
 		BufferedImage img;
 		
 		public void paint(Graphics g) {
 			g.drawImage(img, 0, 0, null);
+		}
+		
+		public ImagePanel() {
+			try {
+				img = ImageIO.read(new File("C:\\Users\\tomi\\DesktopAVL483_Hinweis_Reinigung_1_split1.jpg"));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 }

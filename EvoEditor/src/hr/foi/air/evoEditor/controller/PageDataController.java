@@ -131,10 +131,8 @@ public class PageDataController implements TreeSelectionListener, ActionListener
 	@Override
 	public void tableChanged(TableModelEvent e) {
 		if(active){
-			if(gui.isSomeCellSelected()){
 				savePageAttributeData(gui.getTableModel(PageDataPanel.ATTRIBUTE_TABLE));
 				savePageResourceData(gui.getTableModel(PageDataPanel.RESOURCE_TABLE));
-			}			
 		}		
 	}
 

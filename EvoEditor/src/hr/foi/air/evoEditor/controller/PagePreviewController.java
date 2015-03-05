@@ -5,6 +5,9 @@ import hr.foi.air.evoEditor.model.interfaces.IGallery;
 import hr.foi.air.evoEditor.model.interfaces.IPage;
 import hr.foi.air.evoEditor.model.interfaces.IPageResource;
 
+import java.awt.Component;
+import java.awt.Graphics;
+import java.awt.image.BufferedImage;
 import java.util.UUID;
 
 import javax.swing.JTree;
@@ -54,10 +57,18 @@ public class PagePreviewController implements TreeSelectionListener{
 		DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode)tree.getLastSelectedPathComponent();
 		if(selectedNode != null){
 			selectedPageId = (UUID) selectedNode.getUserObject();
+			gui.setLblText(selectedPageId.toString());
 		}else{
 			selectedPageId = null;
-		}
+		}  	
+	}
+	
+	private class ImagePanel extends Component {
 		
-    	gui.setLblText(selectedPageId.toString());
+		BufferedImage img;
+		
+		public void paint(Graphics g) {
+			g.drawImage(img, 0, 0, null);
+		}
 	}
 }

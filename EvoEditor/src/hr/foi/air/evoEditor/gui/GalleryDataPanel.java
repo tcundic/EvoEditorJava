@@ -61,6 +61,7 @@ public class GalleryDataPanel extends JPanel {
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		
 		JLabel lblGallery = new JLabel("Gallery");
+		lblGallery.setAlignmentX(CENTER_ALIGNMENT);
 		super.add(lblGallery);
 		
 		JSeparator separator = new JSeparator();
@@ -79,6 +80,7 @@ public class GalleryDataPanel extends JPanel {
 		super.add(separator_1);
 		
 		JLabel lblTransparency = new JLabel("Transparency");
+		lblTransparency.setAlignmentX(CENTER_ALIGNMENT);
 		super.add(lblTransparency);
 		
 		unchangeableElements.add("transparency");
@@ -87,6 +89,7 @@ public class GalleryDataPanel extends JPanel {
 		numberPickerTransparencyValue = new JSpinner(spinModel);
 		numberPickerTransparencyValue.addChangeListener(controller);
 		numberPickerTransparencyValue.setName("transparency");
+		numberPickerTransparencyValue.setAlignmentX(CENTER_ALIGNMENT);
 		super.add(numberPickerTransparencyValue);
 		numberPickerTransparencyValue.setMaximumSize(new Dimension(40, 20));
 		
@@ -95,6 +98,7 @@ public class GalleryDataPanel extends JPanel {
 		transparencySlider.setValue(128);
 		transparencySlider.setMaximum(256);
 		transparencySlider.addChangeListener(controller);
+		transparencySlider.setAlignmentX(CENTER_ALIGNMENT);
 		super.add(transparencySlider);
 		
 		JSeparator separator_2 = new JSeparator();
@@ -102,12 +106,14 @@ public class GalleryDataPanel extends JPanel {
 		
 		JCheckBox chckbxGalleryRepeatOption = new JCheckBox("Repeat");
 		chckbxGalleryRepeatOption.setName("repeat");
+		chckbxGalleryRepeatOption.setAlignmentX(CENTER_ALIGNMENT);
 		super.add(chckbxGalleryRepeatOption);
 		
 		unchangeableElements.add("repeat");
 		
 		JCheckBox chckbxShowIndicatorOption = new JCheckBox("Show indicator");
 		chckbxShowIndicatorOption.setName("showIndicator");
+		chckbxShowIndicatorOption.setAlignmentX(CENTER_ALIGNMENT);
 		super.add(chckbxShowIndicatorOption);
 		
 		unchangeableElements.add("showIndicator");
@@ -115,6 +121,7 @@ public class GalleryDataPanel extends JPanel {
 		JButton btnSaveGalleryData = new JButton("Save gallery data");
 		btnSaveGalleryData.setName("saveGalleryData");
 		btnSaveGalleryData.addActionListener(controller);
+		btnSaveGalleryData.setAlignmentX(CENTER_ALIGNMENT);
 		super.add(btnSaveGalleryData);
 		GridBagLayout gbl_GalleryAttributesPanel = new GridBagLayout();
 		gbl_GalleryAttributesPanel.columnWidths = new int[]{1, 0, 0};

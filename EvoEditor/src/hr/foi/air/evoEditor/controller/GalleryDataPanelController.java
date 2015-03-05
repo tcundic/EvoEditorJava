@@ -44,7 +44,6 @@ public class GalleryDataPanelController implements ChangeListener, ActionListene
 
 	@Override
 	public void stateChanged(ChangeEvent e) {
-		System.out.println(e.getSource().getClass());
 		
 		if (e.getSource() instanceof JSpinner) {
 			gui.setSlider(((Number)((JSpinner)e.getSource()).getValue()).intValue());

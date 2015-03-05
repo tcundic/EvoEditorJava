@@ -149,7 +149,7 @@ public class GalleryDataPanel extends JPanel {
 	}
 
 	public void setGalleryTransparency(String galleryTransparency) {
-		int transparency = (galleryTransparency == "") ? 60 : Integer.parseInt(galleryTransparency);
+		int transparency = (galleryTransparency == "") ? 0 : Integer.parseInt(galleryTransparency);
 		
 		numberPickerTransparencyValue.setValue(transparency);
 		transparencySlider.setValue(transparency);

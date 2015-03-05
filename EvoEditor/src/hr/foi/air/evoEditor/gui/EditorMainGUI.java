@@ -107,6 +107,7 @@ public class EditorMainGUI{
 		galleryTreePanelController.setGuiObject(galleryTreePanel);	
 		galleryTreePanel.addTreeSelectionListener(galleryTreePanelController);
 		galleryTreePanel.addTreeSelectionListener(pageDataController);
+		galleryTreePanel.addTreeSelectionListener(pagePreviewController);
 		frmEvoeditor.getContentPane().add(galleryTreePanel, BorderLayout.WEST);
 		
 		// NORTH

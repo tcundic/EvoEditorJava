@@ -16,6 +16,7 @@ public class PagePreviewController implements TreeSelectionListener{
 	
 	IGallery gallery;
 	PagePreviewPanel gui;
+	UUID selectedPageId;
 	
 	public PagePreviewController(IGallery gallery) {
 		this.gallery = gallery;
@@ -51,22 +52,12 @@ public class PagePreviewController implements TreeSelectionListener{
 	public void valueChanged(TreeSelectionEvent e) {
 		JTree tree = (JTree)e.getSource();		
 		DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode)tree.getLastSelectedPathComponent();
-    	
-		String resourceName;
-		int orderNumber;
+		if(selectedNode != null){
+			selectedPageId = (UUID) selectedNode.getUserObject();
+		}else{
+			selectedPageId = null;
+		}
 		
-    	if (selectedNode == null){ //No node is selected    		
-    		resourceName = "No Page selected...";
-    		orderNumber = -1;
-    	}else if(selectedNode == (DefaultMutableTreeNode)tree.getModel().getRoot()){ // Root/Gallery node is selected    		
-    		resourceName = "No Page selected...";
-    		orderNumber = -1;
-	    }else{ // a node (page) is selected	    	
-	    	UUID selectedPageId = (UUID) selectedNode.getUserObject();
-	    	IPage selectedPage = getSelectedPage(selectedPageId);
-	    	resourceName = selectedPage.getUsedResource().getName();
-	    	orderNumber = selectedPage.getOrderNumber();	    	
-	    }	
-    	gui.setLblText(resourceName + " Order No. " + orderNumber);
+    	gui.setLblText(selectedPageId.toString());
 	}
 }

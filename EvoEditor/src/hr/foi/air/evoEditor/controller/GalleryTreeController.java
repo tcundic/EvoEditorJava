@@ -113,29 +113,33 @@ public class GalleryTreeController implements TreeSelectionListener,ActionListen
 	 */
 	private UUID getNextNodeId(UUID pageId){
 		IPage page = gallery.findPageByID(pageId);
-		ArrayList<IPage> pageChildList = gallery.getChildPageList(page.getParentID());
-		UUID nextNodeId;
-		
-		if(pageId != gallery.getID()){
-			ArrayList<IPage> pageList = gallery.getChildPageList(page.getParentID());			
+		UUID nextNodeId = null;
+		if(page != null){
+			ArrayList<IPage> pageChildList = gallery.getChildPageList(page.getParentID());
 			
-			int index = 0; //Get page index
-			for(IPage p : pageList){
-				if(p.getId() == pageId){
-					break;
+			if(pageId != gallery.getID()){
+				ArrayList<IPage> pageList = gallery.getChildPageList(page.getParentID());			
+				
+				int index = 0; //Get page index
+				for(IPage p : pageList){
+					if(p.getId() == pageId){
+						break;
+					}
+					index++;
 				}
-				index++;
-			}
-			
-			if(index < pageChildList.size() - 1){
-				index += 1;
-				nextNodeId = pageList.get(index).getId();
+				
+				if(index < pageChildList.size() - 1){
+					index += 1;
+					nextNodeId = pageList.get(index).getId();
+				}else{
+					nextNodeId = pageId;
+				}
 			}else{
-				nextNodeId = pageId;
-			}
+				nextNodeId = gallery.getID();
+			}			
 		}else{
-			nextNodeId = gallery.getID();
-		}	
+			nextNodeId = pageId;
+		}
 		return nextNodeId;
 	}	
 	

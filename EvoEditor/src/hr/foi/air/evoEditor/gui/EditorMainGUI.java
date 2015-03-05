@@ -7,6 +7,7 @@ import hr.foi.air.evoEditor.controller.PageDataController;
 import hr.foi.air.evoEditor.controller.PagePreviewController;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 
 import javax.swing.BoxLayout;
@@ -29,6 +30,9 @@ public class EditorMainGUI{
 	public static final String ADD_RESOURCE_BTN_TEXT = "Add resource";
 	public static final String SELECT_RESOURCE_BTN_TEXT = "Select resource";
 	public static final String SAVE_PAGE_DATA_BTN_TEXT = "Save page data";
+	
+	public static final int GUI_WIDTH = 1150;
+	public static final int GUI_HEIGHT = 630;
 	
 	private EvoEditor evoEditor;
 
@@ -54,7 +58,7 @@ public class EditorMainGUI{
 		frmEvoeditor = new JFrame();
 		frmEvoeditor.setResizable(false);
 		frmEvoeditor.setTitle("EvoEditor");
-		frmEvoeditor.setBounds(70, 50, 1150, 630);
+		frmEvoeditor.setBounds(70, 50, GUI_WIDTH, GUI_HEIGHT);
 		frmEvoeditor.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmEvoeditor.getContentPane().setLayout(new BorderLayout(0, 0));
 		
@@ -85,12 +89,14 @@ public class EditorMainGUI{
 		//CENTER - top
 		PagePreviewController pagePreviewController = evoEditor.getPagePreviewController();
 		PagePreviewPanel panelPreview = new PagePreviewPanel(pagePreviewController);
+		panelPreview.setPreferredSize(new Dimension(GUI_WIDTH, GUI_HEIGHT/2));
 		pagePreviewController.setGuiObject(panelPreview);
 		panelCenter.add(panelPreview);
 		
 		//CENTER - bottom
 		PageDataController pageDataController = evoEditor.getPageDataController();
 		PageDataPanel pageDataPanel  = new PageDataPanel(pageDataController);
+		pageDataPanel.setPreferredSize(new Dimension(GUI_WIDTH, GUI_HEIGHT/2));
 		pageDataController.setGui(pageDataPanel);
 		panelCenter.add(pageDataPanel);
 		pageDataPanel.setLayout(new BoxLayout(pageDataPanel, BoxLayout.X_AXIS));	

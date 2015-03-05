@@ -67,6 +67,18 @@ public class RawPageResource implements IPageResource {
 		}		
 	}
 
+	@Override
+	public void setPossibleAttributes(ArrayList<String> possibleAttributesArray) {
+		for(String attribute : possibleAttributesArray){
+			attributeMap.put(attribute, "");
+		}		
+	}
+
+	@Override
+	public void addPossibleAttribute(String possibleAttribute) {
+		this.attributeMap.put(possibleAttribute, DEFAULT_STRING);		
+	}
+
 	/**
 	 * Check if that resource can have content.
 	 * @return
@@ -102,7 +114,10 @@ public class RawPageResource implements IPageResource {
 
 		//String is immutable?
 		for(Map.Entry<String, String> entry : attributeMap.entrySet()){
-			pr.setAttributeValue(new String(entry.getKey()), new String(entry.getValue()));
+			String attributeName = new String(entry.getKey());
+			String attributeValue =  new String(entry.getValue());
+			pr.addPossibleAttribute(attributeName);
+			pr.setAttributeValue(attributeName,attributeValue);
 		}		
 		return pr;
 	}
@@ -115,13 +130,6 @@ public class RawPageResource implements IPageResource {
 	@Override
 	public void setUsed(boolean isVisible) {
 		this.isUsed = isVisible;
-	}
-
-	@Override
-	public void setPossibleAttributes(ArrayList<String> possibleAttributesArray) {
-		for(String attribute : possibleAttributesArray){
-			attributeMap.put(attribute, "");
-		}		
 	}
 
 	@Override

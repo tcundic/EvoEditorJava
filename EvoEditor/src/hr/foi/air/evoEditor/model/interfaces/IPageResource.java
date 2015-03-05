@@ -70,6 +70,12 @@ public interface IPageResource {
 	public void setPossibleAttributes(ArrayList<String> possibleAttributesArray);
 	
 	/**
+	 * Adds a new possible attribute to the list of existing page resource attributes.
+	 * @param possibleAttributesArray
+	 */
+	public void addPossibleAttribute(String possibleAttribute);
+	
+	/**
 	 * Defines if the Resource can have content.
 	 * 
 	 */

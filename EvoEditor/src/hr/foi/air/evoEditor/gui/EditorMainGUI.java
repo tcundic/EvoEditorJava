@@ -82,11 +82,13 @@ public class EditorMainGUI{
 		panelCenter.setLayout(new BoxLayout(panelCenter, BoxLayout.Y_AXIS));
 		frmEvoeditor.getContentPane().add(panelCenter, BorderLayout.CENTER);
 		
+		//CENTER - top
 		PagePreviewController pagePreviewController = evoEditor.getPagePreviewController();
 		PagePreviewPanel panelPreview = new PagePreviewPanel(pagePreviewController);
 		pagePreviewController.setGuiObject(panelPreview);
 		panelCenter.add(panelPreview);
 		
+		//CENTER - bottom
 		PageDataController pageDataController = evoEditor.getPageDataController();
 		PageDataPanel pageDataPanel  = new PageDataPanel(pageDataController);
 		pageDataController.setGui(pageDataPanel);
@@ -98,6 +100,7 @@ public class EditorMainGUI{
 		GalleryTreePanel galleryTreePanel = new GalleryTreePanel(galleryTreePanelController);
 		galleryTreePanelController.setGuiObject(galleryTreePanel);	
 		galleryTreePanel.addTreeSelectionListener(galleryTreePanelController);
+		galleryTreePanel.addTreeSelectionListener(pageDataController);
 		frmEvoeditor.getContentPane().add(galleryTreePanel, BorderLayout.WEST);
 		
 		// NORTH

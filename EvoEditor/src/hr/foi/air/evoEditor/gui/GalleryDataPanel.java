@@ -2,12 +2,12 @@ package hr.foi.air.evoEditor.gui;
 
 import hr.foi.air.evoEditor.controller.GalleryDataPanelController;
 
-import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -18,20 +18,8 @@ import javax.swing.JSeparator;
 import javax.swing.JSlider;
 import javax.swing.JSpinner;
 import javax.swing.JTable;
-import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.tree.DefaultMutableTreeNode;
-
-import org.eclipse.wb.swing.FocusTraversalOnArray;
-
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
-import java.awt.Insets;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 public class GalleryDataPanel extends JPanel {
 
@@ -142,7 +130,7 @@ public class GalleryDataPanel extends JPanel {
 		AttributesPanel.add(tblGalleryAttributes);
 		tblGalleryAttributes.setAlignmentY(Component.TOP_ALIGNMENT);
 		tblGalleryAttributes.setAlignmentX(Component.LEFT_ALIGNMENT);
-		super.setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{lblGallery, GalleryAttributesPanel, tblGalleryAttributes, lblTransparency}));
+		//super.setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{lblGallery, GalleryAttributesPanel, tblGalleryAttributes, lblTransparency}));
 		
 	}
 	

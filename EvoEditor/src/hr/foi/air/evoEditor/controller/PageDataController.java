@@ -1,6 +1,7 @@
 package hr.foi.air.evoEditor.controller;
 
 import hr.foi.air.evoEditor.gui.PageDataPanel;
+import hr.foi.air.evoEditor.main.Main;
 import hr.foi.air.evoEditor.model.interfaces.IGallery;
 import hr.foi.air.evoEditor.model.interfaces.IPage;
 import hr.foi.air.evoEditor.model.interfaces.IPageResource;
@@ -10,12 +11,15 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.UUID;
 
+import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JTree;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.tree.DefaultMutableTreeNode;
 
@@ -108,10 +112,20 @@ public class PageDataController implements TreeSelectionListener, ActionListener
 			}else{
 				page = null;
 			}
+			enablePanelComponents();
 			refreshPageAttributeTable();
 			refreshPageResourceTable();
 			setResourceOptions();
 			setActive(true);
+		}
+	}
+
+	
+	private void enablePanelComponents() {
+		if(page != null){
+			gui.enabelPageComponents(true);
+		}else{
+			gui.enabelPageComponents(false);
 		}
 	}
 
@@ -125,7 +139,34 @@ public class PageDataController implements TreeSelectionListener, ActionListener
 			page.usePageResource(resource);
 			refreshPageResourceTable();
 			setActive(true);
-		}		
+		}
+		if(active && page != null && e.getSource() instanceof JButton){
+			JButton button = (JButton)e.getSource();
+			switch (button.getText()) {
+			case PageDataPanel.ADD_RESOURCE_BTN_TEXT:
+				addResourceButtonClicked();
+				break;
+
+			default:
+				break;
+			}
+		}
+	}
+
+	private void addResourceButtonClicked() {
+		JFileChooser chooser = new JFileChooser();
+	    FileNameExtensionFilter filter = new FileNameExtensionFilter(
+	        "JPG, PNG & MP4", "jpg", "gif", "mp4");
+	    chooser.setFileFilter(filter);
+	    int returnVal = chooser.showOpenDialog(null);
+	    if(returnVal == JFileChooser.APPROVE_OPTION) {
+	    	setResourcePath(chooser.getSelectedFile().getAbsolutePath());
+	    }		
+	}
+
+	private void setResourcePath(String absolutePath) {
+		page.getUsedResource().setAttributeValue(Main.PATH_RESOURCE_ATTRIBUTE, absolutePath);
+		refreshPageResourceTable();
 	}
 
 	@Override

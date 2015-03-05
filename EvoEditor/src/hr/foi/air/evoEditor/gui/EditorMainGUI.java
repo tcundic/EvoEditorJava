@@ -27,9 +27,6 @@ public class EditorMainGUI{
 	public static final String MOVE_UP_BTN_TEXT = "Move up";
 	public static final String MOVE_DOWN_BTN_TEXT = "Move down";
 	public static final String EXPORT_BTN_TEXT = "Export";
-	public static final String ADD_RESOURCE_BTN_TEXT = "Add resource";
-	public static final String SELECT_RESOURCE_BTN_TEXT = "Select resource";
-	public static final String SAVE_PAGE_DATA_BTN_TEXT = "Save page data";
 	
 	public static final int GUI_WIDTH = 1150;
 	public static final int GUI_HEIGHT = 630;
@@ -98,8 +95,7 @@ public class EditorMainGUI{
 		PageDataPanel pageDataPanel  = new PageDataPanel(pageDataController);
 		pageDataPanel.setPreferredSize(new Dimension(GUI_WIDTH, GUI_HEIGHT/2));
 		pageDataController.setGui(pageDataPanel);
-		panelCenter.add(pageDataPanel);
-		pageDataPanel.setLayout(new BoxLayout(pageDataPanel, BoxLayout.X_AXIS));	
+		panelCenter.add(pageDataPanel);	
 		
 		// WEST
 		GalleryTreeController galleryTreePanelController = evoEditor.getGalleryTreePanelController();

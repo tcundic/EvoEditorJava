@@ -18,16 +18,16 @@ import javax.swing.UIManager;
 
 public class Main {
 	
-	private static final String DESCRIPTION = "description";
-	private static final String CONFIRMATION_TEXT = "confirmationText";
+	public static final String DESCRIPTION = "description";
+	public static final String CONFIRMATION_TEXT = "confirmationText";
 	
-	private static final String[] GALLERY_ATTRIBUTES = {"name", "qrcode", "repeat", "showIndicator", "transparency"};
+	public static final String[] GALLERY_ATTRIBUTES = {"name", "qrcode", "repeat", "showIndicator", "transparency"};
 	
-	private static final String IMAGE_RESOURCE_NAME = "image";
-	private static final String VIDEO_RESOURCE_NAME = "video";
-	private static final String TEXT_RESOURCE_NAME = "text";
+	public static final String IMAGE_RESOURCE_NAME = "image";
+	public static final String VIDEO_RESOURCE_NAME = "video";
+	public static final String TEXT_RESOURCE_NAME = "text";
 	
-	private static final String IMAGE_RESOURCE_ATTRIBUTE = "path";
+	public static final String PATH_RESOURCE_ATTRIBUTE = "path";
 	
 
 	public static void main(String[] args) {
@@ -60,7 +60,7 @@ public class Main {
 	 */
 	private static ArrayList<IPageResource> getPageResourceFormat() {
 		ArrayList<String> imageVideoResourceAttributes = new ArrayList<String>(1);
-		imageVideoResourceAttributes.add(IMAGE_RESOURCE_ATTRIBUTE);
+		imageVideoResourceAttributes.add(PATH_RESOURCE_ATTRIBUTE);
 		
 		IPageResource image = new RawPageResource();
     	image.setName(IMAGE_RESOURCE_NAME);

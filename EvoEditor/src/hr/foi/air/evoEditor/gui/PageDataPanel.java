@@ -3,8 +3,11 @@ package hr.foi.air.evoEditor.gui;
 import hr.foi.air.evoEditor.controller.PageDataController;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.util.ArrayList;
 
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -24,12 +27,18 @@ public class PageDataPanel extends JPanel {
 	public static final int ATTRIBUTE_TABLE = 0;
 	public static final int RESOURCE_TABLE = 1;
 	
+	public static final String ADD_RESOURCE_BTN_TEXT = "Add resource";
+	public static final String SELECT_RESOURCE_BTN_TEXT = "Select resource";
+	public static final String SAVE_PAGE_DATA_BTN_TEXT = "Save page data";
+	
 	private PageDataController controller;
 	private JTable tablePageAttributes;
 	private JTable tablePageResources;
 	private DefaultTableModel tblResourcesModel;
 	private DefaultTableModel tblAttributesModel;
-	JComboBox<String> comboBoxPageResource;
+	private JComboBox<String> comboBoxPageResource;
+	private JButton btnAddPageResource;
+	private JPanel panelPageResourceChooser;
 	
 	public PageDataPanel(PageDataController controller) {
 		this.controller = controller;
@@ -38,6 +47,7 @@ public class PageDataPanel extends JPanel {
 
 	private void initialize() {
 		setLayout(new BorderLayout(0, 0));
+		setVisible(false);
 		
 		JPanel dataTablesPanel = new JPanel();
 		add(dataTablesPanel, BorderLayout.CENTER);
@@ -64,26 +74,23 @@ public class PageDataPanel extends JPanel {
 		JScrollPane ResourcesTblScrollPane = new JScrollPane(tablePageResources);
 		dataTablesPanel.add(ResourcesTblScrollPane);		
 		
-		JPanel panelPageResourceChooser = new JPanel();
-		add(panelPageResourceChooser,BorderLayout.EAST);
-		panelPageResourceChooser.setLayout(new BoxLayout(panelPageResourceChooser, BoxLayout.Y_AXIS));
+		panelPageResourceChooser = new JPanel();
+		add(panelPageResourceChooser, BorderLayout.NORTH);
+		panelPageResourceChooser.setLayout(new FlowLayout(FlowLayout.CENTER));
 		
 		JLabel lblResource = new JLabel("Resource");
 		panelPageResourceChooser.add(lblResource);
+		panelPageResourceChooser.add(Box.createRigidArea(new Dimension(7,0)));
 		
 		comboBoxPageResource = new JComboBox<String>();
 		comboBoxPageResource.setMaximumSize(comboBoxPageResource.getPreferredSize());
 		comboBoxPageResource.addActionListener(controller);
 		panelPageResourceChooser.add(comboBoxPageResource);
+		panelPageResourceChooser.add(Box.createRigidArea(new Dimension(7,0)));
 		
-		JButton btnAddPageResource = new JButton(EditorMainGUI.ADD_RESOURCE_BTN_TEXT);
-		panelPageResourceChooser.add(btnAddPageResource);
-		
-		JButton btnSelectPageResource = new JButton(EditorMainGUI.SELECT_RESOURCE_BTN_TEXT);
-		panelPageResourceChooser.add(btnSelectPageResource);
-		
-		JButton btnSavePageData = new JButton(EditorMainGUI.SAVE_PAGE_DATA_BTN_TEXT);
-		panelPageResourceChooser.add(btnSavePageData);		
+		btnAddPageResource = new JButton(ADD_RESOURCE_BTN_TEXT);
+		btnAddPageResource.addActionListener(controller);
+		panelPageResourceChooser.add(btnAddPageResource);		
 	}
 	
 	public DefaultTableModel getTableModel(int table){
@@ -210,5 +217,9 @@ public class PageDataPanel extends JPanel {
 
 	public boolean isSomeCellSelected() {
 		return tablePageAttributes.hasFocus() || tablePageResources.hasFocus();		
+	}
+
+	public void enabelPageComponents(boolean isEnabeled) {
+		this.setVisible(isEnabeled);	
 	}	
 }

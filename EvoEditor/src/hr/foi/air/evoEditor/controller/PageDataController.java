@@ -14,6 +14,7 @@ import java.util.UUID;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.JTree;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
@@ -154,14 +155,25 @@ public class PageDataController implements TreeSelectionListener, ActionListener
 	}
 
 	private void addResourceButtonClicked() {
-		JFileChooser chooser = new JFileChooser();
-	    FileNameExtensionFilter filter = new FileNameExtensionFilter(
-	        "JPG, PNG & MP4", "jpg", "gif", "mp4");
-	    chooser.setFileFilter(filter);
-	    int returnVal = chooser.showOpenDialog(null);
-	    if(returnVal == JFileChooser.APPROVE_OPTION) {
-	    	setResourcePath(chooser.getSelectedFile().getAbsolutePath());
-	    }		
+		IPageResource resource = page.getUsedResource();
+		if(resource.containsAttribute(Main.PATH_RESOURCE_ATTRIBUTE)){
+			JFileChooser chooser = new JFileChooser();
+		    FileNameExtensionFilter filter;
+		    if(resource.getName().equalsIgnoreCase(Main.IMAGE_RESOURCE_NAME)){
+		    	filter  = new FileNameExtensionFilter(
+				        ".JPG, .PNG", "jpg", "png");
+		    }else{
+		    	filter  = new FileNameExtensionFilter(
+				        ".MP4", "mp4");
+		    }		   
+		    chooser.setFileFilter(filter);
+		    int returnVal = chooser.showOpenDialog(null);
+		    if(returnVal == JFileChooser.APPROVE_OPTION) {
+		    	setResourcePath(chooser.getSelectedFile().getAbsolutePath());
+		    }
+		}else{
+			JOptionPane.showMessageDialog(gui, "This resource requires no file.");
+		}
 	}
 
 	private void setResourcePath(String absolutePath) {

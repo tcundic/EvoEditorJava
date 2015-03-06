@@ -79,6 +79,11 @@ public class RawPageResource implements IPageResource {
 		this.attributeMap.put(possibleAttribute, DEFAULT_STRING);		
 	}
 
+	@Override
+	public boolean containsAttribute(String attributeName) {
+		return attributeMap.containsKey(attributeName);
+	}
+
 	/**
 	 * Check if that resource can have content.
 	 * @return

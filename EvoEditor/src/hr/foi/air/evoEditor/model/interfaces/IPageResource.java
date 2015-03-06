@@ -76,6 +76,13 @@ public interface IPageResource {
 	public void addPossibleAttribute(String possibleAttribute);
 	
 	/**
+	 * Checks if this resource contains an attribute with the given name.
+	 * @param attributeName
+	 * @return
+	 */
+	public boolean containsAttribute(String attributeName);
+	
+	/**
 	 * Defines if the Resource can have content.
 	 * 
 	 */

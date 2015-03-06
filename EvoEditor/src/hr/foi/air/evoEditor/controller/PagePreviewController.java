@@ -1,12 +1,15 @@
 package hr.foi.air.evoEditor.controller;
 
 import hr.foi.air.evoEditor.gui.PagePreviewPanel;
+import hr.foi.air.evoEditor.model.RawPageResource;
 import hr.foi.air.evoEditor.model.interfaces.IGallery;
 import hr.foi.air.evoEditor.model.interfaces.IPage;
 import hr.foi.air.evoEditor.model.interfaces.IPageResource;
 
 import java.awt.Component;
 import java.awt.Graphics;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -14,11 +17,13 @@ import java.util.UUID;
 
 import javax.imageio.ImageIO;
 import javax.swing.JTree;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 
-public class PagePreviewController implements TreeSelectionListener{
+public class PagePreviewController implements TreeSelectionListener {
 	
 	IGallery gallery;
 	PagePreviewPanel gui;
@@ -60,30 +65,32 @@ public class PagePreviewController implements TreeSelectionListener{
 		DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode)tree.getLastSelectedPathComponent();
 		if(selectedNode != null){
 			selectedPageId = (UUID) selectedNode.getUserObject();
-			gui.setLblText(selectedPageId.toString());
+			
+			gui.showIndicator(false);
+			
+			if ((selectedPageId != null) && (selectedPageId != gallery.getID())) {
+				if (!gallery.getChildPageList(selectedPageId).isEmpty()) {
+					gui.showIndicator(Boolean.valueOf(gallery.getGalleryAttribute("showIndicator")));
+				}
+				
+				for (IPageResource resource : gallery.findPageByID(selectedPageId).getPageResources()) {
+					if (resource.isUsed()) {
+						if (resource.canHaveContent() && resource.getName().equals("text")) {
+							gui.setLblText(resource.getContent());
+						} else {
+							gui.setImage(resource.getAttributeValue("path"));
+						}
+					}
+				}
+			} else if ((selectedPageId != null) && (selectedPageId == gallery.getID())) { 
+				gui.setLblText("");
+			}
 		}else{
 			selectedPageId = null;
 		}  	
 	}
 	
 	public void setInitialData() {
-		gui.add(new ImagePanel());
-	}
-	
-	private class ImagePanel extends Component {
-		
-		BufferedImage img;
-		
-		public void paint(Graphics g) {
-			g.drawImage(img, 0, 0, null);
-		}
-		
-		public ImagePanel() {
-			try {
-				img = ImageIO.read(new File("C:\\Users\\tomi\\DesktopAVL483_Hinweis_Reinigung_1_split1.jpg"));
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
+		gui.setImage(null);
 	}
 }

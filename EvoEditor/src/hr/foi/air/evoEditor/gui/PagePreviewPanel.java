@@ -5,8 +5,10 @@ import hr.foi.air.evoEditor.controller.PagePreviewController;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
+import java.awt.LayoutManager;
 import java.awt.MediaTracker;
 import java.awt.Toolkit;
 
@@ -28,6 +30,8 @@ public class PagePreviewPanel extends JPanel {
 	private ImagePanel imagePanel;
 	private JPanel parentPanel;
 	private JLabel triangleWarning;
+	private JLabel lblDescription;
+	private JLabel lblConfirmationText;
 	
 	private static final int DEFAULT_WIDTH = 500;
 	private static final int DEFAULT_HEIGHT = 260;
@@ -43,7 +47,7 @@ public class PagePreviewPanel extends JPanel {
 		triangleWarning.setVisible(false);
 		add(triangleWarning);
 		
-		lblPreviewText = new JLabel("Test");
+		lblPreviewText = new JLabel();
 		parentPanel = new JPanel();
 		parentPanel.setLayout(new GridBagLayout());
 		imagePanel = new ImagePanel();
@@ -51,7 +55,15 @@ public class PagePreviewPanel extends JPanel {
 		parentPanel.add(imagePanel);
 		parentPanel.add(lblPreviewText);
 		parentPanel.setPreferredSize(new Dimension(DEFAULT_WIDTH, DEFAULT_HEIGHT));
-		add(parentPanel);		
+		add(parentPanel);	
+		
+//		lblDescription = new JLabel();
+//		lblDescription.setText("Description");
+//		add(lblDescription);
+//		
+//		lblConfirmationText = new JLabel();
+//		lblConfirmationText.setText("Confirmation text");
+//		add(lblConfirmationText);
 		
 		setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
 		setVisible(true);

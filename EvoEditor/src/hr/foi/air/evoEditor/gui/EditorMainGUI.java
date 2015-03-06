@@ -88,6 +88,7 @@ public class EditorMainGUI{
 		PagePreviewPanel panelPreview = new PagePreviewPanel(pagePreviewController);
 		panelPreview.setPreferredSize(new Dimension(GUI_WIDTH, GUI_HEIGHT/2));
 		pagePreviewController.setGuiObject(panelPreview);
+		pagePreviewController.setInitialData();
 		panelCenter.add(panelPreview);
 		
 		//CENTER - bottom
@@ -95,6 +96,7 @@ public class EditorMainGUI{
 		PageDataPanel pageDataPanel  = new PageDataPanel(pageDataController);
 		pageDataPanel.setPreferredSize(new Dimension(GUI_WIDTH, GUI_HEIGHT/2));
 		pageDataController.setGui(pageDataPanel);
+		pageDataController.addTableChangeListener(pagePreviewController);
 		panelCenter.add(pageDataPanel);	
 		
 		// WEST

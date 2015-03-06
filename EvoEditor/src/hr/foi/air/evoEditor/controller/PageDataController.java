@@ -215,4 +215,10 @@ public class PageDataController implements TreeSelectionListener, ActionListener
 			}	
 		}			
 	}
+
+	public void addTableChangeListener(
+			PagePreviewController pagePreviewController) {
+		gui.setTableChangeListener(pagePreviewController);
+		
+	}
 }

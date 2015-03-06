@@ -1,6 +1,7 @@
 package hr.foi.air.evoEditor.gui;
 
 import hr.foi.air.evoEditor.controller.PageDataController;
+import hr.foi.air.evoEditor.controller.PagePreviewController;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -108,6 +109,8 @@ public class PageDataPanel extends JPanel {
 		}
 		return model;
 	}
+	
+	
 	
 	/**
 	 * Returns the table model that allows only the second column to be edited
@@ -221,5 +224,12 @@ public class PageDataPanel extends JPanel {
 
 	public void enabelPageComponents(boolean isEnabeled) {
 		this.setVisible(isEnabeled);	
+	}
+
+	public void setTableChangeListener(
+			PagePreviewController pagePreviewController) {
+		tblResourcesModel.addTableModelListener(pagePreviewController);
+		tblAttributesModel.addTableModelListener(pagePreviewController);
+		
 	}	
 }

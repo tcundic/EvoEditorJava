@@ -73,7 +73,7 @@ public class GalleryDataPanel extends JPanel {
 		
 		unchangeableElements.add("transparency");
 		
-		SpinnerNumberModel spinModel = new SpinnerNumberModel(0.0, 0.0, 256.0, 1.0);
+		SpinnerNumberModel spinModel = new SpinnerNumberModel(0.0, 0.0, 255.0, 1.0);
 		numberPickerTransparencyValue = new JSpinner(spinModel);
 		numberPickerTransparencyValue.addChangeListener(controller);
 		numberPickerTransparencyValue.setName("transparency");
@@ -84,7 +84,7 @@ public class GalleryDataPanel extends JPanel {
 		transparencySlider = new JSlider();
 		transparencySlider.setMinorTickSpacing(1);
 		transparencySlider.setValue(128);
-		transparencySlider.setMaximum(256);
+		transparencySlider.setMaximum(255);
 		transparencySlider.addChangeListener(controller);
 		transparencySlider.setAlignmentX(CENTER_ALIGNMENT);
 		super.add(transparencySlider);
@@ -130,7 +130,6 @@ public class GalleryDataPanel extends JPanel {
 		AttributesPanel.add(tblGalleryAttributes);
 		tblGalleryAttributes.setAlignmentY(Component.TOP_ALIGNMENT);
 		tblGalleryAttributes.setAlignmentX(Component.LEFT_ALIGNMENT);
-		//super.setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{lblGallery, GalleryAttributesPanel, tblGalleryAttributes, lblTransparency}));
 		
 	}
 	

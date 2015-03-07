@@ -4,31 +4,31 @@ import hr.foi.air.evoEditor.model.interfaces.IPage;
 import hr.foi.air.evoEditor.model.interfaces.IPageResource;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.UUID;
 
 public class RawPage implements IPage{
 
-    public static final String DEFAULT_STRING = "";   
+    public static final String DEFAULT_STRING = "";
+    public static final boolean DEFAULT_BOOLEAN = false;
     
     private UUID iD;
     private UUID parentID;
     private int orderNumber;
     private boolean pageDefined;
     
-    private HashMap<String, String> pageAttributeMap;
+    private LinkedHashSet<EvoAttribute> pageAttributeSet;
     private ArrayList<IPageResource> pageResourceList;
     
-    public RawPage(Set<String> pageAttributeNames,
+    public RawPage(LinkedHashSet<EvoAttribute> pageAttrbuteSet,
     		ArrayList<IPageResource> pageResourceList){
     	
     	this.iD = UUID.randomUUID();
-    	
-    	this.pageAttributeMap = new HashMap<String, String>();
-        for(String attributeName : pageAttributeNames){
-        	this.pageAttributeMap.put(attributeName, DEFAULT_STRING);
-        }
+    	this.pageAttributeSet = new LinkedHashSet<EvoAttribute>();
+    	for(EvoAttribute attribute : pageAttrbuteSet){
+    		this.pageAttributeSet.add(attribute.clone());
+    	}      
         
         /*
          * Uses the user defined type of PageResources and sets to used the first
@@ -49,8 +49,8 @@ public class RawPage implements IPage{
     
     
     @Override
-	public IPage getInstance(UUID parentiD, int orderNumber) {    	
-    	IPage page = new RawPage(pageAttributeMap.keySet(), pageResourceList);
+	public IPage getInstance(UUID parentiD, int orderNumber) {
+    	IPage page = new RawPage(pageAttributeSet, pageResourceList);
     	page.setParentID(parentiD);
     	page.setOrderNumber(orderNumber);
     	
@@ -114,16 +114,30 @@ public class RawPage implements IPage{
         return parentID;
     }
 
-    public String getPageAttribute(String attributeName) {
-        return this.pageAttributeMap.get(attributeName);
+    public EvoAttribute getPageAttribute(String attributeName) {    	
+		return findAttributeByName(attributeName);
+    }
+    
+    private EvoAttribute findAttributeByName(String attributeName){
+    	EvoAttribute attributeToReturn = null;
+		for(EvoAttribute attribute : pageAttributeSet){
+			if(attribute.getAttributeName().equalsIgnoreCase(attributeName)){
+				attributeToReturn = attribute;
+				break;
+			}
+		}
+		return attributeToReturn;
     }
 
     public void setPageAttribute(String attributeName, String attributeValue) {
-        this.pageAttributeMap.put(attributeName, attributeValue);
+    	EvoAttribute attribute = findAttributeByName(attributeName);
+    	if(attribute != null){
+    		attribute.setAttributeValue(attributeValue);
+    	}
     }  
     
-    public Set<String> getPageAttributeSet(){
-    	return pageAttributeMap.keySet();
+    public Set<EvoAttribute> getPageAttributeSet(){
+    	return pageAttributeSet;
     }
     
     public ArrayList<IPageResource> getPageResources(){
@@ -157,7 +171,12 @@ public class RawPage implements IPage{
     	if(pageResourceList != null){
     		for(IPageResource pageResource : pageResourceList){
         		if(pageResource.getName().equalsIgnoreCase(resourceName)){
-        			pageResource.setAttributeValue(attributeName, attributeValue);
+        			Set<EvoAttribute> resourceAttributeSet = pageResource.getAttributeSet();
+        			for(EvoAttribute attribute : resourceAttributeSet){
+        				if(attribute.getAttributeName().equalsIgnoreCase(attributeName)){
+        					attribute.setAttributeValue(attributeValue);
+        				}
+        			}
         		}
         	}
     	}    	 	

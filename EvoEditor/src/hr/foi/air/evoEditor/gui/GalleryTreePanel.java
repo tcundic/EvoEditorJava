@@ -1,9 +1,11 @@
 package hr.foi.air.evoEditor.gui;
 
 import hr.foi.air.evoEditor.controller.GalleryTreeController;
+import hr.foi.air.evoEditor.model.EvoTreeNodeObject;
 import hr.foi.air.evoEditor.model.interfaces.IPage;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.UUID;
@@ -24,6 +26,12 @@ public class GalleryTreePanel extends JPanel {
 	 */
 	private static final long serialVersionUID = 1231909779810617773L;
 	
+	private static final String GALLERY_NAME = "Gallery";
+	private static final String PAGE_NAME = "Page";
+	
+	public static final int TREE_MIN_WIDTH = 200;
+	public static final int TREE_MIN_HEIGHT = 20;
+	
 	GalleryTreeController controller;
 	DefaultMutableTreeNode galleryTreeRoot;
 	JTree tree;
@@ -33,13 +41,18 @@ public class GalleryTreePanel extends JPanel {
 		initialize();
 	}
 
+	/**
+	 * Initializes all GUI components.
+	 */
 	private void initialize() {
 		super.setLayout(new BorderLayout());
-		galleryTreeRoot = new DefaultMutableTreeNode(controller.getGalleryID());
+		EvoTreeNodeObject rootNode = new EvoTreeNodeObject(GALLERY_NAME, 0, controller.getGalleryID());
+		galleryTreeRoot = new DefaultMutableTreeNode(rootNode);
 		tree = new JTree(galleryTreeRoot);
 		tree.setShowsRootHandles(true);
 		tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);		
-		JScrollPane scrollPanePageTree = new JScrollPane(tree);		
+		JScrollPane scrollPanePageTree = new JScrollPane(tree);
+		scrollPanePageTree.setPreferredSize(new Dimension(TREE_MIN_WIDTH, TREE_MIN_HEIGHT));
 		super.add(scrollPanePageTree, BorderLayout.CENTER);
 	}
 	
@@ -53,13 +66,13 @@ public class GalleryTreePanel extends JPanel {
 	
 	/**
 	 * A new node is added to the tree.
-	 * @param parentId
-	 * @param childId
+	 * @param page Node that contains this page will be the parent node of the newly created node.
 	 */
-	public void addNodeToTree(UUID parentId, UUID childId){	
+	public void addNodeToTree(IPage page){	
 		DefaultTreeModel model = (DefaultTreeModel) tree.getModel();
-		DefaultMutableTreeNode childNode = new DefaultMutableTreeNode(childId);
-		DefaultMutableTreeNode parentNode = findNode(parentId);
+		EvoTreeNodeObject nodeObject = new EvoTreeNodeObject(PAGE_NAME, page.getOrderNumber(), page.getId());
+		DefaultMutableTreeNode childNode = new DefaultMutableTreeNode(nodeObject);
+		DefaultMutableTreeNode parentNode = findNode(page.getParentID());
 		int[] childIndices = {0};
 		
 		if(parentNode != null){
@@ -74,12 +87,15 @@ public class GalleryTreePanel extends JPanel {
 	 * @param parentId
 	 * @param childId
 	 */
-	public void removePageFromTree(UUID pageToDeleteId) {
+	public void removePageFromTree(IPage page) {
 		DefaultTreeModel model = (DefaultTreeModel) tree.getModel();
+		EvoTreeNodeObject rootNodeObject = (EvoTreeNodeObject)galleryTreeRoot.getUserObject();
 		
-		if((UUID)galleryTreeRoot.getUserObject() != pageToDeleteId){
-			DefaultMutableTreeNode nodeToDelete = findNode(pageToDeleteId);
-			model.removeNodeFromParent(nodeToDelete);
+		if(rootNodeObject.getObjectId() != page.getId()){
+			DefaultMutableTreeNode nodeToDelete = findNode(page.getId());
+			if(nodeToDelete != null){
+				model.removeNodeFromParent(nodeToDelete);
+			}			
 		}		
 	}
 
@@ -88,37 +104,49 @@ public class GalleryTreePanel extends JPanel {
 	 * @param node
 	 */
 	private void buildGalleryTreeFromNode(DefaultMutableTreeNode node) {
-		UUID parentId = (UUID)node.getUserObject();
-		ArrayList<IPage> childPagesList = controller.getChildPages(parentId);
+		EvoTreeNodeObject parentNode = (EvoTreeNodeObject)node.getUserObject();
+		ArrayList<IPage> childPagesList = controller.getChildPages(parentNode.getObjectId());
 		
 		// recursion 
 		for(IPage page : childPagesList){
-			DefaultMutableTreeNode childNode = new DefaultMutableTreeNode(page.getId());
+			EvoTreeNodeObject nodeObject = new EvoTreeNodeObject(PAGE_NAME, page.getOrderNumber(), page.getId());
+			DefaultMutableTreeNode childNode = new DefaultMutableTreeNode(nodeObject);
 			node.add(childNode);
 			buildGalleryTreeFromNode(childNode);
 		}		
 	}
-		
+	
+	/**
+	 * Finds a node in the tree that contains the user object with the given ID.
+	 * @param nodeId Id that is looked for in the tree.
+	 * @return node that contains the user object with given ID
+	 */
 	private DefaultMutableTreeNode findNode(UUID nodeId){
 		@SuppressWarnings("unchecked")
 		Enumeration<DefaultMutableTreeNode> e = galleryTreeRoot.depthFirstEnumeration();
 		while (e.hasMoreElements()) {
 			DefaultMutableTreeNode node = e.nextElement();
-			if (node.toString().equalsIgnoreCase(String.valueOf(nodeId))) {
+			EvoTreeNodeObject nodeObject = (EvoTreeNodeObject) node.getUserObject();
+			if (nodeObject.getObjectId() == nodeId) {
 				return node;
 			}
 		}
 		return null;
 	}
 	
-	public void reattachNodes(UUID nodeId){
+	/**
+	 * Reattach all child nodes and their nodes of the node that contains the given page.
+	 * @param page
+	 */
+	public void reattachNodes(IPage page){
 		DefaultTreeModel model = (DefaultTreeModel) tree.getModel();
-		DefaultMutableTreeNode node = findNode(nodeId);
-		DefaultMutableTreeNode parentNode = (DefaultMutableTreeNode)node.getParent();
-		
-		parentNode.removeAllChildren();
-		buildGalleryTreeFromNode(parentNode);
-		model.reload(galleryTreeRoot);		
+		DefaultMutableTreeNode node = findNode(page.getId());
+		if(node != null){
+			DefaultMutableTreeNode parentNode = (DefaultMutableTreeNode)node.getParent();			
+			parentNode.removeAllChildren();
+			buildGalleryTreeFromNode(parentNode);
+			model.reload(galleryTreeRoot);
+		}				
 	}
 	
 	public void setTreeSelectionPath(TreePath path) {

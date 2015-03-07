@@ -1,5 +1,6 @@
 package hr.foi.air.evoEditor.controller;
 
+import hr.foi.air.evoEditor.model.EvoAttribute;
 import hr.foi.air.evoEditor.model.interfaces.IGallery;
 import hr.foi.air.evoEditor.model.interfaces.IPage;
 import hr.foi.air.evoEditor.model.interfaces.IPageResource;
@@ -94,24 +95,30 @@ public class XMLGenerator {
             // create element document for page and set attributes
             Element pageElement = document.createElement(PAGE_TAG_NAME);
             
-            for(String attributeName : page.getPageAttributeSet()){
-            	String pageAttributeValue = page.getPageAttribute(attributeName);
-            	if(!pageAttributeValue.isEmpty()){
-            		pageElement.setAttribute(attributeName, pageAttributeValue);
-            	}
+            Set<EvoAttribute> pageAttributeSet = page.getPageAttributeSet();
+            for(EvoAttribute pageAttribute : pageAttributeSet){
+            	if(pageAttribute.isUsed()){
+            		String pageAttributeName = pageAttribute.getAttributeName();
+            		String pageAttributeValue = pageAttribute.getAttributeValue();
+            		//Empty attributes are printed
+            		pageElement.setAttribute(pageAttributeName, pageAttributeValue);
+            	}            	
             }
             
             for(IPageResource pageResource : page.getPageResources()){
             	if(pageResource.isUsed()){
-            		//If path is NOT an empty string
             		Element element = document.createElement(pageResource.getName());
             		
-            		Set<String> attributeSet = pageResource.getAttributeSet();
-            		for(String attributeName : attributeSet){
-            			String attributeValue = pageResource.getAttributeValue(attributeName);
-            			if(!attributeValue.isEmpty()){
-            				element.setAttribute(attributeName, attributeValue);
-            			}
+            		Set<EvoAttribute> resourceAttributeSet = pageResource.getAttributeSet();
+            		for(EvoAttribute resourceAttribute : resourceAttributeSet){
+            			String pageAttributeName = resourceAttribute.getAttributeName();
+                		String pageAttributeValue = resourceAttribute.getAttributeValue();
+                		if(resourceAttribute.isUsed()){
+	            			if(!pageAttributeValue.isEmpty()){
+	            				//Empty attributes are NOT printed
+	            				element.setAttribute(pageAttributeName, pageAttributeValue);
+	            			}
+                		}
             		}
             		if(pageResource.canHaveContent()){
             			element.appendChild(document.createTextNode(pageResource.getContent()));

@@ -1,5 +1,7 @@
 package hr.foi.air.evoEditor.model.interfaces;
 
+import hr.foi.air.evoEditor.model.EvoAttribute;
+
 import java.util.ArrayList;
 import java.util.Set;
 import java.util.UUID;
@@ -69,7 +71,13 @@ public interface IPage extends Comparable<IPage>{
      * @param attributeName
      * @return
      */
-    public String getPageAttribute(String attributeName);
+    public EvoAttribute getPageAttribute(String attributeName);
+    
+    /**
+	 * Get attributes of current page.
+	 * @return
+	 */
+	public Set<EvoAttribute> getPageAttributeSet();
 
     /**
      * Set value of attribute attributeName of current page to attributeValue.
@@ -77,12 +85,6 @@ public interface IPage extends Comparable<IPage>{
      * @param attributeValue
      */
     public void setPageAttribute(String attributeName, String attributeValue);
-
-    /**
-     * Get attributes of current page.
-     * @return
-     */
-    public Set<String> getPageAttributeSet();
 
     /**
      * Get resources used on current page.
@@ -106,19 +108,4 @@ public interface IPage extends Comparable<IPage>{
      * @param pageResourceName
      */
     public void usePageResource(String pageResourceName);
-
-    /**
-     * Change value of resource attribute attributeName on current page to attributeValue.
-     * @param resourceName
-     * @param attributeName
-     * @param attributeValue
-     */
-    public void editResourceAttribute(String resourceName, String attributeName, String attributeValue);
-
-    /**
-     * Change content of resource resourceName on current page to content.
-     * @param resourceName
-     * @param content
-     */
-    public void editResourceContent(String resourceName, String content);
 }

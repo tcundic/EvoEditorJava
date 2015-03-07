@@ -1,6 +1,7 @@
 package hr.foi.air.evoEditor.controller;
 
 import hr.foi.air.evoEditor.gui.PagePreviewPanel;
+import hr.foi.air.evoEditor.model.EvoTreeNodeObject;
 import hr.foi.air.evoEditor.model.interfaces.IGallery;
 import hr.foi.air.evoEditor.model.interfaces.IPage;
 import hr.foi.air.evoEditor.model.interfaces.IPageResource;
@@ -17,8 +18,9 @@ import javax.swing.tree.DefaultMutableTreeNode;
 public class PagePreviewController implements TreeSelectionListener, TableModelListener {
 	
 	IGallery gallery;
+	IPage selectedPage;
 	PagePreviewPanel gui;
-	UUID selectedPageId;
+	
 	
 	public PagePreviewController(IGallery gallery) {
 		this.gallery = gallery;
@@ -55,41 +57,41 @@ public class PagePreviewController implements TreeSelectionListener, TableModelL
 		JTree tree = (JTree)e.getSource();		
 		DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode)tree.getLastSelectedPathComponent();
 		if(selectedNode != null){
-			selectedPageId = (UUID) selectedNode.getUserObject();
-			refreshPreview();
+			EvoTreeNodeObject nodeObject = (EvoTreeNodeObject) selectedNode.getUserObject();
+			selectedPage = gallery.findPageByID(nodeObject.getObjectId()); 
 		}else{
-			selectedPageId = null;
+			selectedPage = null;
 		}  	
 	}
 
-	private void refreshPreview() {
-		gui.showIndicator(false);
-		
-		if ((selectedPageId != null) && (selectedPageId != gallery.getID())) {
-			if (!gallery.getChildPageList(selectedPageId).isEmpty()) {
-				gui.showIndicator(Boolean.valueOf(gallery.getGalleryAttribute("showIndicator")));
-			}
-			
-			for (IPageResource resource : gallery.findPageByID(selectedPageId).getPageResources()) {
-				if (resource.isUsed()) {
-					if (resource.canHaveContent() && resource.getName().equals("text")) {
-						gui.setLblText(resource.getContent());
-					} else {
-						gui.setImage(resource.getAttributeValue("path"));
-					}
-				}
-			}
-		} else if ((selectedPageId != null) && (selectedPageId == gallery.getID())) { 
-			gui.setLblText("");
-		}
-	}
-	
-	public void setInitialData() {
-		gui.setImage(null);
-	}
+//	private void refreshPreview() {
+//		gui.showIndicator(false);
+//		
+//		if ((selectedPageId != null) && (selectedPageId != gallery.getID())) {
+//			if (!gallery.getChildPageList(selectedPageId).isEmpty()) {
+//				gui.showIndicator(Boolean.valueOf(gallery.getGalleryAttribute("showIndicator")));
+//			}
+//			
+//			for (IPageResource resource : gallery.findPageByID(selectedPageId).getPageResources()) {
+//				if (resource.isUsed()) {
+//					if (resource.canHaveContent() && resource.getName().equals("text")) {
+//						gui.setLblText(resource.getContent());
+//					} else {
+//						gui.setImage(resource.getAttributeValue("path"));
+//					}
+//				}
+//			}
+//		} else if ((selectedPageId != null) && (selectedPageId == gallery.getID())) { 
+//			gui.setLblText("");
+//		}
+//	}
+//	
+//	public void setInitialData() {
+//		gui.setImage(null);
+//	}
 
 	@Override
 	public void tableChanged(TableModelEvent e) {
-		refreshPreview();
+		//refreshPreview();
 	}
 }

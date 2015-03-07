@@ -1,24 +1,18 @@
 package hr.foi.air.evoEditor.controller;
 
+import hr.foi.air.evoEditor.gui.GalleryDataPanel;
+import hr.foi.air.evoEditor.model.interfaces.IGallery;
+
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JSlider;
 import javax.swing.JSpinner;
-import javax.swing.JTable;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import javax.swing.text.TableView.TableRow;
-
-import com.sun.org.apache.xml.internal.utils.IntVector;
-
-import hr.foi.air.evoEditor.gui.GalleryDataPanel;
-import hr.foi.air.evoEditor.model.interfaces.IGallery;
 
 public class GalleryDataPanelController implements ChangeListener, ActionListener {
 	

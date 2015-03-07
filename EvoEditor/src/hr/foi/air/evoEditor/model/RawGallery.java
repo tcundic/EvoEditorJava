@@ -194,34 +194,7 @@ public class RawGallery implements IGallery{
     		page.setPageAttribute(attributeName, attributeValue);
     	}
     }
-
-	/**
-	 * Change resource resourceName to content on page pageID.
-	 * @param pageID
-	 * @param resourceName
-	 * @param content
-	 */
-    public void editPageResourceContent(UUID pageID, String resourceName, String content){
-    	IPage page = findPageByID(pageID);
-    	if(page != null){
-    		page.editResourceContent(resourceName, content);
-    	}    	
-    }
-
-	/**
-	 * Change value of attribute attributeName to attributeValue of resource resourceName on page pageID.
-	 * @param pageID
-	 * @param resourceName
-	 * @param attributeName
-	 * @param attributeValue
-	 */
-    public void editPageResourceAtribute(UUID pageID, String resourceName, String attributeName, String attributeValue){
-    	IPage page = findPageByID(pageID);
-    	if(page != null){
-    		page.editResourceAttribute(resourceName, attributeName, attributeValue);
-    	}    	
-    }
-
+    
 	/**
 	 * Change resource which is used on page pageID to resourceName.
 	 * @param pageID

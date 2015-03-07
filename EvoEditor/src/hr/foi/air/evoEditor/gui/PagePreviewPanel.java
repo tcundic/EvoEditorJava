@@ -2,19 +2,6 @@ package hr.foi.air.evoEditor.gui;
 
 import hr.foi.air.evoEditor.controller.PagePreviewController;
 
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Image;
-import java.awt.LayoutManager;
-import java.awt.MediaTracker;
-import java.awt.Toolkit;
-
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class PagePreviewPanel extends JPanel {
@@ -25,16 +12,6 @@ public class PagePreviewPanel extends JPanel {
 	private static final long serialVersionUID = 6775088016396378378L;
 
 	PagePreviewController controller;
-	
-	private JLabel lblPreviewText;
-	private ImagePanel imagePanel;
-	private JPanel parentPanel;
-	private JLabel triangleWarning;
-	private JLabel lblDescription;
-	private JLabel lblConfirmationText;
-	
-	private static final int DEFAULT_WIDTH = 500;
-	private static final int DEFAULT_HEIGHT = 260;
 
 	public PagePreviewPanel(PagePreviewController controller) {
 		this.controller = controller;
@@ -42,73 +19,73 @@ public class PagePreviewPanel extends JPanel {
 	}
 
 	private void initialize() {
-		ImageIcon warning = new ImageIcon("warningTriangle.png");
-		triangleWarning = new JLabel(warning);
-		triangleWarning.setVisible(false);
-		add(triangleWarning);
-		
-		lblPreviewText = new JLabel();
-		parentPanel = new JPanel();
-		parentPanel.setLayout(new GridBagLayout());
-		imagePanel = new ImagePanel();
-		imagePanel.setPreferredSize(new Dimension(DEFAULT_WIDTH, DEFAULT_HEIGHT));
-		parentPanel.add(imagePanel);
-		parentPanel.add(lblPreviewText);
-		parentPanel.setPreferredSize(new Dimension(DEFAULT_WIDTH, DEFAULT_HEIGHT));
-		add(parentPanel);	
-		
-//		lblDescription = new JLabel();
-//		lblDescription.setText("Description");
-//		add(lblDescription);
+//		//ImageIcon warning = new ImageIcon("warningTriangle.png");
+//		triangleWarning = new JLabel(warning);
+//		triangleWarning.setVisible(false);
+//		add(triangleWarning);
 //		
-//		lblConfirmationText = new JLabel();
-//		lblConfirmationText.setText("Confirmation text");
-//		add(lblConfirmationText);
-		
-		setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
-		setVisible(true);
+//		lblPreviewText = new JLabel();
+//		parentPanel = new JPanel();
+//		parentPanel.setLayout(new GridBagLayout());
+//		imagePanel = new ImagePanel();
+//		imagePanel.setPreferredSize(new Dimension(DEFAULT_WIDTH, DEFAULT_HEIGHT));
+//		parentPanel.add(imagePanel);
+//		parentPanel.add(lblPreviewText);
+//		parentPanel.setPreferredSize(new Dimension(DEFAULT_WIDTH, DEFAULT_HEIGHT));
+//		add(parentPanel);	
+//		
+////		lblDescription = new JLabel();
+////		lblDescription.setText("Description");
+////		add(lblDescription);
+////		
+////		lblConfirmationText = new JLabel();
+////		lblConfirmationText.setText("Confirmation text");
+////		add(lblConfirmationText);
+//		
+//		setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
+//		setVisible(true);
 	}
 	
-	public void setLblText(String text){
-		parentPanel.removeAll();
-		lblPreviewText.setText(text);
-		lblPreviewText.setFont(new Font("Serif", Font.BOLD, 25));
-		parentPanel.add(lblPreviewText);
-		parentPanel.revalidate();
-		parentPanel.repaint();
-	}
-	
-	public void setImage(String image) {
-		parentPanel.removeAll();
-		imagePanel.setImage(image);
-		parentPanel.add(imagePanel);
-		parentPanel.revalidate();
-		parentPanel.repaint();
-	}
-	
-	public void showIndicator(boolean warning) {
-		triangleWarning.setVisible(warning);
-	}
-	
-	private class ImagePanel extends JPanel {
-		Image img = null;
-		
-		private void setImage(String image) {
-			MediaTracker mt = new MediaTracker(this);
-			img = Toolkit.getDefaultToolkit().getImage(image);
-			mt.addImage(img, 0);
-			
-			try {
-				mt.waitForAll();
-			} catch(InterruptedException e) {
-				e.printStackTrace();
-			}
-		}
-		
-		protected void paintComponent(Graphics g) {
-			super.paintComponent(g);
-			int width = (int) (((double)img.getWidth(null)) / (double)img.getHeight(null) * (double)getHeight());
-			g.drawImage(img, 0, 0, width, getHeight(), null);
-		}
-	}
+//	public void setLblText(String text){
+//		parentPanel.removeAll();
+//		lblPreviewText.setText(text);
+//		lblPreviewText.setFont(new Font("Serif", Font.BOLD, 25));
+//		parentPanel.add(lblPreviewText);
+//		parentPanel.revalidate();
+//		parentPanel.repaint();
+//	}
+//	
+//	public void setImage(String image) {
+//		parentPanel.removeAll();
+//		imagePanel.setImage(image);
+//		parentPanel.add(imagePanel);
+//		parentPanel.revalidate();
+//		parentPanel.repaint();
+//	}
+//	
+//	public void showIndicator(boolean warning) {
+//		triangleWarning.setVisible(warning);
+//	}
+//	
+//	private class ImagePanel extends JPanel {
+//		Image img = null;
+//		
+//		private void setImage(String image) {
+//			MediaTracker mt = new MediaTracker(this);
+//			img = Toolkit.getDefaultToolkit().getImage(image);
+//			mt.addImage(img, 0);
+//			
+//			try {
+//				mt.waitForAll();
+//			} catch(InterruptedException e) {
+//				e.printStackTrace();
+//			}
+//		}
+//		
+//		protected void paintComponent(Graphics g) {
+//			super.paintComponent(g);
+//			int width = (int) (((double)img.getWidth(null)) / (double)img.getHeight(null) * (double)getHeight());
+//			g.drawImage(img, 0, 0, width, getHeight(), null);
+//		}
+//	}
 }

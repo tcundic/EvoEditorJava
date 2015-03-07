@@ -13,8 +13,6 @@ import java.awt.FlowLayout;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 
 public class EditorMainGUI{
@@ -59,12 +57,6 @@ public class EditorMainGUI{
 		frmEvoeditor.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmEvoeditor.getContentPane().setLayout(new BorderLayout(0, 0));
 		
-		JMenuBar menuBar = new JMenuBar();
-		frmEvoeditor.setJMenuBar(menuBar);
-		
-		JMenu mnFile = new JMenu("File");
-		menuBar.add(mnFile);
-		
 		JPanel controlItemsPanel = new JPanel();
 		frmEvoeditor.getContentPane().add(controlItemsPanel, BorderLayout.NORTH);
 		controlItemsPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
@@ -73,8 +65,7 @@ public class EditorMainGUI{
 		GalleryDataPanelController galleryDataPanelController = evoEditor.getGalleryDataController();
 		GalleryDataPanel galleryDataPanel = new GalleryDataPanel(galleryDataPanelController);
 		galleryDataPanelController.setGui(galleryDataPanel);
-		galleryDataPanelController.setInitialData();	
-		
+		galleryDataPanelController.setInitialData();			
 		frmEvoeditor.getContentPane().add(galleryDataPanel, BorderLayout.EAST);		
 
 		
@@ -88,7 +79,7 @@ public class EditorMainGUI{
 		PagePreviewPanel panelPreview = new PagePreviewPanel(pagePreviewController);
 		panelPreview.setPreferredSize(new Dimension(GUI_WIDTH, GUI_HEIGHT/2));
 		pagePreviewController.setGuiObject(panelPreview);
-		pagePreviewController.setInitialData();
+		//pagePreviewController.setInitialData();
 		panelCenter.add(panelPreview);
 		
 		//CENTER - bottom

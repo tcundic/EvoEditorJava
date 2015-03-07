@@ -27,16 +27,17 @@ public class PageDataPanel extends JPanel {
 	
 	public static final int ATTRIBUTE_TABLE = 0;
 	public static final int RESOURCE_TABLE = 1;
+	public static final int RESOURCE_CONTENT_TABLE = 2;
 	
 	public static final String ADD_RESOURCE_BTN_TEXT = "Add resource";
-	public static final String SELECT_RESOURCE_BTN_TEXT = "Select resource";
-	public static final String SAVE_PAGE_DATA_BTN_TEXT = "Save page data";
 	
 	private PageDataController controller;
 	private JTable tablePageAttributes;
 	private JTable tablePageResources;
+	private JTable tableResourceContent;
 	private DefaultTableModel tblResourcesModel;
 	private DefaultTableModel tblAttributesModel;
+	private DefaultTableModel tblResourceContentModel;
 	private JComboBox<String> comboBoxPageResource;
 	private JButton btnAddPageResource;
 	private JPanel panelPageResourceChooser;
@@ -46,6 +47,9 @@ public class PageDataPanel extends JPanel {
 		initialize();
 	}
 
+	/**
+	 * Initializes all GUI components.
+	 */
 	private void initialize() {
 		setLayout(new BorderLayout(0, 0));
 		setVisible(false);
@@ -54,26 +58,37 @@ public class PageDataPanel extends JPanel {
 		add(dataTablesPanel, BorderLayout.CENTER);
 		dataTablesPanel.setLayout(new BoxLayout(dataTablesPanel, BoxLayout.Y_AXIS));
 		
-		tblAttributesModel = getTableModel();
+		tblAttributesModel = getAttributeTableModel();
+		tblAttributesModel.addColumn("Use attribute");
 		tblAttributesModel.addColumn("Page attribute name");
 		tblAttributesModel.addColumn("Page attribute value");
 		tblAttributesModel.addTableModelListener(controller);
 		tablePageAttributes = new JTable(tblAttributesModel);
 		tablePageAttributes.putClientProperty("terminateEditOnFocusLost", Boolean.TRUE);
 		
-		tblResourcesModel = getTableModel();
+		tblResourcesModel = getResourceTableModel();
+		tblResourcesModel.addColumn("Use attribute");
 		tblResourcesModel.addColumn("Resource attribute name");
 		tblResourcesModel.addColumn("Resource attribute value");
 		tblResourcesModel.addTableModelListener(controller);
 		tablePageResources = new JTable(tblResourcesModel);
 		tablePageResources.putClientProperty("terminateEditOnFocusLost", Boolean.TRUE);
 		
+		tblResourceContentModel = getResourceContentTableModel();
+		tblResourceContentModel.addColumn("Resource name");
+		tblResourceContentModel.addColumn("Resource content");
+		tblResourceContentModel.addTableModelListener(controller);
+		tableResourceContent = new JTable(tblResourceContentModel);
+		tableResourceContent.putClientProperty("terminateEditOnFocusLost", Boolean.TRUE);		
 		
 		JScrollPane atributesTblScrollPane = new JScrollPane(tablePageAttributes);
 		dataTablesPanel.add(atributesTblScrollPane);
 		
-		JScrollPane ResourcesTblScrollPane = new JScrollPane(tablePageResources);
-		dataTablesPanel.add(ResourcesTblScrollPane);		
+		JScrollPane resourcesTblScrollPane = new JScrollPane(tablePageResources);
+		dataTablesPanel.add(resourcesTblScrollPane);
+		
+		JScrollPane resourcesContentTblScrollPane = new JScrollPane(tableResourceContent);
+		dataTablesPanel.add(resourcesContentTblScrollPane);
 		
 		panelPageResourceChooser = new JPanel();
 		add(panelPageResourceChooser, BorderLayout.NORTH);
@@ -94,6 +109,43 @@ public class PageDataPanel extends JPanel {
 		panelPageResourceChooser.add(btnAddPageResource);		
 	}
 	
+	/**
+	 * Populates the combobox with the given options and selects the option at the given index.
+	 * @param resourceOptions
+	 * @param selectedIndex
+	 */
+	public void setResourceOptions(ArrayList<String> resourceOptions, int selectedIndex) {
+		comboBoxPageResource.removeAllItems();
+		for(String resourceName : resourceOptions){
+			comboBoxPageResource.addItem(resourceName);	
+		}
+		comboBoxPageResource.setSelectedIndex(selectedIndex);
+		comboBoxPageResource.setMaximumSize(comboBoxPageResource.getPreferredSize());
+	}
+
+	/**
+	 * Makes a component visible.
+	 * @param isEnabeled
+	 */
+	public void enabelPageComponents(boolean isEnabeled) {
+		this.setVisible(isEnabeled);	
+	}
+
+	/**
+	 * Adds the given listener to all pages.
+	 * @param pagePreviewController
+	 */
+	public void setTableChangeListener(PagePreviewController pagePreviewController) {
+		tblResourcesModel.addTableModelListener(pagePreviewController);
+		tblAttributesModel.addTableModelListener(pagePreviewController);
+		tblResourceContentModel.addTableModelListener(pagePreviewController);
+	}
+
+	/**
+	 * Returns the table model of the given table identifier.
+	 * @param table
+	 * @return
+	 */
 	public DefaultTableModel getTableModel(int table){
 		DefaultTableModel model;
 		switch (table) {
@@ -103,6 +155,9 @@ public class PageDataPanel extends JPanel {
 		case RESOURCE_TABLE:
 			model = tblResourcesModel;
 			break;
+		case RESOURCE_CONTENT_TABLE:
+			model = tblResourceContentModel;
+			break;
 		default:
 			model = null;
 			break;
@@ -110,17 +165,48 @@ public class PageDataPanel extends JPanel {
 		return model;
 	}
 	
-	
+	private DefaultTableModel getResourceContentTableModel() {
+		return getTableModel();
+	}
+
+	private DefaultTableModel getResourceTableModel() {
+		return getTableModelWithCheckBox();
+	}
+
+	private DefaultTableModel getAttributeTableModel() {
+		return getTableModelWithCheckBox();
+	}
+
+	/**
+	 * Returns the table model that allows a checkbox and 2 String objects in table columns. First and third column are editable.
+	 * @return
+	 */
+	private DefaultTableModel getTableModelWithCheckBox(){
+		DefaultTableModel tableModel = new DefaultTableModel(){	        
+			private static final long serialVersionUID = -2272342654671031121L;
+			
+			public Class getColumnClass(int column) {
+			    return (getValueAt(0, column).getClass());
+			  }
+			
+			boolean[] canEdit = new boolean[]{ true, false, true};
+
+	        public boolean isCellEditable(int rowIndex, int columnIndex) {
+	            return canEdit[columnIndex];
+	        }
+	    };
+	    
+		return tableModel;
+	}
 	
 	/**
 	 * Returns the table model that allows only the second column to be edited
 	 * @return
 	 */
 	private DefaultTableModel getTableModel(){
-		DefaultTableModel tableModel = new DefaultTableModel(){	        
-			private static final long serialVersionUID = -2272342654671031121L;
-			
-			boolean[] canEdit = new boolean[]{ false, true};
+		DefaultTableModel tableModel = new DefaultTableModel(){	     
+			private static final long serialVersionUID = 7761729244640799495L;
+			boolean[] canEdit = new boolean[]{false, true};
 
 	        public boolean isCellEditable(int rowIndex, int columnIndex) {
 	            return canEdit[columnIndex];
@@ -141,6 +227,9 @@ public class PageDataPanel extends JPanel {
 			break;
 		case RESOURCE_TABLE:
 			removeAllRowsFromTable(tblResourcesModel);
+			break;
+		case RESOURCE_CONTENT_TABLE:
+			removeAllRowsFromTable(tblResourceContentModel);
 			break;
 		default:
 			break;
@@ -170,6 +259,9 @@ public class PageDataPanel extends JPanel {
 		case RESOURCE_TABLE:
 			refreshPageTable(tblResourcesModel);
 			break;
+		case RESOURCE_CONTENT_TABLE:
+			refreshPageTable(tblResourceContentModel);
+			break;
 		default:
 			break;
 		}
@@ -195,6 +287,9 @@ public class PageDataPanel extends JPanel {
 		case RESOURCE_TABLE:
 			addRowToTable(tblResourcesModel, dataRow);
 			break;
+		case RESOURCE_CONTENT_TABLE:
+			addRowToTable(tblResourceContentModel, dataRow);
+			break;
 		default:
 			break;
 		}
@@ -207,29 +302,5 @@ public class PageDataPanel extends JPanel {
 	 */
 	private void addRowToTable(DefaultTableModel model, Object[] dataRow){
 		model.addRow(dataRow);
-	}
-
-	public void setResourceOptions(ArrayList<String> resourceOptions, int selectedIndex) {
-		comboBoxPageResource.removeAllItems();
-		for(String resourceName : resourceOptions){
-			comboBoxPageResource.addItem(resourceName);	
-		}
-		comboBoxPageResource.setSelectedIndex(selectedIndex);
-		comboBoxPageResource.setMaximumSize(comboBoxPageResource.getPreferredSize());
-	}
-
-	public boolean isSomeCellSelected() {
-		return tablePageAttributes.hasFocus() || tablePageResources.hasFocus();		
-	}
-
-	public void enabelPageComponents(boolean isEnabeled) {
-		this.setVisible(isEnabeled);	
-	}
-
-	public void setTableChangeListener(
-			PagePreviewController pagePreviewController) {
-		tblResourcesModel.addTableModelListener(pagePreviewController);
-		tblAttributesModel.addTableModelListener(pagePreviewController);
-		
 	}	
 }

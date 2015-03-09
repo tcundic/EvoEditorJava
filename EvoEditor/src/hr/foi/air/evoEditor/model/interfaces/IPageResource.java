@@ -92,20 +92,19 @@ public interface IPageResource {
 	/**
 	 * Sets which attribute from the defined attribute set is used to specify the
 	 * location of an external file.
-	 * @param filePath
+	 * @param externalFileLocationAttributeName
 	 */
 	public void setExternalFileLocationAttributeName(String externalFileLocationAttributeName);
 	
 	/**
 	 * Returns the attribute from the defined attribute set that is used to specify
 	 * the location of an external file.
-	 * @param filePath
 	 */
 	public String getExternalFileLocationAttributeName();
 
 	/**
 	 * Adds a new possible attribute to the list of existing page resource attributes.
-	 * @param possibleAttributesArray
+	 * @param possibleAttribute
 	 */
 	public void addPossibleAttribute(EvoAttribute possibleAttribute);
 
@@ -118,7 +117,7 @@ public interface IPageResource {
     
 	/**
 	 * Defines possible attributes for this resource
-	 * @param possibleAttributesArray
+	 * @param possibleAttributesSet
 	 */
 	public void setPossibleAttributes(LinkedHashSet<EvoAttribute> possibleAttributesSet);
 

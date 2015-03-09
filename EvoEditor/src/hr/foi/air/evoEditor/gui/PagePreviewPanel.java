@@ -2,25 +2,17 @@ package hr.foi.air.evoEditor.gui;
 
 import hr.foi.air.evoEditor.controller.PagePreviewController;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Font;
-import java.awt.Image;
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import javax.swing.border.LineBorder;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-import javax.imageio.ImageIO;
-import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTextArea;
-import javax.swing.border.LineBorder;
-
+/**
+ * Panel for page preview.
+ */
 public class PagePreviewPanel extends JPanel {
 
 	/**
@@ -131,8 +123,8 @@ public class PagePreviewPanel extends JPanel {
 
 	/**
 	 * Sets if hasSubpages or confirmationText icons are shown in GUI
-	 * @param hasSubpages
-	 * @param confirmationText
+	 * @param isSubpagesIconVisible
+	 * @param isConfirmationTextVisible
 	 */
 	public void showIcons(boolean isSubpagesIconVisible, boolean isConfirmationTextVisible) {
 		needConfirmationIconLabel.setVisible(isConfirmationTextVisible);

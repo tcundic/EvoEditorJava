@@ -6,7 +6,7 @@ import hr.foi.air.evoEditor.model.interfaces.IPageResourceRule;
 import java.util.ArrayList;
 
 /**
- * Defines the rules on which page resources can be used by a single page. This <br/>
+ * Defines the rules on which page resources can be used by a single page. This {@literal <}br/{@literal >}
  * Only one resource can be used at the time.
  * 
  * @author Tadija
@@ -17,7 +17,7 @@ public class EvoPageResourceRule implements IPageResourceRule{
 	/**
 	 * Only one resource can be visible at the time.
 	 * 
-	 * @param pageResources List of all page resources
+	 * @param pageResourceList List of all page resources
 	 * @param pageResourceName The name of the visible resource
 	 */
 	@Override

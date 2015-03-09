@@ -2,25 +2,14 @@ package hr.foi.air.evoEditor.gui;
 
 import hr.foi.air.evoEditor.controller.GalleryDataPanelController;
 
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.GridLayout;
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import java.awt.*;
 import java.util.ArrayList;
 
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JSeparator;
-import javax.swing.JSlider;
-import javax.swing.JSpinner;
-import javax.swing.JTable;
-import javax.swing.SpinnerNumberModel;
-import javax.swing.table.DefaultTableModel;
-
+/**
+ * Panel with gallery attributes.
+ */
 public class GalleryDataPanel extends JPanel {
 
 	/**

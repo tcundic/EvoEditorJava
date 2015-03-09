@@ -10,13 +10,15 @@ import hr.foi.air.evoEditor.model.interfaces.IGallery;
 import hr.foi.air.evoEditor.model.interfaces.IPage;
 import hr.foi.air.evoEditor.model.interfaces.IPageResource;
 
-import java.util.UUID;
-
-import javax.swing.JTree;
+import javax.swing.*;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
+import java.util.UUID;
 
+/**
+ * This is controller class for page preview panel.
+ */
 public class PagePreviewController implements TreeSelectionListener, GalleryChangeListener, PageChangeListener {
 	
 	IGallery gallery;
@@ -58,6 +60,10 @@ public class PagePreviewController implements TreeSelectionListener, GalleryChan
 		
 	}
 
+    /**
+     * Catch events when user select/deselect page in gallery tree panel.
+     * @param e
+     */
 	@Override
 	public void valueChanged(TreeSelectionEvent e) {
 		JTree tree = (JTree)e.getSource();		
@@ -77,6 +83,9 @@ public class PagePreviewController implements TreeSelectionListener, GalleryChan
 		}		
 	}
 
+    /**
+     * Show appropriate preview when page is selected.
+     */
 	private void loadAppropriatePagePreviewElements() {
 		if(selectedPage != null){			
 			gui.hideAllPanels();

@@ -1,20 +1,13 @@
 package hr.foi.air.evoEditor.gui;
 
-import hr.foi.air.evoEditor.controller.EvoEditor;
-import hr.foi.air.evoEditor.controller.GalleryDataPanelController;
-import hr.foi.air.evoEditor.controller.GalleryTreeController;
-import hr.foi.air.evoEditor.controller.PageDataController;
-import hr.foi.air.evoEditor.controller.PagePreviewController;
+import hr.foi.air.evoEditor.controller.*;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
+import javax.swing.*;
+import java.awt.*;
 
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-
+/**
+ * Main GUI class, it contains all other panels.
+ */
 public class EditorMainGUI{
 	
 	public static final String ADD_PAGE_BTN_TEXT = "Add page";
@@ -67,6 +60,9 @@ public class EditorMainGUI{
 		frmEvoeditor.getContentPane().add(panelCenter, BorderLayout.CENTER);
 		
 		//CENTER - top
+        /**
+         * Page preview panel.
+         */
 		PagePreviewController pagePreviewController = evoEditor.getPagePreviewController();
 		PagePreviewPanel panelPreview = new PagePreviewPanel(pagePreviewController);
 		panelPreview.setPreferredSize(new Dimension(GUI_WIDTH, GUI_HEIGHT/2));
@@ -74,6 +70,9 @@ public class EditorMainGUI{
 		panelCenter.add(panelPreview);
 		
 		//CENTER - bottom
+        /**
+         * Page and resources attributes panel.
+         */
 		PageDataController pageDataController = evoEditor.getPageDataController();
 		PageDataPanel pageDataPanel  = new PageDataPanel(pageDataController);
 		pageDataPanel.setPreferredSize(new Dimension(GUI_WIDTH, GUI_HEIGHT/2));
@@ -82,6 +81,9 @@ public class EditorMainGUI{
 		panelCenter.add(pageDataPanel);	
 		
 		// WEST
+        /**
+         * Gallery tree panel.
+         */
 		GalleryTreeController galleryTreePanelController = evoEditor.getGalleryTreePanelController();
 		GalleryTreePanel galleryTreePanel = new GalleryTreePanel(galleryTreePanelController);
 		galleryTreePanelController.setGuiObject(galleryTreePanel);	
@@ -92,6 +94,9 @@ public class EditorMainGUI{
 		frmEvoeditor.getContentPane().add(galleryTreePanel, BorderLayout.WEST);
 		
 		//EAST component
+        /**
+         * Gallery attributes panel.
+         */
 		GalleryDataPanelController galleryDataPanelController = evoEditor.getGalleryDataController();
 		GalleryDataPanel galleryDataPanel = new GalleryDataPanel(galleryDataPanelController);
 		galleryDataPanelController.setGui(galleryDataPanel);
@@ -100,6 +105,10 @@ public class EditorMainGUI{
 		frmEvoeditor.getContentPane().add(galleryDataPanel, BorderLayout.EAST);
 		
 		// NORTH
+        /**
+         * Buttons for adding pages and subpages, selecting next/previous pages,
+         * deleting pages, moving pages, exporting gallery.
+         */
 		JButton btnAddPage = new JButton(ADD_PAGE_BTN_TEXT);
 		btnAddPage.addActionListener(galleryTreePanelController);
 		controlItemsPanel.add(btnAddPage);

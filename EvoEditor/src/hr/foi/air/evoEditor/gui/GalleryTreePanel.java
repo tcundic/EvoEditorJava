@@ -4,20 +4,16 @@ import hr.foi.air.evoEditor.controller.GalleryTreeController;
 import hr.foi.air.evoEditor.model.EvoTreeNodeObject;
 import hr.foi.air.evoEditor.model.interfaces.IPage;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.UUID;
-
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTree;
+import javax.swing.*;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.UUID;
 
 public class GalleryTreePanel extends JPanel {
 
@@ -84,8 +80,7 @@ public class GalleryTreePanel extends JPanel {
 	
 	/**
 	 * A  node is removed from the tree.
-	 * @param parentId
-	 * @param childId
+	 * @param page
 	 */
 	public void removePageFromTree(IPage page) {
 		DefaultTreeModel model = (DefaultTreeModel) tree.getModel();

@@ -22,7 +22,7 @@ public interface IGallery {
 	public boolean isGallerySet();
 	
 	/**
-	 * Returns all the children of the given parent or an empty ArrayList<IPage>. If a gallery ID is received, all pages 
+	 * Returns all the children of the given parent or an empty ArrayList{@literal <}IPage{@literal >}. If a gallery ID is received, all pages
 	 * of the first level will be returned.
 	 * 
 	 * @param parentID
@@ -119,7 +119,7 @@ public interface IGallery {
 
 	/**
 	 * Set attribute set to current gallery.
-	 * @param galleryAttributeMap
+	 * @param possibleAttributesSet
 	 */
 	public void setPossiblesAttributes(LinkedHashSet<EvoAttribute> possibleAttributesSet);	
 }

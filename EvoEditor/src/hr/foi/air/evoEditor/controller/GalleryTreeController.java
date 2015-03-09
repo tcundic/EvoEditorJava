@@ -7,18 +7,20 @@ import hr.foi.air.evoEditor.model.EvoTreeNodeObject;
 import hr.foi.air.evoEditor.model.interfaces.IGallery;
 import hr.foi.air.evoEditor.model.interfaces.IPage;
 
+import javax.swing.*;
+import javax.swing.event.TreeSelectionEvent;
+import javax.swing.event.TreeSelectionListener;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.TreePath;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.UUID;
 
-import javax.swing.JButton;
-import javax.swing.JTree;
-import javax.swing.event.TreeSelectionEvent;
-import javax.swing.event.TreeSelectionListener;
-import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.TreePath;
+/**
+ * This class is controller for Gallery tree panel.
+ */
 
 public class GalleryTreeController implements TreeSelectionListener,ActionListener{
 	
@@ -46,19 +48,23 @@ public class GalleryTreeController implements TreeSelectionListener,ActionListen
 
 	/**
 	 * Returns the UUID of the selected page or null if no page is selected.
-	 * @return
+	 * @return Selected page or null
 	 */
 	public IPage getSelectedPage() {
 		return selectedPage;
 	}
-	
+
+    /**
+     * Make specific page on tree selected.
+     * @param page
+     */
 	public void selectNodeWithPage(IPage page) {
 		gui.setTreeSelectionPath(getNodeTreePath(page));
 	}
 	
 	/**
 	 * Adds a new node to parent node with given ID
-	 * @param parrentId
+	 * @param parentPage
 	 */
 	private void addNodeToParent(IPage parentPage){
 		UUID parentId;
@@ -128,8 +134,8 @@ public class GalleryTreeController implements TreeSelectionListener,ActionListen
 
 	/**
 	 * Returns the path to node with given Id.
-	 * @param pageId
-	 * @return
+	 * @param page
+	 * @return TreePath
 	 */
 	private TreePath getNodeTreePath(IPage page) {
 		DefaultMutableTreeNode treeRootNode = gui.getGalleryTreeRoot();
@@ -150,7 +156,7 @@ public class GalleryTreeController implements TreeSelectionListener,ActionListen
 
 	/**
 	 * Returns the UUID of the node that is above the node with the given ID.
-	 * @param pageId
+	 * @param page
 	 * @return
 	 */
 	private IPage getPreviousPage(IPage page){
@@ -179,7 +185,7 @@ public class GalleryTreeController implements TreeSelectionListener,ActionListen
 
 	/**
 	 * Returns the UUID of the node that is under the node with the given ID.
-	 * @param pageId
+	 * @param page
 	 * @return
 	 */
 	private IPage getNextPage(IPage page){

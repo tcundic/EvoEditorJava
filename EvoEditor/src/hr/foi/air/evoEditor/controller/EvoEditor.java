@@ -6,9 +6,17 @@ import hr.foi.air.evoEditor.model.interfaces.IPage;
 import java.util.ArrayList;
 import java.util.UUID;
 
+/**
+ * Here are all panels on UI declared.
+ * Application is programmed in such way that every panel
+ * is one class, so replacing some element on UI is easy.
+ * Just create new class instead of that you want to replace and
+ * include it here, and configure it in EditorMainGUI.java class.
+ */
+
 public class EvoEditor {
 	private IGallery gallery;
-	
+
 	private GalleryDataPanelController galleryDataPanelController;
 	private PagePreviewController pagePreviewController;
 	private GalleryTreeController galleryTreePanelController;

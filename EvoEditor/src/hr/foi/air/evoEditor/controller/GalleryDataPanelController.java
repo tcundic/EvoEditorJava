@@ -6,17 +6,19 @@ import hr.foi.air.evoEditor.main.Main;
 import hr.foi.air.evoEditor.model.EvoAttribute;
 import hr.foi.air.evoEditor.model.interfaces.IGallery;
 
-import java.awt.Component;
+import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JSlider;
-import javax.swing.JSpinner;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
+/**
+ * This is controller class for data panel on UI. This controller
+ * update gallery attributes and update panel on which user can change
+ * gallery attributes.
+ */
 
 public class GalleryDataPanelController implements ChangeListener, ActionListener {
 	
@@ -34,6 +36,10 @@ public class GalleryDataPanelController implements ChangeListener, ActionListene
 		this.gui = gui;
 	}
 
+    /**
+     * This method create attributes fields on gallery attributes panel
+     * and set values to default values in gallery object.
+     */
 	public void setInitialData() {
 		for (EvoAttribute attr : gallery.getGalleryAttributeSet()) {
 			if (!gui.getUnchangeableElements().contains(attr.getAttributeName()))
@@ -43,6 +49,11 @@ public class GalleryDataPanelController implements ChangeListener, ActionListene
 		gui.setGalleryTransparency(gallery.getGalleryAttribute(Main.TRANSPARENCY).getAttributeValue());
 	}
 
+    /**
+     * This metode listen when user change transparency value,
+     * whether with slider or with number spinner.
+     * @param e
+     */
 	@Override
 	public void stateChanged(ChangeEvent e) {
 		
@@ -53,6 +64,12 @@ public class GalleryDataPanelController implements ChangeListener, ActionListene
 		}
 	}
 
+    /**
+     * This method listen when user press button "Save gallery attributes",
+     * and then save attributes from fields on UI to
+     * gallery object.
+     * @param e
+     */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (((JButton)e.getSource()).getName().equals("saveGalleryData")) {
@@ -80,11 +97,19 @@ public class GalleryDataPanelController implements ChangeListener, ActionListene
 			galleryDataChanged();
 		}		
 	}
-	
+
+    /**
+     * This method add controller for preview panel to list.
+     * @param pagePreviewController
+     */
 	public void addGalleryDataChangeListener(GalleryChangeListener pagePreviewController){
 		this.listeners.add(pagePreviewController);
 	}
-	
+
+    /**
+     * This method attach galleryDataChanged function to controller, so when
+     * user change some gallery attribute, that function is called.
+     */
 	public void galleryDataChanged(){
 		for(GalleryChangeListener listener : listeners){
 			listener.galleryDataChanged();

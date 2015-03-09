@@ -9,15 +9,7 @@ import hr.foi.air.evoEditor.model.interfaces.IGallery;
 import hr.foi.air.evoEditor.model.interfaces.IPage;
 import hr.foi.air.evoEditor.model.interfaces.IPageResource;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
-
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
-import javax.swing.JTree;
+import javax.swing.*;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.event.TreeSelectionEvent;
@@ -25,6 +17,13 @@ import javax.swing.event.TreeSelectionListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.tree.DefaultMutableTreeNode;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+
+/**
+ * This is controller class for pages attributes panel.
+ */
 
 public class PageDataController implements TreeSelectionListener, ActionListener, TableModelListener{
 	
@@ -76,7 +75,11 @@ public class PageDataController implements TreeSelectionListener, ActionListener
 			setActive(true);
 		}		
 	}
-	
+
+    /**
+     * If resource can have content this method add
+     * row "Content" to attributes table.
+     */
 	private void refreshResourceContentTable(){
 		setActive(false);
 		gui.removeAllRowsFromTable(PageDataPanel.RESOURCE_CONTENT_TABLE);
@@ -94,6 +97,10 @@ public class PageDataController implements TreeSelectionListener, ActionListener
 		setActive(true);
 	}
 
+    /**
+     * Populate resource attributes table with
+     * attributes that used resource have.
+     */
 	private void refreshPageResourceTable() {
 		setActive(false);
 		gui.removeAllRowsFromTable(PageDataPanel.RESOURCE_TABLE);
@@ -111,6 +118,10 @@ public class PageDataController implements TreeSelectionListener, ActionListener
 		setActive(true);
 	}
 
+    /**
+     * Populate page attributes table with attributes that
+     * page have.
+     */
 	private void refreshPageAttributeTable() {
 		setActive(false);
 		gui.removeAllRowsFromTable(PageDataPanel.ATTRIBUTE_TABLE);
@@ -156,13 +167,17 @@ public class PageDataController implements TreeSelectionListener, ActionListener
 		}
 	}
 
-	
+    /**
+     * Hide page data panel when no page is selected, and
+     * show when user select page.
+     * @param isVisible
+     */
 	private void makePanelVisible(boolean isVisible) {
 		gui.makePanelVisible(isVisible);
 	}
 
 	/**
-	 * Does work when a 
+	 * Does work when user add resource to page.
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -189,6 +204,9 @@ public class PageDataController implements TreeSelectionListener, ActionListener
 		}
 	}
 
+    /**
+     * Does work when user choose resource file.
+     */
 	private void addResourceButtonClicked() {
 		IPageResource resource = selectedPage.getUsedResource();
 		if(resource.containsExternalFile()){
@@ -213,7 +231,7 @@ public class PageDataController implements TreeSelectionListener, ActionListener
 			JOptionPane.showMessageDialog(gui, "This resource requires no file.");
 		}
 	}
-	
+
 	private void refreshPageData(){
 		refreshPageAttributeTable();
 		refreshPageResourceTable();
@@ -242,6 +260,10 @@ public class PageDataController implements TreeSelectionListener, ActionListener
 		}		
 	}
 
+    /**
+     * Save content attribute to resource if it has one.
+     * @param tableModel
+     */
 	private void saveResourceContentData(DefaultTableModel tableModel) {
 		if(selectedPage != null){
 			//Page can use only one resource.. for now
@@ -255,6 +277,10 @@ public class PageDataController implements TreeSelectionListener, ActionListener
 		
 	}
 
+    /**
+     * Save resource attributes.
+     * @param tableModel
+     */
 	private void savePageResourceData(DefaultTableModel tableModel) {
 		if(selectedPage != null){
 			IPageResource resource = selectedPage.getUsedResource();
@@ -272,6 +298,10 @@ public class PageDataController implements TreeSelectionListener, ActionListener
 		}	
 	}
 
+    /**
+     * Save page attributes.
+     * @param tableModel
+     */
 	private void savePageAttributeData(DefaultTableModel tableModel) {
 		if(selectedPage != null){
 			EvoAttribute pageAttribute;

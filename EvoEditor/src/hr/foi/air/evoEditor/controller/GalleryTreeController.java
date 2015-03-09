@@ -1,5 +1,6 @@
 package hr.foi.air.evoEditor.controller;
 
+import hr.foi.air.evoEditor.events.PageChangeListener;
 import hr.foi.air.evoEditor.gui.EditorMainGUI;
 import hr.foi.air.evoEditor.gui.GalleryTreePanel;
 import hr.foi.air.evoEditor.model.EvoTreeNodeObject;
@@ -23,7 +24,9 @@ public class GalleryTreeController implements TreeSelectionListener,ActionListen
 	
 	IGallery gallery;
 	IPage selectedPage;
-	GalleryTreePanel gui;	
+	GalleryTreePanel gui;
+	
+	private ArrayList<PageChangeListener> listeners = new ArrayList<PageChangeListener>();
 	
 	public GalleryTreeController(IGallery gallery) {
 		this.gallery = gallery;
@@ -67,6 +70,7 @@ public class GalleryTreeController implements TreeSelectionListener,ActionListen
 		UUID childId = gallery.addBlankPage(parentId);
 		IPage pageToAdd = gallery.findPageByID(childId);
 		gui.addNodeToTree(pageToAdd);
+		tablesChanged();
 	}
 	
 	/**
@@ -213,6 +217,7 @@ public class GalleryTreeController implements TreeSelectionListener,ActionListen
 			gallery.deletePage(selectedPage.getId());
 			gui.removePageFromTree(selectedPage);
 			selectNodeWithPage(pageToSelect);
+			tablesChanged();
 		}
 	}
 
@@ -262,5 +267,15 @@ public class GalleryTreeController implements TreeSelectionListener,ActionListen
 			this.selectedPage = selectedPage;
 			selectNodeWithPage(this.selectedPage);		
 		}			
+	}
+	
+	private void tablesChanged(){
+		for(PageChangeListener pl : listeners){
+			pl.pageDataChanged();
+		}
+	}
+
+	public void addTableChangeListener(PageChangeListener pagePreviewController) {
+		listeners.add(pagePreviewController);		
 	}
 }

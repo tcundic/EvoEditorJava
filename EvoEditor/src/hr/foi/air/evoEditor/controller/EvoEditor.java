@@ -8,6 +8,7 @@ import java.util.UUID;
 
 public class EvoEditor {
 	private IGallery gallery;
+	
 	private GalleryDataPanelController galleryDataPanelController;
 	private PagePreviewController pagePreviewController;
 	private GalleryTreeController galleryTreePanelController;

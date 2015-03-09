@@ -1,11 +1,15 @@
 package hr.foi.air.evoEditor.controller;
 
+import hr.foi.air.evoEditor.events.GalleryChangeListener;
 import hr.foi.air.evoEditor.gui.GalleryDataPanel;
+import hr.foi.air.evoEditor.main.Main;
+import hr.foi.air.evoEditor.model.EvoAttribute;
 import hr.foi.air.evoEditor.model.interfaces.IGallery;
 
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -18,6 +22,9 @@ public class GalleryDataPanelController implements ChangeListener, ActionListene
 	
 	private IGallery gallery;
 	private GalleryDataPanel gui;
+	
+	private ArrayList<GalleryChangeListener> listeners = new ArrayList<GalleryChangeListener>();
+
 
 	public GalleryDataPanelController(IGallery gallery){
 		this.gallery = gallery;
@@ -28,12 +35,12 @@ public class GalleryDataPanelController implements ChangeListener, ActionListene
 	}
 
 	public void setInitialData() {
-		for (String attributeName : gallery.getGalleryAttributeSet()) {
-			if (!gui.getUnchangeableElements().contains(attributeName))
-				gui.addAttributes(attributeName, gallery.getGalleryAttribute(attributeName));
+		for (EvoAttribute attr : gallery.getGalleryAttributeSet()) {
+			if (!gui.getUnchangeableElements().contains(attr.getAttributeName()))
+				gui.addAttributes(attr.getAttributeName(), attr.getAttributeValue());
 		}
 		
-		gui.setGalleryTransparency(gallery.getGalleryAttribute("transparency"));
+		gui.setGalleryTransparency(gallery.getGalleryAttribute(Main.TRANSPARENCY).getAttributeValue());
 	}
 
 	@Override
@@ -70,11 +77,17 @@ public class GalleryDataPanelController implements ChangeListener, ActionListene
 			for (int row = 0; row < gui.getTblGalleryAttributes().getRowCount(); row++) {
 				gallery.setGalleryAttribute((String) gui.getTblGalleryAttributes().getValueAt(row, 0), (String) gui.getTblGalleryAttributes().getValueAt(row, 1));
 			}
-			
-		}
-		
-		for (String attribute : gallery.getGalleryAttributeSet()) {
-			System.out.println(attribute + ": " + gallery.getGalleryAttribute(attribute));
+			galleryDataChanged();
+		}		
+	}
+	
+	public void addGalleryDataChangeListener(GalleryChangeListener pagePreviewController){
+		this.listeners.add(pagePreviewController);
+	}
+	
+	public void galleryDataChanged(){
+		for(GalleryChangeListener listener : listeners){
+			listener.galleryDataChanged();
 		}
 	}
 }

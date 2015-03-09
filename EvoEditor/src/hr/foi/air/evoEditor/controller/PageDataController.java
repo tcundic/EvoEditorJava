@@ -1,6 +1,8 @@
 package hr.foi.air.evoEditor.controller;
 
+import hr.foi.air.evoEditor.events.PageChangeListener;
 import hr.foi.air.evoEditor.gui.PageDataPanel;
+import hr.foi.air.evoEditor.main.Main;
 import hr.foi.air.evoEditor.model.EvoAttribute;
 import hr.foi.air.evoEditor.model.EvoTreeNodeObject;
 import hr.foi.air.evoEditor.model.interfaces.IGallery;
@@ -35,7 +37,13 @@ public class PageDataController implements TreeSelectionListener, ActionListener
 	private PageDataPanel gui;
 	
 	private IPage selectedPage;
-	private boolean active = true;    
+	private boolean active = true; 
+	
+	private ArrayList<PageChangeListener> listeners = new ArrayList<PageChangeListener>();
+
+    public void addListener(PageChangeListener toAdd) {
+        listeners.add(toAdd);
+    }
 
 	public PageDataController(IGallery gallery) {
 		this.gallery = gallery;
@@ -134,22 +142,23 @@ public class PageDataController implements TreeSelectionListener, ActionListener
 			}else{
 				selectedPage = null;
 			}
-			enablePanelComponents();
-			refreshPageAttributeTable();
-			refreshPageResourceTable();
-			refreshResourceContentTable();
-			setResourceOptions();
+			
+			if(selectedPage != null){
+				makePanelVisible(true);
+				refreshPageAttributeTable();
+				refreshPageResourceTable();
+				refreshResourceContentTable();
+				setResourceOptions();
+			}else{
+				makePanelVisible(false);
+			}
 			setActive(true);
 		}
 	}
 
 	
-	private void enablePanelComponents() {
-		if(selectedPage != null){
-			gui.enabelPageComponents(true);
-		}else{
-			gui.enabelPageComponents(false);
-		}
+	private void makePanelVisible(boolean isVisible) {
+		gui.makePanelVisible(isVisible);
 	}
 
 	/**
@@ -165,6 +174,7 @@ public class PageDataController implements TreeSelectionListener, ActionListener
 			selectedPage.usePageResource(resource);
 			refreshPageResourceTable();
 			refreshResourceContentTable();
+			tablesChanged();
 			setActive(true);
 		}
 		if(active && selectedPage != null && e.getSource() instanceof JButton){
@@ -193,19 +203,33 @@ public class PageDataController implements TreeSelectionListener, ActionListener
 		    chooser.setFileFilter(filter);
 		    int returnVal = chooser.showOpenDialog(null);
 		    if(returnVal == JFileChooser.APPROVE_OPTION) {
+		    	setResourcePathAttributeToUsed(selectedPage.getUsedResource());
 		    	setResourcePath(chooser.getSelectedFile().getAbsolutePath());
+		    	refreshPageResourceTable();
+				refreshResourceContentTable();
+				tablesChanged();
 		    }
 		}else{
 			JOptionPane.showMessageDialog(gui, "This resource requires no file.");
 		}
+	}
+	
+	private void refreshPageData(){
+		refreshPageAttributeTable();
+		refreshPageResourceTable();
+		refreshResourceContentTable();
+		tablesChanged();
+	}
+
+	private void setResourcePathAttributeToUsed(IPageResource usedResource) {
+		EvoAttribute pathAttribute = usedResource.getAttributeByName(Main.PATH_RESOURCE_ATTRIBUTE);
+		pathAttribute.setUsed(true);		
 	}
 
 	private void setResourcePath(String absolutePath) {
 		IPageResource resource = selectedPage.getUsedResource();
 		EvoAttribute attribute = resource.getAttributeByName(resource.getExternalFileLocationAttributeName());
 		attribute.setAttributeValue(absolutePath);
-		refreshPageResourceTable();
-		refreshResourceContentTable();
 	}
 
 	@Override
@@ -214,6 +238,7 @@ public class PageDataController implements TreeSelectionListener, ActionListener
 			savePageAttributeData(gui.getTableModel(PageDataPanel.ATTRIBUTE_TABLE));
 			savePageResourceData(gui.getTableModel(PageDataPanel.RESOURCE_TABLE));
 			saveResourceContentData(gui.getTableModel(PageDataPanel.RESOURCE_CONTENT_TABLE));
+			tablesChanged();
 		}		
 	}
 
@@ -262,8 +287,14 @@ public class PageDataController implements TreeSelectionListener, ActionListener
 			}	
 		}			
 	}
+	
+	private void tablesChanged(){
+		for(PageChangeListener pl : listeners){
+			pl.pageDataChanged();
+		}
+	}
 
-	public void addTableChangeListener(PagePreviewController pagePreviewController) {
-		gui.setTableChangeListener(pagePreviewController);		
+	public void addTableChangeListener(PageChangeListener pagePreviewController) {
+		listeners.add(pagePreviewController);		
 	}
 }

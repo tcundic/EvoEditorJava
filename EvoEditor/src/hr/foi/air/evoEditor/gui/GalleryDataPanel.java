@@ -129,8 +129,7 @@ public class GalleryDataPanel extends JPanel {
 		tblGalleryAttributes.setName("galleryAttributes");
 		AttributesPanel.add(tblGalleryAttributes);
 		tblGalleryAttributes.setAlignmentY(Component.TOP_ALIGNMENT);
-		tblGalleryAttributes.setAlignmentX(Component.LEFT_ALIGNMENT);
-		
+		tblGalleryAttributes.setAlignmentX(Component.LEFT_ALIGNMENT);		
 	}
 	
 	public void addAttributes(String attributeName, String attributeValue) {

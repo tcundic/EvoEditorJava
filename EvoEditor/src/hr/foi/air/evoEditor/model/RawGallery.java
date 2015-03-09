@@ -5,7 +5,7 @@ import hr.foi.air.evoEditor.model.interfaces.IPage;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.UUID;
 import java.util.logging.Logger;
@@ -21,27 +21,26 @@ public class RawGallery implements IGallery{
 	
 	private final static Logger LOGGER = Logger.getLogger(RawGallery.class.getName()); 
 
-    private static final String DEFAULT_STRING = "";
-
     private UUID iD;    
     
-    private HashMap<String, String> galleryAttributeMap;
+    private LinkedHashSet<EvoAttribute> galleryAttributeSet;
     
     private ArrayList<IPage> pageList;
     
     private boolean galleryDefined;
     private IPage pageType;
     
-    public RawGallery(Set<String> galleryAttributeNames, IPage pageType){
+    public RawGallery(Set<EvoAttribute> galleryAttribute, IPage pageType){
     	
     	this.iD = UUID.randomUUID();
     	
     	this.pageType = pageType;
     	this.pageList = new ArrayList<IPage>();
         
-    	this.galleryAttributeMap = new HashMap<String, String>();
-    	for(String attributeName : galleryAttributeNames){
-        	this.galleryAttributeMap.put(attributeName, DEFAULT_STRING);
+    	this.galleryAttributeSet = new LinkedHashSet<EvoAttribute>();
+    	for(EvoAttribute attribute : galleryAttribute){
+    		EvoAttribute newAttribute = new EvoAttribute(attribute.getAttributeName());
+        	this.galleryAttributeSet.add(newAttribute);
         }        
     }
     
@@ -49,7 +48,7 @@ public class RawGallery implements IGallery{
     public RawGallery getInstance(){    	
     	galleryDefined = true;
     	
-    	return new RawGallery(galleryAttributeMap.keySet(), pageType);
+    	return new RawGallery(galleryAttributeSet, pageType);
     }
 
 	/**
@@ -241,21 +240,36 @@ public class RawGallery implements IGallery{
 		}
 		pageList.remove(page);
 	}
+	
+	private EvoAttribute findAttributeByName(String name){
+		EvoAttribute attribute = null;
+		for(EvoAttribute attr : this.galleryAttributeSet){
+			if(attr.getAttributeName().equalsIgnoreCase(name)){
+				attribute = attr;
+				break;
+			}
+		}
+		return attribute;
+	}
 
-	public Set<String> getGalleryAttributeSet() {
-		return this.galleryAttributeMap.keySet();
+	public Set<EvoAttribute> getGalleryAttributeSet() {
+		return this.galleryAttributeSet;
 	}
 	
-	public String getGalleryAttribute(String attributeName) {
-		return this.galleryAttributeMap.get(attributeName);
+	public EvoAttribute getGalleryAttribute(String attributeName) {		
+		return findAttributeByName(attributeName);
 	}
 	
 	public void setGalleryAttribute(String attributeName, String attributeValue) {
-		this.galleryAttributeMap.put(attributeName, attributeValue);
+		EvoAttribute attribute = findAttributeByName(attributeName);
+		if(attribute != null){
+			attribute.setAttributeValue(attributeValue);
+		}
 	}
 
-	public void setGalleryAttributeMap(HashMap<String, String> galleryAttributeMap) {
-		this.galleryAttributeMap = galleryAttributeMap;
+	@Override
+	public void setPossiblesAttributes(LinkedHashSet<EvoAttribute> galleryAttributeSet) {
+		this.galleryAttributeSet = galleryAttributeSet;
 	}
 	
 	@Override

@@ -3,8 +3,7 @@ package hr.foi.air.evoEditor.model;
 import java.util.UUID;
 
 /**
- * Object that is used as a JTree node in the gui.
- * @author Tadija
+ * Object that is used as a JTree node in the GUI.
  *
  */
 public class EvoTreeNodeObject {
@@ -44,6 +43,7 @@ public class EvoTreeNodeObject {
 	}
 
 	public String toString(){
-		return objectName + " " + (orderNumber + 1) ;
+		String objectShortId = objectId.toString().substring(0, 4);
+		return objectName + " " + (orderNumber + 1) + " [" +  objectShortId + "]";
 	}
 }

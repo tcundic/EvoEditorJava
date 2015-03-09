@@ -12,7 +12,6 @@ import hr.foi.air.evoEditor.model.interfaces.IPageResource;
 
 import java.awt.EventQueue;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -23,7 +22,9 @@ public class Main {
 	public static final String DESCRIPTION = "description";
 	public static final String CONFIRMATION_TEXT = "confirmationText";
 	
-	public static final String[] GALLERY_ATTRIBUTES = {"name", "qrcode", "repeat", "showIndicator", "transparency"};
+	public static final String SHOW_INDICATOR = "showIndicator";
+	public static final String TRANSPARENCY = "transparency";
+	public static final String[] GALLERY_ATTRIBUTES = {"name", "qrcode", "repeat", SHOW_INDICATOR, TRANSPARENCY};
 	
 	public static final String IMAGE_RESOURCE_NAME = "image";
 	public static final String VIDEO_RESOURCE_NAME = "video";
@@ -79,7 +80,7 @@ public class Main {
     	image.setDataType(IMAGE_RESOURCE_TYPE);
     	image.setContainsExternalFile(true);
     	image.setExternalFileLocationAttributeName(PATH_RESOURCE_ATTRIBUTE);
-    	image.setAcceptableFileExtensions(new String[]{".jpg",".gif"});
+    	image.setAcceptableFileExtensions(new String[]{"jpg","gif"});
     	
     	IPageResource video = new RawPageResource();
     	video.setName(VIDEO_RESOURCE_NAME);
@@ -88,7 +89,7 @@ public class Main {
     	video.setDataType(VIDEO_RESOURCE_TYPE);
     	video.setContainsExternalFile(true);
     	video.setExternalFileLocationAttributeName(PATH_RESOURCE_ATTRIBUTE);
-    	video.setAcceptableFileExtensions(new String[]{".mp4"});    	
+    	video.setAcceptableFileExtensions(new String[]{"mp4"});    	
     	
     	IPageResource text = new RawPageResource();
     	text.setName(TEXT_RESOURCE_NAME);
@@ -127,12 +128,12 @@ public class Main {
 	 * @return
 	 */
 	private static IGallery getGalleryFormat(IPage pageType) {
-		Set<String> possibleGalleryAttributeList = new HashSet<String>();
-    	for(String attribute : GALLERY_ATTRIBUTES){
-    		possibleGalleryAttributeList.add(attribute);
+		Set<EvoAttribute> possibleGalleryAttributeSet = new LinkedHashSet<EvoAttribute>(1);
+    	for(String attributeName : GALLERY_ATTRIBUTES){
+    		possibleGalleryAttributeSet.add(new EvoAttribute(attributeName));
     	}
     	
-    	IGallery galleryFormat = new RawGallery(possibleGalleryAttributeList, pageType);
+    	IGallery galleryFormat = new RawGallery(possibleGalleryAttributeSet, pageType);
     	return galleryFormat;
 	}
 

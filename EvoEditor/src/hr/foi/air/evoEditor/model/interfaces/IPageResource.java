@@ -120,7 +120,7 @@ public interface IPageResource {
 	 * Defines possible attributes for this resource
 	 * @param possibleAttributesArray
 	 */
-	public void setPossibleAttributes(LinkedHashSet<EvoAttribute> possibleAttributesArray);
+	public void setPossibleAttributes(LinkedHashSet<EvoAttribute> possibleAttributesSet);
 
 	/**
 	 * 

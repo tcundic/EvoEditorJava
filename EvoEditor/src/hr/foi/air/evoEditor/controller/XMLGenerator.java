@@ -76,10 +76,10 @@ public class XMLGenerator {
     	this.gallery = gallery;
         Element galleryElement = document.createElement(GALLERY_TAG_NAME);
         
-        for(String attributeName : gallery.getGalleryAttributeSet()){
-        	String galleryAttributeValue = gallery.getGalleryAttribute(attributeName);
+        for(EvoAttribute attribute : gallery.getGalleryAttributeSet()){
+        	String galleryAttributeValue = attribute.getAttributeValue();
         	if(!galleryAttributeValue.isEmpty()){
-        		galleryElement.setAttribute(attributeName, galleryAttributeValue);
+        		galleryElement.setAttribute(attribute.getAttributeName(), galleryAttributeValue);
         	}
         }      
         

@@ -1,7 +1,6 @@
 package hr.foi.air.evoEditor.gui;
 
 import hr.foi.air.evoEditor.controller.PageDataController;
-import hr.foi.air.evoEditor.controller.PagePreviewController;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -57,13 +56,15 @@ public class PageDataPanel extends JPanel {
 		JPanel dataTablesPanel = new JPanel();
 		add(dataTablesPanel, BorderLayout.CENTER);
 		dataTablesPanel.setLayout(new BoxLayout(dataTablesPanel, BoxLayout.Y_AXIS));
+		Dimension dim = getPreferredSize();
 		
 		tblAttributesModel = getAttributeTableModel();
 		tblAttributesModel.addColumn("Use attribute");
 		tblAttributesModel.addColumn("Page attribute name");
 		tblAttributesModel.addColumn("Page attribute value");
 		tblAttributesModel.addTableModelListener(controller);
-		tablePageAttributes = new JTable(tblAttributesModel);
+		tablePageAttributes = new JTable(tblAttributesModel);		
+		//tablePageAttributes.setPreferredSize(new Dimension(dim.width, dim.height/3));
 		tablePageAttributes.putClientProperty("terminateEditOnFocusLost", Boolean.TRUE);
 		
 		tblResourcesModel = getResourceTableModel();
@@ -72,6 +73,7 @@ public class PageDataPanel extends JPanel {
 		tblResourcesModel.addColumn("Resource attribute value");
 		tblResourcesModel.addTableModelListener(controller);
 		tablePageResources = new JTable(tblResourcesModel);
+		//tablePageResources.setPreferredSize(new Dimension(dim.width, dim.height/3));
 		tablePageResources.putClientProperty("terminateEditOnFocusLost", Boolean.TRUE);
 		
 		tblResourceContentModel = getResourceContentTableModel();
@@ -79,6 +81,7 @@ public class PageDataPanel extends JPanel {
 		tblResourceContentModel.addColumn("Resource content");
 		tblResourceContentModel.addTableModelListener(controller);
 		tableResourceContent = new JTable(tblResourceContentModel);
+		//tableResourceContent.setPreferredSize(new Dimension(dim.width, dim.height/3));
 		tableResourceContent.putClientProperty("terminateEditOnFocusLost", Boolean.TRUE);		
 		
 		JScrollPane atributesTblScrollPane = new JScrollPane(tablePageAttributes);
@@ -127,18 +130,8 @@ public class PageDataPanel extends JPanel {
 	 * Makes a component visible.
 	 * @param isEnabeled
 	 */
-	public void enabelPageComponents(boolean isEnabeled) {
+	public void makePanelVisible(boolean isEnabeled) {
 		this.setVisible(isEnabeled);	
-	}
-
-	/**
-	 * Adds the given listener to all pages.
-	 * @param pagePreviewController
-	 */
-	public void setTableChangeListener(PagePreviewController pagePreviewController) {
-		tblResourcesModel.addTableModelListener(pagePreviewController);
-		tblAttributesModel.addTableModelListener(pagePreviewController);
-		tblResourceContentModel.addTableModelListener(pagePreviewController);
 	}
 
 	/**

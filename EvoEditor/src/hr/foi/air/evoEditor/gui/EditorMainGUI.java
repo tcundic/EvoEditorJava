@@ -26,8 +26,8 @@ public class EditorMainGUI{
 	public static final String MOVE_DOWN_BTN_TEXT = "Move down";
 	public static final String EXPORT_BTN_TEXT = "Export";
 	
-	public static final int GUI_WIDTH = 1150;
-	public static final int GUI_HEIGHT = 630;
+	public static final int GUI_WIDTH = 1160;
+	public static final int GUI_HEIGHT = 660;
 	
 	private EvoEditor evoEditor;
 
@@ -53,21 +53,13 @@ public class EditorMainGUI{
 		frmEvoeditor = new JFrame();
 		frmEvoeditor.setResizable(false);
 		frmEvoeditor.setTitle("EvoEditor");
-		frmEvoeditor.setBounds(70, 50, GUI_WIDTH, GUI_HEIGHT);
+		frmEvoeditor.setBounds(20, 20, GUI_WIDTH, GUI_HEIGHT);
 		frmEvoeditor.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmEvoeditor.getContentPane().setLayout(new BorderLayout(0, 0));
 		
 		JPanel controlItemsPanel = new JPanel();
 		frmEvoeditor.getContentPane().add(controlItemsPanel, BorderLayout.NORTH);
 		controlItemsPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-		
-		//EAST component
-		GalleryDataPanelController galleryDataPanelController = evoEditor.getGalleryDataController();
-		GalleryDataPanel galleryDataPanel = new GalleryDataPanel(galleryDataPanelController);
-		galleryDataPanelController.setGui(galleryDataPanel);
-		galleryDataPanelController.setInitialData();			
-		frmEvoeditor.getContentPane().add(galleryDataPanel, BorderLayout.EAST);		
-
 		
 		//CENTER component
 		JPanel panelCenter = new JPanel();		
@@ -79,7 +71,6 @@ public class EditorMainGUI{
 		PagePreviewPanel panelPreview = new PagePreviewPanel(pagePreviewController);
 		panelPreview.setPreferredSize(new Dimension(GUI_WIDTH, GUI_HEIGHT/2));
 		pagePreviewController.setGuiObject(panelPreview);
-		//pagePreviewController.setInitialData();
 		panelCenter.add(panelPreview);
 		
 		//CENTER - bottom
@@ -98,6 +89,14 @@ public class EditorMainGUI{
 		galleryTreePanel.addTreeSelectionListener(pageDataController);
 		galleryTreePanel.addTreeSelectionListener(pagePreviewController);
 		frmEvoeditor.getContentPane().add(galleryTreePanel, BorderLayout.WEST);
+		
+		//EAST component
+		GalleryDataPanelController galleryDataPanelController = evoEditor.getGalleryDataController();
+		GalleryDataPanel galleryDataPanel = new GalleryDataPanel(galleryDataPanelController);
+		galleryDataPanelController.setGui(galleryDataPanel);
+		galleryDataPanelController.setInitialData();
+		galleryDataPanelController.addGalleryDataChangeListener(pagePreviewController);
+		frmEvoeditor.getContentPane().add(galleryDataPanel, BorderLayout.EAST);
 		
 		// NORTH
 		JButton btnAddPage = new JButton(ADD_PAGE_BTN_TEXT);

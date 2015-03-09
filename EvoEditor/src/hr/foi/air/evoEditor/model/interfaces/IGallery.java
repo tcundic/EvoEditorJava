@@ -1,7 +1,9 @@
 package hr.foi.air.evoEditor.model.interfaces;
 
+import hr.foi.air.evoEditor.model.EvoAttribute;
+
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.UUID;
 
@@ -20,7 +22,7 @@ public interface IGallery {
 	public boolean isGallerySet();
 	
 	/**
-	 * Returns all the children of the given parent. If a gallery ID is received, all pages 
+	 * Returns all the children of the given parent or an empty ArrayList<IPage>. If a gallery ID is received, all pages 
 	 * of the first level will be returned.
 	 * 
 	 * @param parentID
@@ -99,14 +101,14 @@ public interface IGallery {
 	 * Get all attributes of current gallery.
 	 * @return
 	 */
-	public Set<String> getGalleryAttributeSet();
+	public Set<EvoAttribute> getGalleryAttributeSet();
 
 	/**
 	 * Get attribute attributeName of current gallery.
 	 * @param attributeName
 	 * @return
 	 */
-	public String getGalleryAttribute(String attributeName);
+	public EvoAttribute getGalleryAttribute(String attributeName);
 
 	/**
 	 * Set value of attribute attributeName to attributeValue of current gallery.
@@ -116,8 +118,8 @@ public interface IGallery {
 	public void setGalleryAttribute(String attributeName, String attributeValue);
 
 	/**
-	 * Set attibute set to current gallery.
+	 * Set attribute set to current gallery.
 	 * @param galleryAttributeMap
 	 */
-	public void setGalleryAttributeMap(HashMap<String, String> galleryAttributeMap);	
+	public void setPossiblesAttributes(LinkedHashSet<EvoAttribute> possibleAttributesSet);	
 }

@@ -4,14 +4,11 @@ import hr.foi.air.evoEditor.gui.EditorMainGUI;
 import hr.foi.air.evoEditor.model.interfaces.IGallery;
 import hr.foi.air.evoEditor.model.interfaces.IPage;
 
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.UUID;
-
-import javax.swing.JButton;
-import javax.swing.JFileChooser;
 
 /**
  * Here are all panels on UI declared.
@@ -77,9 +74,9 @@ public class EvoEditor implements ActionListener {
 	private void exportXmlFIle() {
 		String filePath="";
 		JFileChooser c = new JFileChooser();
-	    int rVal = c.showSaveDialog(null);
+        int rVal = c.showSaveDialog(null);
 	    if(rVal == JFileChooser.APPROVE_OPTION){
-	    	filePath = c.getSelectedFile().getAbsolutePath();
+	    	filePath = c.getSelectedFile().getPath();
 	    	xmlGenerator.setFile(filePath);
 	    	xmlGenerator.generateXmlFile(gallery);
 	    }

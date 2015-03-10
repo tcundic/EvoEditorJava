@@ -4,12 +4,11 @@ import hr.foi.air.evoEditor.model.EvoAttribute;
 import hr.foi.air.evoEditor.model.interfaces.IGallery;
 import hr.foi.air.evoEditor.model.interfaces.IPage;
 import hr.foi.air.evoEditor.model.interfaces.IPageResource;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Set;
+import org.apache.commons.io.FilenameUtils;
+import org.w3c.dom.DOMImplementation;
+import org.w3c.dom.Document;
+import org.w3c.dom.DocumentType;
+import org.w3c.dom.Element;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -20,17 +19,24 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-
-import org.w3c.dom.DOMImplementation;
-import org.w3c.dom.Document;
-import org.w3c.dom.DocumentType;
-import org.w3c.dom.Element;
-
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Set;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 public class XMLGenerator {
 	
 	private static final String GALLERY_TAG_NAME = "gallery";
 	private static final String PAGE_TAG_NAME = "page";
+    public static final String PATH_RESOURCE_ATTRIBUTE = "path";
+    public static final String ROOT_NODE = "documentation";
+    public static final String DTD_FILE = "documentation.dtd";
+    private static final String GALLERY_NAME_ATTRIBUTE = "name";
+    private static final String DEFAULT_INDENT = "4";
 
     //region PRIVATE FIELDS
     private DocumentBuilderFactory documentBuilderFactory;
@@ -40,6 +46,8 @@ public class XMLGenerator {
     private String file;
     private String indent;
     private IGallery gallery;
+    private File xmlFile;
+    private ArrayList<String> resources;
     //endregion
 
     //region CONSTRUCTORS
@@ -52,8 +60,9 @@ public class XMLGenerator {
 
             // XML tree
             // create root element and insert it in document
-            documentationElement = document.createElement("documentation");
+            documentationElement = document.createElement(ROOT_NODE);
             document.appendChild(documentationElement);
+            setIndent(DEFAULT_INDENT);
         } catch (ParserConfigurationException ex) {
             ex.printStackTrace();
         }
@@ -85,6 +94,8 @@ public class XMLGenerator {
         
         documentationElement.appendChild(galleryElement);
 
+        resources = new ArrayList<String>();
+
         appendPages(gallery.getChildPageList(gallery.getID()), galleryElement);
     }
 
@@ -115,8 +126,16 @@ public class XMLGenerator {
                 		String pageAttributeValue = resourceAttribute.getAttributeValue();
                 		if(resourceAttribute.isUsed()){
 	            			if(!pageAttributeValue.isEmpty()){
-	            				//Empty attributes are NOT printed
-	            				element.setAttribute(pageAttributeName, pageAttributeValue);
+                                if (pageAttributeName.equalsIgnoreCase(PATH_RESOURCE_ATTRIBUTE)) {
+                                    resources.add(pageAttributeValue);
+                                    //Empty attributes are NOT printed
+                                    pageAttributeValue =
+                                            (pageAttributeValue.lastIndexOf("\\") != -1) ?
+                                                    pageAttributeValue.substring(pageAttributeValue.lastIndexOf("\\") + 1, pageAttributeValue.length()) :
+                                                    pageAttributeValue.substring(pageAttributeValue.lastIndexOf("/") + 1, pageAttributeValue.length());
+                                    element.setAttribute(pageAttributeName, pageAttributeValue);
+                                } else
+                                    element.setAttribute(pageAttributeName, pageAttributeValue);
 	            			}
                 		}
             		}
@@ -136,6 +155,67 @@ public class XMLGenerator {
             parentElement.appendChild(pageElement);
         }
     }
+
+    private void zipGallery() throws IOException {
+        byte[] buffer = new byte[1024];
+
+        FileOutputStream fos;
+        ZipOutputStream zos = null;
+
+        try {
+            fos = new FileOutputStream(FilenameUtils.getFullPath(file) + FilenameUtils.getBaseName(file) + ".zip");
+            zos = new ZipOutputStream(fos);
+
+            /**
+             * Put xml file in zip.
+             */
+            ZipEntry ze = new ZipEntry(xmlFile.getName());
+            zos.putNextEntry(ze);
+            FileInputStream in = new FileInputStream(xmlFile.getAbsolutePath());
+
+            int len;
+            while ((len = in.read(buffer)) > 0) {
+                zos.write(buffer, 0, len);
+            }
+
+            in.close();
+            zos.closeEntry();
+
+            /**
+             * Put dtd file in zip.
+             */
+            ze = new ZipEntry(DTD_FILE);
+            zos.putNextEntry(ze);
+            in = new FileInputStream(System.getProperty("user.dir") + File.separator + DTD_FILE);
+
+            while ((len = in.read(buffer)) > 0) {
+                zos.write(buffer, 0, len);
+            }
+
+            in.close();
+            zos.closeEntry();
+
+            /**
+             * Put each resource file in zip.
+             */
+            for (String resource : resources) {
+                ze = new ZipEntry(FilenameUtils.getName(resource));
+                zos.putNextEntry(ze);
+                in = new FileInputStream(resource);
+
+                while ((len = in.read(buffer)) > 0) {
+                    zos.write(buffer, 0, len);
+                }
+
+                in.close();
+                zos.closeEntry();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            zos.close();
+        }
+    }
     //endregion
 
     //region PUBLIC METHODS
@@ -151,7 +231,7 @@ public class XMLGenerator {
          */
         try {
             document.setXmlStandalone(true);
-            File xmlFile = new File(file);
+            xmlFile = new File(file);
             xmlFile.createNewFile();
             FileOutputStream outputStream = new FileOutputStream(xmlFile);
             TransformerFactory tf = TransformerFactory.newInstance();
@@ -165,12 +245,14 @@ public class XMLGenerator {
 
             // add doctype to xml document
             DOMImplementation domImpl = document.getImplementation();
-            DocumentType docType = domImpl.createDocumentType("doctype", "documentation", "documentation.dtd");
+            DocumentType docType = domImpl.createDocumentType("doctype", ROOT_NODE, DTD_FILE);
             t.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM, docType.getSystemId());
             t.transform(dSource, sr);
 
             outputStream.flush();
             outputStream.close();
+
+            zipGallery();
 
         } catch (IOException e) {
             e.printStackTrace();

@@ -1,10 +1,17 @@
 package hr.foi.air.evoEditor.controller;
 
+import hr.foi.air.evoEditor.gui.EditorMainGUI;
 import hr.foi.air.evoEditor.model.interfaces.IGallery;
 import hr.foi.air.evoEditor.model.interfaces.IPage;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.UUID;
+
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
 
 /**
  * Here are all panels on UI declared.
@@ -14,8 +21,9 @@ import java.util.UUID;
  * include it here, and configure it in EditorMainGUI.java class.
  */
 
-public class EvoEditor {
+public class EvoEditor implements ActionListener {
 	private IGallery gallery;
+	private XMLGenerator xmlGenerator;
 
 	private GalleryDataPanelController galleryDataPanelController;
 	private PagePreviewController pagePreviewController;
@@ -24,6 +32,7 @@ public class EvoEditor {
 
 	public EvoEditor(IGallery galleryFormat) {
 		this.gallery = galleryFormat;
+		this.xmlGenerator = new XMLGenerator();
 		this.galleryDataPanelController = new GalleryDataPanelController(gallery);
 		this.galleryTreePanelController = new GalleryTreeController(gallery);
 		this.pagePreviewController = new PagePreviewController(gallery);
@@ -52,5 +61,30 @@ public class EvoEditor {
 
 	public ArrayList<IPage> getChildPages(UUID parentId) {
 		return gallery.getChildPageList(parentId);
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		String btnText = ((JButton) e.getSource()).getText();
+		switch(btnText){
+		case(EditorMainGUI.EXPORT_BTN_TEXT):
+			exportXmlFIle();
+			break;
+		}
+		
+	}
+
+	private void exportXmlFIle() {
+		String filePath="";
+		JFileChooser c = new JFileChooser();
+	    int rVal = c.showSaveDialog(null);
+	    if(rVal == JFileChooser.APPROVE_OPTION){
+	    	filePath = c.getSelectedFile().getAbsolutePath();
+	    	xmlGenerator.setFile(filePath);
+	    	xmlGenerator.generateXmlFile(gallery);
+	    }
+	    if(rVal == JFileChooser.CANCEL_OPTION){
+	    	
+	    }		
 	}
 }

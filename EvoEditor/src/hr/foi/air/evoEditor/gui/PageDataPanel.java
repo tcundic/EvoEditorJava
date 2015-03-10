@@ -2,10 +2,20 @@ package hr.foi.air.evoEditor.gui;
 
 import hr.foi.air.evoEditor.controller.PageDataController;
 
-import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.util.ArrayList;
+
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 /**
  * Panel with page and resource attributes.
@@ -49,7 +59,7 @@ public class PageDataPanel extends JPanel {
 		JPanel dataTablesPanel = new JPanel();
 		add(dataTablesPanel, BorderLayout.CENTER);
 		dataTablesPanel.setLayout(new BoxLayout(dataTablesPanel, BoxLayout.Y_AXIS));
-		Dimension dim = getPreferredSize();
+		
 		
 		tblAttributesModel = getAttributeTableModel();
 		tblAttributesModel.addColumn("Use attribute");
@@ -57,7 +67,6 @@ public class PageDataPanel extends JPanel {
 		tblAttributesModel.addColumn("Page attribute value");
 		tblAttributesModel.addTableModelListener(controller);
 		tablePageAttributes = new JTable(tblAttributesModel);		
-		//tablePageAttributes.setPreferredSize(new Dimension(dim.width, dim.height/3));
 		tablePageAttributes.putClientProperty("terminateEditOnFocusLost", Boolean.TRUE);
 		
 		tblResourcesModel = getResourceTableModel();
@@ -66,7 +75,6 @@ public class PageDataPanel extends JPanel {
 		tblResourcesModel.addColumn("Resource attribute value");
 		tblResourcesModel.addTableModelListener(controller);
 		tablePageResources = new JTable(tblResourcesModel);
-		//tablePageResources.setPreferredSize(new Dimension(dim.width, dim.height/3));
 		tablePageResources.putClientProperty("terminateEditOnFocusLost", Boolean.TRUE);
 		
 		tblResourceContentModel = getResourceContentTableModel();
@@ -74,7 +82,6 @@ public class PageDataPanel extends JPanel {
 		tblResourceContentModel.addColumn("Resource content");
 		tblResourceContentModel.addTableModelListener(controller);
 		tableResourceContent = new JTable(tblResourceContentModel);
-		//tableResourceContent.setPreferredSize(new Dimension(dim.width, dim.height/3));
 		tableResourceContent.putClientProperty("terminateEditOnFocusLost", Boolean.TRUE);		
 		
 		JScrollPane atributesTblScrollPane = new JScrollPane(tablePageAttributes);

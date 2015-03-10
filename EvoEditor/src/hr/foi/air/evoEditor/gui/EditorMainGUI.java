@@ -138,7 +138,7 @@ public class EditorMainGUI{
 		controlItemsPanel.add(btnMoveDown);
 		
 		JButton btnExport = new JButton(EXPORT_BTN_TEXT);
-		btnExport.addActionListener(galleryTreePanelController);
+		btnExport.addActionListener(evoEditor);
 		controlItemsPanel.add(btnExport);
 	}
 }

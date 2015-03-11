@@ -3,7 +3,9 @@ package hr.foi.air.evoEditor.gui;
 import hr.foi.air.evoEditor.controller.GalleryDataPanelController;
 
 import javax.swing.*;
+import javax.swing.Box.Filler;
 import javax.swing.table.DefaultTableModel;
+
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -37,30 +39,41 @@ public class GalleryDataPanel extends JPanel {
 		super.setMinimumSize(new Dimension(350, 100));
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		
+		Box.Filler spacing = (Filler) Box.createVerticalGlue();
+		spacing.changeShape(new Dimension(1, 10), new Dimension(1, 10), spacing.getMaximumSize());
+		
 		JLabel lblGallery = new JLabel("Gallery");
 		lblGallery.setAlignmentX(CENTER_ALIGNMENT);
 		super.add(lblGallery);
+		super.add(Box.createRigidArea(new Dimension(10,0)));
 		
 		JSeparator separator = new JSeparator();
 		super.add(separator);
+		super.add(Box.createRigidArea(new Dimension(10,0)));
 		
 		JPanel GalleryAttributesPanel = new JPanel();
-		GalleryAttributesPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
-		GalleryAttributesPanel.setAlignmentY(Component.TOP_ALIGNMENT);
+		GalleryAttributesPanel.setAlignmentX(CENTER_ALIGNMENT);
 		super.add(GalleryAttributesPanel);
+		super.add(Box.createRigidArea(new Dimension(10,0)));
 		
 		DefaultTableModel model = new DefaultTableModel();
 		model.addColumn("Attribute name");
 		model.addColumn("Attribute value");
 		
+		tblGalleryAttributes = new JTable(model);
+		tblGalleryAttributes.setName("galleryAttributes");
+		super.add(tblGalleryAttributes);
+		super.add(spacing);
+		
 		JSeparator separator_1 = new JSeparator();
 		super.add(separator_1);
+		super.add(spacing);
 		
 		JLabel lblTransparency = new JLabel("Transparency");
 		lblTransparency.setAlignmentX(CENTER_ALIGNMENT);
-		super.add(lblTransparency);
-		
+		super.add(lblTransparency);		
 		unchangeableElements.add("transparency");
+		super.add(spacing);
 		
 		SpinnerNumberModel spinModel = new SpinnerNumberModel(0.0, 0.0, 255.0, 1.0);
 		numberPickerTransparencyValue = new JSpinner(spinModel);
@@ -69,6 +82,7 @@ public class GalleryDataPanel extends JPanel {
 		numberPickerTransparencyValue.setAlignmentX(CENTER_ALIGNMENT);
 		super.add(numberPickerTransparencyValue);
 		numberPickerTransparencyValue.setMaximumSize(new Dimension(40, 20));
+		super.add(spacing);
 		
 		transparencySlider = new JSlider();
 		transparencySlider.setMinorTickSpacing(1);
@@ -77,9 +91,11 @@ public class GalleryDataPanel extends JPanel {
 		transparencySlider.addChangeListener(controller);
 		transparencySlider.setAlignmentX(CENTER_ALIGNMENT);
 		super.add(transparencySlider);
+		super.add(spacing);
 		
 		JSeparator separator_2 = new JSeparator();
 		super.add(separator_2);
+		super.add(spacing);
 		
 		JCheckBox chckbxGalleryRepeatOption = new JCheckBox("Repeat");
 		chckbxGalleryRepeatOption.setName("repeat");
@@ -94,31 +110,19 @@ public class GalleryDataPanel extends JPanel {
 		super.add(chckbxShowIndicatorOption);
 		
 		unchangeableElements.add("showIndicator");
+		super.add(spacing);
 		
 		JButton btnSaveGalleryData = new JButton("Save gallery data");
 		btnSaveGalleryData.setName("saveGalleryData");
 		btnSaveGalleryData.addActionListener(controller);
 		btnSaveGalleryData.setAlignmentX(CENTER_ALIGNMENT);
 		super.add(btnSaveGalleryData);
-		GridBagLayout gbl_GalleryAttributesPanel = new GridBagLayout();
-		gbl_GalleryAttributesPanel.columnWidths = new int[]{1, 0, 0};
-		gbl_GalleryAttributesPanel.rowHeights = new int[]{1, 0, 0};
-		gbl_GalleryAttributesPanel.columnWeights = new double[]{1.0, 0.0, Double.MIN_VALUE};
-		gbl_GalleryAttributesPanel.rowWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
-		GalleryAttributesPanel.setLayout(gbl_GalleryAttributesPanel);
 		
-		JPanel AttributesPanel = new JPanel();
-		GridBagConstraints gbc_AttributesPanel = new GridBagConstraints();
-		gbc_AttributesPanel.fill = GridBagConstraints.BOTH;
-		gbc_AttributesPanel.gridx = 0;
-		gbc_AttributesPanel.gridy = 0;
-		GalleryAttributesPanel.add(AttributesPanel, gbc_AttributesPanel);
-		AttributesPanel.setLayout(new GridLayout(0, 1, 0, 0));
-		tblGalleryAttributes = new JTable(model);
-		tblGalleryAttributes.setName("galleryAttributes");
-		AttributesPanel.add(tblGalleryAttributes);
-		tblGalleryAttributes.setAlignmentY(Component.TOP_ALIGNMENT);
-		tblGalleryAttributes.setAlignmentX(Component.LEFT_ALIGNMENT);		
+		Box.Filler glue = (Filler) Box.createVerticalGlue();
+	    glue.changeShape(glue.getMinimumSize(), 
+	                    new Dimension(0, 270), // make glue greedy
+	                    glue.getMaximumSize());
+	    super.add(glue);		
 	}
 	
 	public void addAttributes(String attributeName, String attributeValue) {

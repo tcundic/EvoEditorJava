@@ -1,155 +1,146 @@
 package hr.foi.air.evoEditor.model;
 
-import java.util.LinkedHashSet;
-
 import hr.foi.air.evoEditor.model.interfaces.IPageResource;
+
+import java.util.LinkedHashSet;
 
 public class EvoTextResource implements IPageResource {
 
+	public static final String TEXT_RESOURCE_NAME = "text";
+	public static final int TEXT_RESOURCE_TYPE = 3;
+	
+	private boolean isUsedByDefault;
+	private boolean isUsed;
+	private String content;
+	private LinkedHashSet<EvoAttribute> attributeSet;
+	
+	public EvoTextResource(boolean isUsedByDefault) {
+		this.isUsedByDefault = isUsedByDefault;
+		this.isUsed = false;
+		this.content = "";
+		attributeSet = new LinkedHashSet<EvoAttribute>();
+	}
+	
+	public EvoTextResource() {
+		this.isUsedByDefault = false;
+		this.isUsed = false;
+		this.content = "";
+		attributeSet = new LinkedHashSet<EvoAttribute>();
+	}
+	
+	private EvoTextResource(boolean isUsedByDefault, boolean isUsed, String content) {
+		this.isUsedByDefault = isUsedByDefault;
+		this.isUsed = isUsed;
+		this.content = content;
+		attributeSet = new LinkedHashSet<EvoAttribute>();
+	}
+	
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
-		return null;
+		return TEXT_RESOURCE_NAME;
 	}
 
 	@Override
-	public void setName(String name) {
-		// TODO Auto-generated method stub
-
-	}
+	public void setName(String name) {}
 
 	@Override
 	public void setDefaultlyUsed(boolean isUsedByDefault) {
-		// TODO Auto-generated method stub
-
+		this.isUsedByDefault = isUsedByDefault;
 	}
 
 	@Override
 	public boolean isDefaultlyUsed() {
-		// TODO Auto-generated method stub
-		return false;
+		return isUsedByDefault;
 	}
 
 	@Override
 	public boolean isUsed() {
-		// TODO Auto-generated method stub
-		return false;
+		return isUsed;
 	}
 
 	@Override
 	public void setUsed(boolean isUsed) {
-		// TODO Auto-generated method stub
-
+		this.isUsed = isUsed;
 	}
 
 	@Override
 	public void setCanHaveContent(boolean canHaveContent) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public boolean canHaveContent() {
-		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
 	public void setContent(String content) {
-		// TODO Auto-generated method stub
-
+		this.content = content;
 	}
 
 	@Override
 	public String getContent() {
-		// TODO Auto-generated method stub
-		return null;
+		return content;
 	}
 
 	@Override
-	public void setDataType(int dataType) {
-		// TODO Auto-generated method stub
+	public void setDataType(int dataType) {}
 
+	@Override
+	public int getDataType() {		
+		return TEXT_RESOURCE_TYPE;
 	}
 
 	@Override
-	public int getDataType() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public void setContainsExternalFile(boolean containsExternalFile) {
-		// TODO Auto-generated method stub
-
-	}
+	public void setContainsExternalFile(boolean containsExternalFile) {	}
 
 	@Override
 	public boolean containsExternalFile() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public void setExternalFileLocationAttributeName(
-			String externalFileLocationAttributeName) {
-		// TODO Auto-generated method stub
-
-	}
+			String externalFileLocationAttributeName) {	}
 
 	@Override
 	public String getExternalFileLocationAttributeName() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void addPossibleAttribute(EvoAttribute possibleAttribute) {
-		// TODO Auto-generated method stub
-
-	}
+	public void addPossibleAttribute(EvoAttribute possibleAttribute) {}
 
 	@Override
 	public boolean containsAttributeWithName(String attributeName) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public void setPossibleAttributes(
-			LinkedHashSet<EvoAttribute> possibleAttributesSet) {
-		// TODO Auto-generated method stub
-
-	}
+			LinkedHashSet<EvoAttribute> possibleAttributesSet) {}
 
 	@Override
 	public LinkedHashSet<EvoAttribute> getAttributeSet() {
-		// TODO Auto-generated method stub
-		return null;
+		return attributeSet;
 	}
 
 	@Override
 	public EvoAttribute getAttributeByName(String attributeName) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public void setAcceptableFileExtensions(String[] extensions) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public String[] getAcceptableFileExtensions() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public IPageResource clone() {
-		// TODO Auto-generated method stub
-		return null;
+		return new EvoTextResource(isUsedByDefault, isUsed, content);
 	}
 
 }

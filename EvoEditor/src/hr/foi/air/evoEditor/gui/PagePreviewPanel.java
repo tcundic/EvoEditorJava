@@ -157,7 +157,7 @@ public class PagePreviewPanel extends JPanel {
 		resourceText.setLineWrap(true);
 		resourceText.setRows(10);
 		resourceText.setColumns(65);
-		resourceText.setText(text);
+		resourceText.setText(text);		
 		showText(resourceText);
 	}
 	

@@ -3,6 +3,9 @@ package hr.foi.air.evoEditor.main;
 import hr.foi.air.evoEditor.controller.EvoEditor;
 import hr.foi.air.evoEditor.gui.EditorMainGUI;
 import hr.foi.air.evoEditor.model.EvoAttribute;
+import hr.foi.air.evoEditor.model.EvoImageResource;
+import hr.foi.air.evoEditor.model.EvoTextResource;
+import hr.foi.air.evoEditor.model.EvoVideoResource;
 import hr.foi.air.evoEditor.model.RawGallery;
 import hr.foi.air.evoEditor.model.RawPage;
 import hr.foi.air.evoEditor.model.RawPageResource;
@@ -72,15 +75,15 @@ public class Main {
 		imageResourceAttributes.add(new EvoAttribute(PATH_RESOURCE_ATTRIBUTE_NAME));
 		videoResourceAttributes.add(new EvoAttribute(PATH_RESOURCE_ATTRIBUTE_NAME));
 		
-		IPageResource image = new RawPageResource();
-    	image.setName(IMAGE_RESOURCE_NAME); 
-    	image.setPossibleAttributes(imageResourceAttributes);
-    	image.setCanHaveContent(false);
-    	image.setDefaultlyUsed(true);
-    	image.setDataType(IMAGE_RESOURCE_TYPE);
-    	image.setContainsExternalFile(true);
-    	image.setExternalFileLocationAttributeName(PATH_RESOURCE_ATTRIBUTE_NAME);
-    	image.setAcceptableFileExtensions(new String[]{"jpg","gif"});
+//		IPageResource image = new RawPageResource();
+//    	image.setName(IMAGE_RESOURCE_NAME); 
+//    	image.setPossibleAttributes(imageResourceAttributes);
+//    	image.setCanHaveContent(false);
+//    	image.setDefaultlyUsed(true);
+//    	image.setDataType(IMAGE_RESOURCE_TYPE);
+//    	image.setContainsExternalFile(true);
+//    	image.setExternalFileLocationAttributeName(PATH_RESOURCE_ATTRIBUTE_NAME);
+//    	image.setAcceptableFileExtensions(new String[]{"jpg","gif"});    	
     	
     	IPageResource video = new RawPageResource();
     	video.setName(VIDEO_RESOURCE_NAME);
@@ -95,12 +98,19 @@ public class Main {
     	text.setName(TEXT_RESOURCE_NAME);
     	text.setCanHaveContent(true);
     	text.setDataType(TEXT_RESOURCE_TYPE);
-    	text.setContainsExternalFile(false); 
+    	text.setContainsExternalFile(false);
+    	
+    	IPageResource evoImage = new EvoImageResource(true);
+    	IPageResource evoVideo = new EvoVideoResource();
+    	IPageResource evoText = new EvoTextResource();
     	
     	ArrayList<IPageResource> pageResourceFormat = new ArrayList<IPageResource>(3);
-    	pageResourceFormat.add(image);
-    	pageResourceFormat.add(video);
-    	pageResourceFormat.add(text);
+//    	pageResourceFormat.add(image);
+//    	pageResourceFormat.add(video);
+//    	pageResourceFormat.add(text);
+    	pageResourceFormat.add(evoImage);
+    	pageResourceFormat.add(evoVideo);
+    	pageResourceFormat.add(evoText);    	
     	
     	return pageResourceFormat;
 	}

@@ -113,7 +113,7 @@ public class PageDataController implements TreeSelectionListener, ActionListener
 						attribute.getAttributeValue()
 						};
 				gui.addRowToTable(PageDataPanel.RESOURCE_TABLE, dataRow);
-			}
+			}		
 		}
 		setActive(true);
 	}

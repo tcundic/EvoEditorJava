@@ -119,7 +119,7 @@ public class EvoImageResource implements IPageResource {
 
 	@Override
 	public String[] getAcceptableFileExtensions() {		
-		return new String[]{".jpg", ".gif"};
+		return new String[]{"jpg", "gif"};
 	}
 
 	@Override

@@ -29,7 +29,6 @@ public class EvoEditor implements ActionListener {
 
 	public EvoEditor(IGallery galleryFormat) {
 		this.gallery = galleryFormat;
-		this.xmlGenerator = new XMLGenerator();
 		this.galleryDataPanelController = new GalleryDataPanelController(gallery);
 		this.galleryTreePanelController = new GalleryTreeController(gallery);
 		this.pagePreviewController = new PagePreviewController(gallery);
@@ -77,6 +76,7 @@ public class EvoEditor implements ActionListener {
         int rVal = c.showSaveDialog(null);
 	    if(rVal == JFileChooser.APPROVE_OPTION){
 	    	filePath = c.getSelectedFile().getPath();
+            xmlGenerator = new XMLGenerator();
 	    	xmlGenerator.setFile(filePath);
 	    	xmlGenerator.generateXmlFile(gallery);
 	    }

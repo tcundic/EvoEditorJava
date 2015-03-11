@@ -32,10 +32,8 @@ public class XMLGenerator {
 	
 	private static final String GALLERY_TAG_NAME = "gallery";
 	private static final String PAGE_TAG_NAME = "page";
-    public static final String PATH_RESOURCE_ATTRIBUTE = "path";
     public static final String ROOT_NODE = "documentation";
     public static final String DTD_FILE = "documentation.dtd";
-    private static final String GALLERY_NAME_ATTRIBUTE = "name";
     private static final String DEFAULT_INDENT = "4";
 
     //region PRIVATE FIELDS
@@ -119,24 +117,23 @@ public class XMLGenerator {
             for(IPageResource pageResource : page.getPageResources()){
             	if(pageResource.isUsed()){
             		Element element = document.createElement(pageResource.getName());
-            		
+
+                    String pathIdentifier = pageResource.getExternalFileLocationAttributeName();
+
             		Set<EvoAttribute> resourceAttributeSet = pageResource.getAttributeSet();
             		for(EvoAttribute resourceAttribute : resourceAttributeSet){
             			String pageAttributeName = resourceAttribute.getAttributeName();
                 		String pageAttributeValue = resourceAttribute.getAttributeValue();
                 		if(resourceAttribute.isUsed()){
-	            			if(!pageAttributeValue.isEmpty()){
-                                if (pageAttributeName.equalsIgnoreCase(PATH_RESOURCE_ATTRIBUTE)) {
+	            			if(pathIdentifier.equalsIgnoreCase(pageAttributeName)){
+                                //Empty attributes are NOT printed
+                                if(!pageAttributeValue.isEmpty()){
                                     resources.add(pageAttributeValue);
-                                    //Empty attributes are NOT printed
-                                    pageAttributeValue =
-                                            (pageAttributeValue.lastIndexOf("\\") != -1) ?
-                                                    pageAttributeValue.substring(pageAttributeValue.lastIndexOf("\\") + 1, pageAttributeValue.length()) :
-                                                    pageAttributeValue.substring(pageAttributeValue.lastIndexOf("/") + 1, pageAttributeValue.length());
-                                    element.setAttribute(pageAttributeName, pageAttributeValue);
-                                } else
-                                    element.setAttribute(pageAttributeName, pageAttributeValue);
+                                    File f = new File(pageAttributeValue);
+                                    pageAttributeValue = "resources" + File.separator + f.getName();
+                                }
 	            			}
+                            element.setAttribute(pageAttributeName, pageAttributeValue);
                 		}
             		}
             		if(pageResource.canHaveContent()){
@@ -163,7 +160,7 @@ public class XMLGenerator {
         ZipOutputStream zos = null;
 
         try {
-            fos = new FileOutputStream(FilenameUtils.getFullPath(file) + FilenameUtils.getBaseName(file) + ".zip");
+            fos = new FileOutputStream(file + ".zip");
             zos = new ZipOutputStream(fos);
 
             /**
@@ -186,7 +183,7 @@ public class XMLGenerator {
              */
             ze = new ZipEntry(DTD_FILE);
             zos.putNextEntry(ze);
-            in = new FileInputStream(System.getProperty("user.dir") + File.separator + DTD_FILE);
+            in = new FileInputStream(new File("Resources" + File.separator + DTD_FILE));
 
             while ((len = in.read(buffer)) > 0) {
                 zos.write(buffer, 0, len);
@@ -199,7 +196,7 @@ public class XMLGenerator {
              * Put each resource file in zip.
              */
             for (String resource : resources) {
-                ze = new ZipEntry(FilenameUtils.getName(resource));
+                ze = new ZipEntry("resources" + File.separator + FilenameUtils.getName(resource));
                 zos.putNextEntry(ze);
                 in = new FileInputStream(resource);
 
@@ -215,6 +212,8 @@ public class XMLGenerator {
         } finally {
             zos.close();
         }
+
+        xmlFile.delete();
     }
     //endregion
 
@@ -231,7 +230,7 @@ public class XMLGenerator {
          */
         try {
             document.setXmlStandalone(true);
-            xmlFile = new File(file);
+            xmlFile = new File(file + ".xml");
             xmlFile.createNewFile();
             FileOutputStream outputStream = new FileOutputStream(xmlFile);
             TransformerFactory tf = TransformerFactory.newInstance();

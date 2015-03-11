@@ -4,7 +4,6 @@ import hr.foi.air.evoEditor.model.EvoAttribute;
 import hr.foi.air.evoEditor.model.interfaces.IGallery;
 import hr.foi.air.evoEditor.model.interfaces.IPage;
 import hr.foi.air.evoEditor.model.interfaces.IPageResource;
-import org.apache.commons.io.FilenameUtils;
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
 import org.w3c.dom.DocumentType;
@@ -196,7 +195,8 @@ public class XMLGenerator {
              * Put each resource file in zip.
              */
             for (String resource : resources) {
-                ze = new ZipEntry("resources" + File.separator + FilenameUtils.getName(resource));
+            	File f = new File(resource);
+                ze = new ZipEntry("resources" + File.separator + f.getName());
                 zos.putNextEntry(ze);
                 in = new FileInputStream(resource);
 

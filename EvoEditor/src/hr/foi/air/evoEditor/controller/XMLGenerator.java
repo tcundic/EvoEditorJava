@@ -191,21 +191,25 @@ public class XMLGenerator {
             in.close();
             zos.closeEntry();
 
+            ArrayList<String> checkForDuplicates = new ArrayList<String>();
             /**
              * Put each resource file in zip.
              */
             for (String resource : resources) {
-            	File f = new File(resource);
-                ze = new ZipEntry("resources" + File.separator + f.getName());
-                zos.putNextEntry(ze);
-                in = new FileInputStream(resource);
-
-                while ((len = in.read(buffer)) > 0) {
-                    zos.write(buffer, 0, len);
-                }
-
-                in.close();
-                zos.closeEntry();
+            	if (!checkForDuplicates.contains(resource)) {
+            		File f = new File(resource);
+	                ze = new ZipEntry("resources" + File.separator + f.getName());
+	                zos.putNextEntry(ze);
+	                in = new FileInputStream(resource);
+	
+	                while ((len = in.read(buffer)) > 0) {
+	                    zos.write(buffer, 0, len);
+	                }
+	
+	                in.close();
+	                zos.closeEntry();
+            	}
+            	checkForDuplicates.add(resource);
             }
         } catch (IOException e) {
             e.printStackTrace();

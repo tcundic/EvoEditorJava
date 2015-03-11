@@ -5,10 +5,13 @@ import hr.foi.air.evoEditor.model.interfaces.IGallery;
 import hr.foi.air.evoEditor.model.interfaces.IPage;
 
 import javax.swing.*;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.UUID;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Here are all panels on UI declared.
@@ -76,6 +79,17 @@ public class EvoEditor implements ActionListener {
         int rVal = c.showSaveDialog(null);
 	    if(rVal == JFileChooser.APPROVE_OPTION){
 	    	filePath = c.getSelectedFile().getPath();
+	    	
+	    	Pattern p = Pattern.compile("(\\.[A-Za-z0-9]{1,3}$)");
+	        Matcher m = p.matcher(filePath);
+	        StringBuffer sb = new StringBuffer();
+	        
+	        if (m.find()) {
+	        	m.appendReplacement(sb, "");
+	        	m.appendTail(sb);
+	        	filePath = sb.toString();
+	        }
+	        
             xmlGenerator = new XMLGenerator();
 	    	xmlGenerator.setFile(filePath);
 	    	xmlGenerator.generateXmlFile(gallery);

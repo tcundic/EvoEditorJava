@@ -36,7 +36,7 @@ public class Main {
 	public static final int TEXT_RESOURCE_TYPE = 3;
 	public static final int AUDIO_RESOURCE_TYPE = 4;
 	
-	public static final String PATH_RESOURCE_ATTRIBUTE = "path";
+	public static final String PATH_RESOURCE_ATTRIBUTE_NAME = "path";
 	
 
 	public static void main(String[] args) {
@@ -69,8 +69,8 @@ public class Main {
 	private static ArrayList<IPageResource> getPageResourceFormat() {
 		LinkedHashSet<EvoAttribute> imageResourceAttributes = new LinkedHashSet<EvoAttribute>(1);
 		LinkedHashSet<EvoAttribute> videoResourceAttributes = new LinkedHashSet<EvoAttribute>(1);
-		imageResourceAttributes.add(new EvoAttribute(PATH_RESOURCE_ATTRIBUTE));
-		videoResourceAttributes.add(new EvoAttribute(PATH_RESOURCE_ATTRIBUTE));
+		imageResourceAttributes.add(new EvoAttribute(PATH_RESOURCE_ATTRIBUTE_NAME));
+		videoResourceAttributes.add(new EvoAttribute(PATH_RESOURCE_ATTRIBUTE_NAME));
 		
 		IPageResource image = new RawPageResource();
     	image.setName(IMAGE_RESOURCE_NAME); 
@@ -79,7 +79,7 @@ public class Main {
     	image.setDefaultlyUsed(true);
     	image.setDataType(IMAGE_RESOURCE_TYPE);
     	image.setContainsExternalFile(true);
-    	image.setExternalFileLocationAttributeName(PATH_RESOURCE_ATTRIBUTE);
+    	image.setExternalFileLocationAttributeName(PATH_RESOURCE_ATTRIBUTE_NAME);
     	image.setAcceptableFileExtensions(new String[]{"jpg","gif"});
     	
     	IPageResource video = new RawPageResource();
@@ -88,7 +88,7 @@ public class Main {
     	video.setCanHaveContent(false);
     	video.setDataType(VIDEO_RESOURCE_TYPE);
     	video.setContainsExternalFile(true);
-    	video.setExternalFileLocationAttributeName(PATH_RESOURCE_ATTRIBUTE);
+    	video.setExternalFileLocationAttributeName(PATH_RESOURCE_ATTRIBUTE_NAME);
     	video.setAcceptableFileExtensions(new String[]{"mp4"});    	
     	
     	IPageResource text = new RawPageResource();

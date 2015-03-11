@@ -222,6 +222,7 @@ public class GalleryTreeController implements TreeSelectionListener,ActionListen
 			}
 			gallery.deletePage(selectedPage.getId());
 			gui.removePageFromTree(selectedPage);
+			gui.reattachNodes(pageToSelect);
 			selectNodeWithPage(pageToSelect);
 			tablesChanged();
 		}

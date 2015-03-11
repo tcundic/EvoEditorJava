@@ -240,7 +240,7 @@ public class PageDataController implements TreeSelectionListener, ActionListener
 	}
 
 	private void setResourcePathAttributeToUsed(IPageResource usedResource) {
-		EvoAttribute pathAttribute = usedResource.getAttributeByName(Main.PATH_RESOURCE_ATTRIBUTE);
+		EvoAttribute pathAttribute = usedResource.getAttributeByName(Main.PATH_RESOURCE_ATTRIBUTE_NAME);
 		pathAttribute.setUsed(true);		
 	}
 

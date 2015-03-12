@@ -1,6 +1,7 @@
 package hr.foi.air.evoEditor.controller;
 
 import hr.foi.air.evoEditor.gui.EditorMainGUI;
+import hr.foi.air.evoEditor.model.XMLGenerator;
 import hr.foi.air.evoEditor.model.interfaces.IGallery;
 import hr.foi.air.evoEditor.model.interfaces.IPage;
 

@@ -17,8 +17,10 @@ import javax.swing.event.TreeSelectionListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.tree.DefaultMutableTreeNode;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.ArrayList;
 
 /**
@@ -211,6 +213,8 @@ public class PageDataController implements TreeSelectionListener, ActionListener
 		IPageResource resource = selectedPage.getUsedResource();
 		if(resource.containsExternalFile()){
 			JFileChooser chooser = new JFileChooser();
+			//TODO: Just for demo.
+			chooser.setCurrentDirectory(new File(System.getProperty("user.home") + System.getProperty("file.separator")+ "Desktop" + System.getProperty("file.separator")+ "EvoEditor" + System.getProperty("file.separator")+ "DemoResources"));
 			String description = "";
 			String[] possibleExtensions = resource.getAcceptableFileExtensions();
 			for(String extension : possibleExtensions){
@@ -232,12 +236,12 @@ public class PageDataController implements TreeSelectionListener, ActionListener
 		}
 	}
 
-	private void refreshPageData(){
-		refreshPageAttributeTable();
-		refreshPageResourceTable();
-		refreshResourceContentTable();
-		tablesChanged();
-	}
+//	private void refreshPageData(){
+//		refreshPageAttributeTable();
+//		refreshPageResourceTable();
+//		refreshResourceContentTable();
+//		tablesChanged();
+//	}
 
 	private void setResourcePathAttributeToUsed(IPageResource usedResource) {
 		EvoAttribute pathAttribute = usedResource.getAttributeByName(Main.PATH_RESOURCE_ATTRIBUTE_NAME);

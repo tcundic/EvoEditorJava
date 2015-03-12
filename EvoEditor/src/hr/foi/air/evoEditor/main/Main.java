@@ -85,32 +85,52 @@ public class Main {
 //    	image.setExternalFileLocationAttributeName(PATH_RESOURCE_ATTRIBUTE_NAME);
 //    	image.setAcceptableFileExtensions(new String[]{"jpg","gif"});    	
     	
-    	IPageResource video = new RawPageResource();
-    	video.setName(VIDEO_RESOURCE_NAME);
-    	video.setPossibleAttributes(videoResourceAttributes);
-    	video.setCanHaveContent(false);
-    	video.setDataType(VIDEO_RESOURCE_TYPE);
-    	video.setContainsExternalFile(true);
-    	video.setExternalFileLocationAttributeName(PATH_RESOURCE_ATTRIBUTE_NAME);
-    	video.setAcceptableFileExtensions(new String[]{"mp4"});    	
+//    	IPageResource video = new RawPageResource();
+//    	video.setName(VIDEO_RESOURCE_NAME);
+//    	video.setPossibleAttributes(videoResourceAttributes);
+//    	video.setCanHaveContent(false);
+//    	video.setDataType(VIDEO_RESOURCE_TYPE);
+//    	video.setContainsExternalFile(true);
+//    	video.setExternalFileLocationAttributeName(PATH_RESOURCE_ATTRIBUTE_NAME);
+//    	video.setAcceptableFileExtensions(new String[]{"mp4"});    	
     	
-    	IPageResource text = new RawPageResource();
-    	text.setName(TEXT_RESOURCE_NAME);
-    	text.setCanHaveContent(true);
-    	text.setDataType(TEXT_RESOURCE_TYPE);
-    	text.setContainsExternalFile(false);
+//    	IPageResource text = new RawPageResource();
+//    	text.setName(TEXT_RESOURCE_NAME);
+//    	text.setCanHaveContent(true);
+//    	text.setDataType(TEXT_RESOURCE_TYPE);
+//    	text.setContainsExternalFile(false);
+		
+		// audio resource
+//    	IPageResource audio = new RawPageResource();
+//    	audio.setName(AUDIO_RESOURCE_NAME);
+		
+//    	LinkedHashSet<EvoAttribute> audioPageResources = 
+//    			new LinkedHashSet<EvoAttribute>(4);//    	
+//    	audioPageResources.add(new EvoAttribute("path"));
+//    	audioPageResources.add(new EvoAttribute("start_time"));
+//    	audioPageResources.add(new EvoAttribute("volume"));
+//    	audio.setPossibleAttributes(audioPageResources);
+//    	
+//    	audio.setCanHaveContent(true);
+//    	audio.setDataType(AUDIO_RESOURCE_TYPE);
+//    	audio.setContainsExternalFile(true);
+//    	audio.setExternalFileLocationAttributeName("path");
+//    	audio.setAcceptableFileExtensions(new String[]{"mp3"});   
     	
+    	// Evo resources
     	IPageResource evoImage = new EvoImageResource(true);
     	IPageResource evoVideo = new EvoVideoResource();
     	IPageResource evoText = new EvoTextResource();
     	
     	ArrayList<IPageResource> pageResourceFormat = new ArrayList<IPageResource>(3);
+//    	pageResourceFormat.add(audio);
+    	pageResourceFormat.add(evoImage);
+    	pageResourceFormat.add(evoVideo);
+    	pageResourceFormat.add(evoText);
+    	
 //    	pageResourceFormat.add(image);
 //    	pageResourceFormat.add(video);
 //    	pageResourceFormat.add(text);
-    	pageResourceFormat.add(evoImage);
-    	pageResourceFormat.add(evoVideo);
-    	pageResourceFormat.add(evoText);    	
     	
     	return pageResourceFormat;
 	}
@@ -127,7 +147,7 @@ public class Main {
 		
 		LinkedHashSet<EvoAttribute> possiblePageAttributeList = new LinkedHashSet<EvoAttribute>(2);		
 		possiblePageAttributeList.add(description);		
-		possiblePageAttributeList.add(confirmationText);    	
+		possiblePageAttributeList.add(confirmationText); 
     	
     	IPage pageFormat = new RawPage(possiblePageAttributeList, pageResourceFormat);
     	return pageFormat;
@@ -138,8 +158,9 @@ public class Main {
 	 * @return
 	 */
 	private static IGallery getGalleryFormat(IPage pageType) {
-		Set<EvoAttribute> possibleGalleryAttributeSet = new LinkedHashSet<EvoAttribute>(1);
-    	for(String attributeName : GALLERY_ATTRIBUTES){
+		Set<EvoAttribute> possibleGalleryAttributeSet = new LinkedHashSet<EvoAttribute>(10);
+		String[] galleryAttributes = {"name", "qrcode", "repeat", SHOW_INDICATOR, TRANSPARENCY};
+    	for(String attributeName : galleryAttributes){
     		possibleGalleryAttributeSet.add(new EvoAttribute(attributeName));
     	}
     	

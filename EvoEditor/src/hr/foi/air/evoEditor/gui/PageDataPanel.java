@@ -178,6 +178,7 @@ public class PageDataPanel extends JPanel {
 		DefaultTableModel tableModel = new DefaultTableModel(){	        
 			private static final long serialVersionUID = -2272342654671031121L;
 			
+			@SuppressWarnings({ "unchecked", "rawtypes" })
 			public Class getColumnClass(int column) {
 			    return (getValueAt(0, column).getClass());
 			  }

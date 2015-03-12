@@ -8,6 +8,7 @@ import javax.swing.*;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.UUID;
 import java.util.regex.Matcher;
@@ -76,6 +77,9 @@ public class EvoEditor implements ActionListener {
 	private void exportXmlFIle() {
 		String filePath="";
 		JFileChooser c = new JFileChooser();
+		//TODO: Just for demo.
+		c.setCurrentDirectory(new File(System.getProperty("user.home") + System.getProperty("file.separator")+ "Desktop" + System.getProperty("file.separator")+ "EvoEditor"));
+		
         int rVal = c.showSaveDialog(null);
 	    if(rVal == JFileChooser.APPROVE_OPTION){
 	    	filePath = c.getSelectedFile().getPath();

@@ -27,14 +27,14 @@ public class EvoEditor implements ActionListener {
 	private IGallery gallery;
 	private XMLGenerator xmlGenerator;
 
-	private GalleryDataPanelController galleryDataPanelController;
+	private GalleryDataController galleryDataPanelController;
 	private PagePreviewController pagePreviewController;
 	private GalleryTreeController galleryTreePanelController;
 	private PageDataController pageDataController;
 
 	public EvoEditor(IGallery galleryFormat) {
 		this.gallery = galleryFormat;
-		this.galleryDataPanelController = new GalleryDataPanelController(gallery);
+		this.galleryDataPanelController = new GalleryDataController(gallery);
 		this.galleryTreePanelController = new GalleryTreeController(gallery);
 		this.pagePreviewController = new PagePreviewController(gallery);
 		this.pageDataController = new PageDataController(gallery);
@@ -48,7 +48,7 @@ public class EvoEditor implements ActionListener {
 		return this.pagePreviewController;
 	}
 
-	public GalleryDataPanelController getGalleryDataController(){
+	public GalleryDataController getGalleryDataController(){
 		return this.galleryDataPanelController;
 	}
 

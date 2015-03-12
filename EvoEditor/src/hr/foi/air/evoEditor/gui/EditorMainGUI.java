@@ -97,7 +97,7 @@ public class EditorMainGUI{
         /**
          * Gallery attributes panel.
          */
-		GalleryDataPanelController galleryDataPanelController = evoEditor.getGalleryDataController();
+		GalleryDataController galleryDataPanelController = evoEditor.getGalleryDataController();
 		GalleryDataPanel galleryDataPanel = new GalleryDataPanel(galleryDataPanelController);
 		galleryDataPanelController.setGui(galleryDataPanel);
 		galleryDataPanelController.setInitialData();

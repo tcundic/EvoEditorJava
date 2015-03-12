@@ -20,7 +20,7 @@ import java.util.ArrayList;
  * gallery attributes.
  */
 
-public class GalleryDataPanelController implements ChangeListener, ActionListener {
+public class GalleryDataController implements ChangeListener, ActionListener {
 	
 	private IGallery gallery;
 	private GalleryDataPanel gui;
@@ -28,7 +28,7 @@ public class GalleryDataPanelController implements ChangeListener, ActionListene
 	private ArrayList<GalleryChangeListener> listeners = new ArrayList<GalleryChangeListener>();
 
 
-	public GalleryDataPanelController(IGallery gallery){
+	public GalleryDataController(IGallery gallery){
 		this.gallery = gallery;
 	}
 

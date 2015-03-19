@@ -5,15 +5,15 @@ import hr.foi.air.evoEditor.model.XMLGenerator;
 import hr.foi.air.evoEditor.model.interfaces.IGallery;
 import hr.foi.air.evoEditor.model.interfaces.IPage;
 
-import javax.swing.*;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
 
 /**
  * Here are all panels on UI declared.
@@ -78,8 +78,6 @@ public class EvoEditor implements ActionListener {
 	private void exportXmlFIle() {
 		String filePath="";
 		JFileChooser c = new JFileChooser();
-		//TODO: Just for demo.
-		c.setCurrentDirectory(new File(System.getProperty("user.home") + System.getProperty("file.separator")+ "Desktop" + System.getProperty("file.separator")+ "EvoEditor"));
 		
         int rVal = c.showSaveDialog(null);
 	    if(rVal == JFileChooser.APPROVE_OPTION){

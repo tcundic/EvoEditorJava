@@ -101,21 +101,23 @@ public class Main {
 //    	text.setContainsExternalFile(false);
 		
 		// audio resource
-//    	IPageResource audio = new RawPageResource();
-//    	audio.setName(AUDIO_RESOURCE_NAME);
+    	IPageResource audio = new RawPageResource();
+    	audio.setName(AUDIO_RESOURCE_NAME);
 		
-//    	LinkedHashSet<EvoAttribute> audioPageResources = 
-//    			new LinkedHashSet<EvoAttribute>(4);//    	
-//    	audioPageResources.add(new EvoAttribute("path"));
-//    	audioPageResources.add(new EvoAttribute("start_time"));
-//    	audioPageResources.add(new EvoAttribute("volume"));
-//    	audio.setPossibleAttributes(audioPageResources);
-//    	
-//    	audio.setCanHaveContent(true);
-//    	audio.setDataType(AUDIO_RESOURCE_TYPE);
-//    	audio.setContainsExternalFile(true);
-//    	audio.setExternalFileLocationAttributeName("path");
-//    	audio.setAcceptableFileExtensions(new String[]{"mp3"});   
+    	// resource attributes
+    	LinkedHashSet<EvoAttribute> audioPageResources = 
+    			new LinkedHashSet<EvoAttribute>();    	
+    	audioPageResources.add(new EvoAttribute("path"));
+    	audioPageResources.add(new EvoAttribute("start_time"));
+    	audioPageResources.add(new EvoAttribute("volume"));
+    	audio.setPossibleAttributes(audioPageResources);
+    	
+    	// Meta data
+    	audio.setCanHaveContent(true);
+    	audio.setDataType(AUDIO_RESOURCE_TYPE);
+    	audio.setContainsExternalFile(true);
+    	audio.setExternalFileLocationAttributeName("path");
+    	audio.setAcceptableFileExtensions(new String[]{"mp3"});   
     	
     	// Evo resources
     	IPageResource evoImage = new EvoImageResource(true);
@@ -123,7 +125,7 @@ public class Main {
     	IPageResource evoText = new EvoTextResource();
     	
     	ArrayList<IPageResource> pageResourceFormat = new ArrayList<IPageResource>(3);
-//    	pageResourceFormat.add(audio);
+    	pageResourceFormat.add(audio);
     	pageResourceFormat.add(evoImage);
     	pageResourceFormat.add(evoVideo);
     	pageResourceFormat.add(evoText);

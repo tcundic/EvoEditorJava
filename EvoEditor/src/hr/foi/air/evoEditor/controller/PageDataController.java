@@ -9,7 +9,15 @@ import hr.foi.air.evoEditor.model.interfaces.IGallery;
 import hr.foi.air.evoEditor.model.interfaces.IPage;
 import hr.foi.air.evoEditor.model.interfaces.IPageResource;
 
-import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.JTree;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.event.TreeSelectionEvent;
@@ -17,11 +25,6 @@ import javax.swing.event.TreeSelectionListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.tree.DefaultMutableTreeNode;
-
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.File;
-import java.util.ArrayList;
 
 /**
  * This is controller class for pages attributes panel.
@@ -213,8 +216,6 @@ public class PageDataController implements TreeSelectionListener, ActionListener
 		IPageResource resource = selectedPage.getUsedResource();
 		if(resource.containsExternalFile()){
 			JFileChooser chooser = new JFileChooser();
-			//TODO: Just for demo.
-			chooser.setCurrentDirectory(new File(System.getProperty("user.home") + System.getProperty("file.separator")+ "Desktop" + System.getProperty("file.separator")+ "EvoEditor" + System.getProperty("file.separator")+ "DemoResources"));
 			String description = "";
 			String[] possibleExtensions = resource.getAcceptableFileExtensions();
 			for(String extension : possibleExtensions){
